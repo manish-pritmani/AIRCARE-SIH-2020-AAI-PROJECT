@@ -25,6 +25,24 @@ class _TravelState extends State<Travel> {
             ),
           )
       ),
+      body: Column(
+        children: <Widget>[
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              leading: CircleAvatar(
+                backgroundColor: Color(0xffecf0f1),
+                child: Icon(Icons.card_travel, color: Color(0xFF2980b9),),
+              ),
+              title: Text("Ethereum"),
+              trailing: Text("\$450"),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

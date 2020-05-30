@@ -22,9 +22,11 @@ environment:
 
 dependencies:
   line_icons: ^0.2.0
+  font_awesome_flutter: ^8.8.1
   flutter:
     sdk: flutter
   google_nav_bar: ^2.2.0
+
 
 
 
