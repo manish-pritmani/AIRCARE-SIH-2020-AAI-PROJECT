@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "596747993874",
+    "firebase_url": "https://aircare-xeihyn.firebaseio.com",
+    "project_id": "aircare-xeihyn",
+    "storage_bucket": "aircare-xeihyn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596747993874:android:97688cb9f5efb99091a9cb",
+        "android_client_info": {
+          "package_name": "sixmusk.aircare.sih"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "596747993874-oj6kpirlnbhlhfrteu7dp1vhaquv1qpk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLzjhuVT1w-18LOCEf-XLvj1F1TJuQnNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "596747993874-oj6kpirlnbhlhfrteu7dp1vhaquv1qpk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

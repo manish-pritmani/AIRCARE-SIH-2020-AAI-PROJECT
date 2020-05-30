@@ -34,7 +34,17 @@ class _ProfileState extends State<Profile> {
                 Container(
                   width: double.infinity,
                   height: 330,
-                  color: Colors.deepOrange,
+                  margin: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Color(0xff0437D6),
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xff0434D6),
+                        Color(0xff8A00E0),
+                      ],
+                    ),
+                  ),
                 ),
                 Positioned(
                   top: 20,
@@ -128,7 +138,7 @@ class _ProfileState extends State<Profile> {
                                 Container(
                                     padding:
                                     EdgeInsets.only(top: 10, bottom: 5),
-                                    child: Text("Connected Account",
+                                    child: Text("Account",
                                         style: TextStyle(
                                             color: Colors.black54))),
                                 Container(
@@ -136,7 +146,8 @@ class _ProfileState extends State<Profile> {
                                     child: Text("3",
                                         style: TextStyle(
                                             color: Colors.black87,
-                                            fontSize: 16))),
+                                            fontSize: 16)
+                                    )),
                               ],
                             ),
                           ],
