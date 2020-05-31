@@ -38,10 +38,24 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       key: introKey,
       pages: [
         PageViewModel(
-          title: "Fractional shares",
+          title: "Get Rewarded in VIP",
           body:
-          "Instead of having to buy an entire share, invest any amount you want.",
+          "Everytime you pay at anything get ONE Pay Rewards, Join VIP Today.",
           image: _buildImage('reward'),
+          footer: RaisedButton(
+            onPressed: () {
+              introKey.currentState?.animateScroll(0);
+            },
+            child: const Text(
+              'Buy VIP Now',
+              style: TextStyle(color: Colors.white,fontSize: 16),
+            ),
+            padding: EdgeInsets.only(top: 15,bottom: 15,left: 25,right: 25),
+            color: Color(0xff0437D6),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+          ),
           decoration: pageDecoration,
         ),
         PageViewModel(
@@ -98,7 +112,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       nextFlex: 0,
       skip: const Text('SKIP'),
       next: const Icon(Icons.arrow_forward),
-      done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
+      done: const Text('HELP', style: TextStyle(fontWeight: FontWeight.w600)),
       dotsDecorator: const DotsDecorator(
         size: Size(10.0, 10.0),
         color: Color(0xFFBDBDBD),

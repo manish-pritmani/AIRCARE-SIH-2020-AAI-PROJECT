@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sih/Help/qna.dart';
-import 'package:sih/navigation/onboarding.dart';
+import 'file:///C:/Users/manis/AndroidStudioProjects/aircare-sih/lib/onboarding.dart';
 
 class Explore extends StatefulWidget {
   @override
@@ -211,7 +211,10 @@ class _ExploreState extends State<Explore> {
             FlatButton(
               child: Text("Get location"),
               onPressed: () {
-                OnBoardingPage();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OnBoardingPage()),
+                );
               },
             ),
           ],
