@@ -27,6 +27,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_nav_bar: ^2.2.0
+  introduction_screen: ^1.0.8
 
 
 
