@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:sih/Help/qna.dart';
 
 class Explore extends StatefulWidget {
   @override
@@ -6,6 +9,9 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
+  final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+  Position _currentPosition;
+  String _currentAddress;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +24,7 @@ class _ExploreState extends State<Explore> {
               children: <Widget>[
                 Icon(Icons.location_on,color: Colors.black,),
                 Text(
-                  "Jabalpur Airport",
+                  _currentAddress == null ? "Get Location" : _currentAddress,
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w400,
@@ -40,7 +46,12 @@ class _ExploreState extends State<Explore> {
             ),
           )),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Query()),
+          );
+        },
         elevation: 1,
         child: Icon(Icons.chat),
         backgroundColor: Color(0xffffffff),
@@ -166,8 +177,47 @@ class _ExploreState extends State<Explore> {
               ),
             ),
           ),
+          if (_currentPosition != null)
+            Text(
+                "LAT: ${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}"),
+          FlatButton(
+            child: Text("Get location"),
+            onPressed: () {
+              _getCurrentLocation();
+            },
+          ),
         ],
       ),
     );
+  }
+
+  _getCurrentLocation() {
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+      });
+
+      _getAddressFromLatLng();
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  _getAddressFromLatLng() async {
+    try {
+      List<Placemark> p = await geolocator.placemarkFromCoordinates(
+          _currentPosition.latitude, _currentPosition.longitude);
+
+      Placemark place = p[0];
+
+      setState(() {
+        _currentAddress =
+        "${place.locality}, ${place.postalCode}, ${place.country}";
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 }

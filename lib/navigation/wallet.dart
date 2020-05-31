@@ -14,8 +14,8 @@ class _WalletState extends State<Wallet> {
       appBar: AppBar(
           elevation: 1,
           backgroundColor: Colors.white,
-          leading: IconButton(
-            icon: Icon(Icons.account_balance_wallet),
+          leading: Icon(
+            Icons.account_balance_wallet,
             color: Colors.black,
           ),
           title: Text(
@@ -170,7 +170,6 @@ class _WalletState extends State<Wallet> {
               ),
 
 
-
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20,),
                 child: Row(
@@ -283,3 +282,4 @@ class _WalletState extends State<Wallet> {
     );
   }
 }
+

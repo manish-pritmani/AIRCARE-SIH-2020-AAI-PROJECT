@@ -40,6 +40,7 @@ class _ProfileState extends State<Profile> {
                     color: Color(0xff0437D6),
                     gradient: LinearGradient(
                       colors: [
+
                         Color(0xff0434D6),
                         Color(0xff8A00E0),
                       ],
@@ -154,7 +155,132 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                     ),
-                    UserInfo()
+                    UserInfo(),
+                    SingleChildScrollView(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "ACCOUNT",
+                            style: headerStyle,
+                          ),
+                          const SizedBox(height: 10.0),
+                          Card(
+                            elevation: 0.5,
+                            margin: const EdgeInsets.symmetric(
+                              vertical: 4.0,
+                              horizontal: 0,
+                            ),
+                            child: Column(
+                              children: <Widget>[
+                                ListTile(
+                                  leading: CircleAvatar(
+                                    backgroundImage: NetworkImage('https://www.thehindubusinessline.com/info-tech/social-media/z6d0w1/article25454757.ece/ALTERNATES/LANDSCAPE_1200/SUNDARPICHAI'),
+                                  ),
+                                  title: Text("Damodar Lohani"),
+                                  onTap: () {},
+                                ),
+                                _buildDivider(),
+                                SwitchListTile(
+                                  activeColor: Color(0xff0437D6),
+                                  value: true,
+                                  title: Text("Private Account"),
+                                  onChanged: (val) {},
+                                ),
+                                _buildDivider(),
+                                ListTile(
+                                  title: Text("Connected Accounts"),
+                                  onTap: () {},
+                                  trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey.shade600,),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 20.0),
+                          Text(
+                            "PUSH NOTIFICATIONS",
+                            style: headerStyle,
+                          ),
+                          const SizedBox(height: 10.0),
+                          Card(
+                            margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0,),
+                            child: Column(
+                              children: <Widget>[
+                                SwitchListTile(
+                                  activeColor: Color(0xff0437D6),
+                                  value: true,
+                                  title: Text("Received notification"),
+                                  onChanged: (val) {},
+                                ),
+                                _buildDivider(),
+                                SwitchListTile(
+                                  activeColor: Color(0xff0437D6),
+                                  value: false,
+                                  title: Text("Received newsletter"),
+                                  onChanged: null,
+                                ),
+                                _buildDivider(),
+                                SwitchListTile(
+                                  activeColor: Color(0xff0437D6),
+                                  value: true,
+                                  title: Text("Received Offer Notification"),
+                                  onChanged: (val) {},
+                                ),
+                                _buildDivider(),
+                                SwitchListTile(
+                                  activeColor: Color(0xff0437D6),
+                                  value: true,
+                                  title: Text("Received App Updates"),
+                                  onChanged: null,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 20.0),
+                          Text(
+                            "APP INFO",
+                            style: headerStyle,
+                          ),
+                          Card(
+                            margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0,),
+                            child: Column(
+                              children: <Widget>[
+                                SwitchListTile(
+                                  activeColor: Color(0xff0437D6),
+                                  value: true,
+                                  title: Text("Dark Mode"),
+                                  onChanged: (val) {},
+                                ),
+                                _buildDivider(),
+                                SwitchListTile(
+                                  activeColor: Color(0xff0437D6),
+                                  value: true,
+                                  title: Text("Received Offer Notification"),
+                                  onChanged: (val) {},
+                                ),
+                                _buildDivider(),
+                                SwitchListTile(
+                                  activeColor: Color(0xff0437D6),
+                                  value: true,
+                                  title: Text("Received App Updates"),
+                                  onChanged: (val){}
+                                ),
+                              ],
+                            ),
+                          ),
+                          Card(
+                            margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0,),
+                            child: ListTile(
+                              leading: Icon(Icons.exit_to_app),
+                              title: Text("Logout"),
+                              onTap: (){},
+                            ),
+                          ),
+                          const SizedBox(height: 60.0),
+                        ],
+                      ),
+                    ),
                   ],
                 )
               ],
@@ -231,3 +357,19 @@ class UserInfo extends StatelessWidget {
     );
   }
 }
+
+Container _buildDivider() {
+  return Container(
+    margin: const EdgeInsets.symmetric(
+      horizontal: 8.0,
+    ),
+    width: double.infinity,
+    height: 1.0,
+    color: Colors.grey.shade300,
+  );
+}
+final TextStyle headerStyle = TextStyle(
+  color: Colors.grey.shade800,
+  fontWeight: FontWeight.bold,
+  fontSize: 20.0,
+);
