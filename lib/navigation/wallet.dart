@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:md2_tab_indicator/md2_tab_indicator.dart';
+import 'package:sih/features/wifi.dart';
 
 
 class Wallet extends StatefulWidget {
@@ -7,9 +9,21 @@ class Wallet extends StatefulWidget {
   _WalletState createState() => _WalletState();
 }
 
-class _WalletState extends State<Wallet> {
+class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
+  TabController _tabController;
   @override
   Widget build(BuildContext context) {
+    @override
+    void initState() {
+      super.initState();
+      _tabController = TabController(vsync: this, length: 4);
+    }
+
+    @override
+    void dispose() {
+      _tabController.dispose();
+      super.dispose();
+    }
     return Scaffold(
       appBar: AppBar(
           elevation: 1,
@@ -19,20 +33,17 @@ class _WalletState extends State<Wallet> {
             color: Colors.black,
           ),
           title: Text(
-            "ONE Wallet",
+            "One Wallet",
             style: TextStyle(
               color: Theme.of(context).brightness == Brightness.dark ? Colors.white :Colors.black,
-              fontWeight: FontWeight.bold,
               fontFamily: "Circular",
             ),
           )
       ),
       body: Container(
-        color: Color(0xFFbdc3c7),
-        width: MediaQuery.of(context).size.width,
+//        color: Color(0xFFbdc3c7),
+//        width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
-
-
           child: Column(
             children: <Widget>[
               Container(
@@ -74,17 +85,16 @@ class _WalletState extends State<Wallet> {
                       ),
 
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 20,),
+                        margin: EdgeInsets.symmetric(horizontal: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-
                             Text(
-                              "IN 32,452",
+                              "32,452",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 35,
-                                  fontWeight: FontWeight.bold
+                                  fontWeight: FontWeight.w900
                               ),
                             ),
 
@@ -129,6 +139,7 @@ class _WalletState extends State<Wallet> {
                         children: <Widget>[
                           RaisedButton.icon(
                             elevation: 0,
+                            color: Colors.white,
                             onPressed: (){},
                             icon: Icon(Icons.add, color: Color(0xFF2ecc71),),
                             label: Text("Add Money"),
@@ -138,6 +149,7 @@ class _WalletState extends State<Wallet> {
                           ),
                           RaisedButton.icon(
                             elevation: 0,
+                            color: Colors.white,
                             onPressed: (){},
                             icon: Icon(Icons.view_headline, color: Color(0xff3498db),),
                             label: Text("Recent Spends"),
@@ -168,113 +180,69 @@ class _WalletState extends State<Wallet> {
                   ),
                 ),
               ),
-
-
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20,),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-
-
-                    Expanded(
-                      child: RaisedButton.icon(
-                        onPressed: (){},
-                        icon: Icon(FontAwesomeIcons.levelUpAlt, color: Color(0xff3498db),),
-                        label: Text("Send"),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  FlatButton(
+                    onPressed: () => {},
+                    padding: EdgeInsets.all(10.0),
+                    child: Column( // Replace with a Row for horizontal icon + text
+                      children: <Widget>[
+                        Icon(LineIcons.money),
+                        SizedBox(height: 5,),
+                        Text("Send Money")
+                      ],
                     ),
-
-                    SizedBox(width: 20,),
-
-                    Expanded(
-                      child: RaisedButton.icon(
-                        elevation: 0,
-                        onPressed: (){},
-                        icon: Icon(Icons.add, color: Color(0xFF2ecc71),),
-                        label: Text("Add Money"),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
+                  ),
+                  FlatButton(
+                    onPressed: () => {},
+                    padding: EdgeInsets.all(10.0),
+                    child: Column( // Replace with a Row for horizontal icon + text
+                      children: <Widget>[
+                        Icon(LineIcons.bell),
+                        SizedBox(height: 5,),
+                        Text("Notifications")
+                      ],
                     ),
-
-                  ],
-                ),
+                  ),
+                  FlatButton(
+                    onPressed: () => {},
+                    padding: EdgeInsets.all(10.0),
+                    child: Column( // Replace with a Row for horizontal icon + text
+                      children: <Widget>[
+                        Icon(LineIcons.gift),
+                        SizedBox(height: 5,),
+                        Text("Won Rewards")
+                      ],
+                    ),
+                  ),
+//                  Container(
+//                    decoration: BoxDecoration(
+//                      borderRadius: BorderRadius.circular(5),
+//                      color: Colors.orangeAccent
+//                    ),
+//                    padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+//                    child: IconButton(icon: Icon(LineIcons.gift), onPressed: (){}),
+//                  ),
+//                  Container(
+//                    decoration: BoxDecoration(
+//                      color: Color(0xFF303960),
+//                      borderRadius: BorderRadius.circular(16),
+//                    ),
+//                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+//                    child: Text(
+//                      "TRANSFER AMOUNT",
+//                      style: TextStyle(
+//                          color: Colors.white,
+//                          fontSize: 16,
+//                          fontWeight: FontWeight.bold
+//                      ),
+//                    ),
+//                  ),
+                ],
               ),
-
-
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20,),
-                alignment: Alignment.topLeft,
-                child: Text("Currency", style: TextStyle(fontSize: 22,),),
-              ),
-
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10,),
-                alignment: Alignment.topLeft,
-                child: Column(
-                  children: <Widget>[
-                    Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        leading: CircleAvatar(
-                          backgroundColor: Color(0xffecf0f1),
-                          child: Icon(FontAwesomeIcons.bitcoin, color: Color(0xFFf1c40f),),
-                        ),
-                        title: Text("Bitcoin"),
-                        trailing: Text("\$8,000"),
-                      ),
-                    ),
-
-                    SizedBox(height: 10,),
-
-                    Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        leading: CircleAvatar(
-                          backgroundColor: Color(0xffecf0f1),
-                          child: Icon(FontAwesomeIcons.ethereum, color: Color(0xFF2980b9),),
-                        ),
-                        title: Text("Ethereum"),
-                        trailing: Text("\$450"),
-                      ),
-                    ),
-
-                    SizedBox(height: 10,),
-
-                    Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        leading: CircleAvatar(
-                          backgroundColor: Color(0xffecf0f1),
-                          child: Icon(FontAwesomeIcons.euroSign, color: Color(0xff2ecc71),),
-                        ),
-                        title: Text("Euro"),
-                        trailing: Text("\$99"),
-                      ),
-                    ),
-
-                  ],
-                ),
-              ),
-
-
-              SizedBox(height: 100,),
-
-
+             _tabSection(context)
             ],
           ),
         ),
@@ -283,3 +251,43 @@ class _WalletState extends State<Wallet> {
   }
 }
 
+Widget _tabSection(BuildContext context) {
+  return DefaultTabController(
+    length: 2,
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          child: TabBar(
+              labelColor: Colors.black,
+              indicatorColor: Color(0xff0437D6),
+              tabs: [
+                Tab(
+                  text: "Transaction",
+                ),
+                Tab(
+                  text: "Promotion",
+                ),
+          ]),
+        ),
+        Container(
+          //Add this to give height
+          height: MediaQuery.of(context).size.height,
+          child: TabBarView(children: [
+            Container(
+              child: Text("Promotion Body"),
+            ),
+            Container(
+                child: Column(
+                  children: <Widget>[
+                    TabContentStructure.createContent(context, 'PROMOTION'),
+                    TabContentStructure.createContent(context, 'LUCKY DRAW'),
+                  ],
+                )
+            ),
+          ]),
+        ),
+      ],
+    ),
+  );
+}

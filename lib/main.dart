@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: colorCustom,
+        accentColor: Colors.grey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomePage(),
@@ -62,19 +63,19 @@ class _HomePageState extends State<HomePage> {
                 tabBackgroundColor: Color(0xff0437D6),
                 tabs: [
                   GButton(
-                    icon: Icons.beach_access,
+                    icon: LineIcons.dashboard,
                     text: 'Explore',
                   ),
                   GButton(
-                    icon: Icons.card_travel,
+                    icon: LineIcons.briefcase,
                     text: 'Travel',
                   ),
                   GButton(
-                    icon: Icons.card_giftcard,
+                    icon: LineIcons.credit_card,
                     text: 'Wallet',
                   ),
                   GButton(
-                    icon: Icons.people_outline,
+                    icon: LineIcons.user,
                     text: 'Profile',
                   ),
                 ],

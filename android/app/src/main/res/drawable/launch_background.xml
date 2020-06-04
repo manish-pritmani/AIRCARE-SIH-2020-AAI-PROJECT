@@ -4,7 +4,9 @@
     <item android:drawable="@android:color/white" />
     <item>
         <bitmap
-            android:gravity="fill"
+            android:gravity="center"
+            android:width="200dp"
+            android:height="200dp"
             android:src="@mipmap/launch_image" />
     </item>
 </layer-list>

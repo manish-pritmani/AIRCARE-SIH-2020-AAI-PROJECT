@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:sih/Help/qna.dart';
+import 'package:sih/features/wifi.dart';
 import 'file:///C:/Users/manis/AndroidStudioProjects/aircare-sih/lib/onboarding.dart';
+import 'package:sih/navigation/test.dart';
 
 class Explore extends StatefulWidget {
   @override
@@ -10,6 +13,9 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
+  double width, height = 55.0;
+  double customFontSize = 13;
+  final TextEditingController _searchControl = new TextEditingController();
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   Position _currentPosition;
   String _currentAddress;
@@ -17,15 +23,17 @@ class _ExploreState extends State<Explore> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          elevation: 1,
+          elevation: 0,
           backgroundColor: Colors.white,
+          automaticallyImplyLeading: false,
           actions: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Icon(Icons.location_on,color: Colors.black,),
+                Icon(LineIcons.map_marker,color: Colors.black,),
+                SizedBox(width: 5),
                 Text(
-                  _currentAddress == null ? "Get Location" : _currentAddress,
+                  _currentAddress == null ? "Getting Location" : _currentAddress,
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w400,
@@ -42,7 +50,6 @@ class _ExploreState extends State<Explore> {
               color: Theme.of(context).brightness == Brightness.dark
                   ? Colors.white
                   : Colors.black,
-              fontWeight: FontWeight.bold,
               fontFamily: "Circular",
             ),
           )),
@@ -58,9 +65,434 @@ class _ExploreState extends State<Explore> {
         backgroundColor: Color(0xffffffff),
         foregroundColor: Color(0xff0437D6),
       ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            PreferredSize(
+              child: Padding(
+                padding: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+                child: Card(
+                  elevation: 2.0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5.0),
+                      ),
+                    ),
+                    child: TextField(
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.black,
+                      ),
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(10.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(color: Colors.white,),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white,),
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        hintText: "How can we help you ?",
+                        prefixIcon: Icon(
+                          LineIcons.search,
+                          color: Colors.black,
+                        ),
+                        suffixIcon: Icon(
+                          Icons.filter_list,
+                          color: Colors.black,
+                        ),
+                        hintStyle: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                      maxLines: 1,
+                      controller: _searchControl,
+                    ),
+                  ),
+                ),
+              ),
+              preferredSize: Size(
+                MediaQuery.of(context).size.width,
+                60.0,
+              ),
+            ),
+            sectionHeader('Pick a Services', onViewMore: () {}),
+            SizedBox(
+              height: 100,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        width: width,
+                        height: height,
+                        margin: EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
+                        child: RawMaterialButton(
+                          onPressed: () {},
+                          shape: CircleBorder(),
+                          child: Icon(
+                            Icons.fastfood,
+                            color: Color(0xFFAB436B),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "Fast Food",
+                        style: TextStyle(
+                            color: Color(0xFF969696),
+                            fontFamily: 'Roboto-Light.ttf',
+                            fontSize: customFontSize),
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        width: width,
+                        height: height,
+                        margin: EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
+                        child: RawMaterialButton(
+                          onPressed: () {},
+                          shape: CircleBorder(),
+                          child: Icon(
+                            Icons.local_taxi,
+                            color: Color(0xFFC1A17C),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "Book Taxi",
+                        style: TextStyle(
+                            color: Color(0xFF969696),
+                            fontSize: customFontSize),
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        width: width,
+                        height: height,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
+                        child: RawMaterialButton(
+                          onPressed: () {},
+                          shape: CircleBorder(),
+                          child: Icon(
+                            Icons.hotel,
+                            color: Color(0xFF5EB699),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "Hotels Nearby",
+                        style: TextStyle(
+                            color: Color(0xFF969696),
+                            fontSize: customFontSize),
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        width: width,
+                        height: height,
+                        margin: EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
+                        child: RawMaterialButton(
+                          onPressed: () {},
+                          shape: CircleBorder(),
+                          child: Icon(
+                            Icons.shopping_cart,
+                            color: Color(0xFF4D9DA7),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "Shopping",
+                        style: TextStyle(
+                            color: Color(0xFF969696),
+                            fontSize: customFontSize),
+                      )
+                    ],
+                  ),
+                ],),
+            ),
+            SizedBox(
+              height: 100,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        width: width,
+                        height: height,
+                        margin: EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
+                        child: RawMaterialButton(
+                          onPressed: () {},
+                          shape: CircleBorder(),
+                          child: Icon(
+                            Icons.local_parking,
+                            color: Colors.redAccent
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "Park Vehicle",
+                        style: TextStyle(
+                            color: Color(0xFF969696),
+                            fontFamily: 'Roboto-Light.ttf',
+                            fontSize: customFontSize),
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        width: width,
+                        height: height,
+                        margin: EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
+                        child: RawMaterialButton(
+                          onPressed: () {},
+                          shape: CircleBorder(),
+                          child: Icon(
+                            Icons.flight,
+                            color: Colors.lightBlueAccent,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "Book Flight",
+                        style: TextStyle(
+                            color: Color(0xFF969696),
+                            fontSize: customFontSize),
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        width: width,
+                        height: height,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
+                        child: RawMaterialButton(
+                          onPressed: () {
+
+                          },
+                          shape: CircleBorder(),
+                          child: Icon(
+                            Icons.wifi,
+                            color: Colors.pinkAccent,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "Wifi Nearby",
+                        style: TextStyle(
+                            color: Color(0xFF969696),
+                            fontSize: customFontSize),
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        width: width,
+                        height: height,
+                        margin: EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
+                        child: RawMaterialButton(
+                          onPressed: () {},
+                          shape: CircleBorder(),
+                          child: Icon(
+                            Icons.playlist_add_check,
+                            color: Color(0xFF4D9DA7),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "Check-in",
+                        style: TextStyle(
+                            color: Color(0xFF969696),
+                            fontSize: customFontSize),
+                      )
+                    ],
+                  ),
+                ],),
+            ),
+            SizedBox(
+              height: 100,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        width: width,
+                        height: height,
+                        margin: EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
+                        child: RawMaterialButton(
+                          onPressed: () {},
+                          shape: CircleBorder(),
+                          child: Icon(
+                            Icons.room_service,
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                      ),
+                      Column(children: <Widget>[
+                        Text(
+                          "Waiting",
+                          style: TextStyle(
+                              color: Color(0xFF969696),
+                              fontSize: customFontSize),
+                        ),
+                        Text(
+                          "Room",
+                          style: TextStyle(
+                              color: Color(0xFF969696),
+                              fontSize: customFontSize),
+                        )],
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        width: width,
+                        height: height,
+                        margin: EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
+                        child: RawMaterialButton(
+                          onPressed: () {},
+                          shape: CircleBorder(),
+                          child: Icon(
+                            Icons.live_help,
+                            color: Color(0xFFe8A95C),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "HelpDesk",
+                        style: TextStyle(
+                            color: Color(0xFF969696),
+                            fontSize: customFontSize),
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        width: width,
+                        height: height,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
+                        child: RawMaterialButton(
+                          onPressed: () {},
+                          shape: CircleBorder(),
+                          child: Icon(
+                            Icons.supervisor_account,
+                            color: Color(0xFF5EB699),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "Tour Guide",
+                        style: TextStyle(
+                            color: Color(0xFF969696),
+                            fontSize: customFontSize),
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        width: width,
+                        height: height,
+                        margin: EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
+                        child: RawMaterialButton(
+                          onPressed: () {},
+                          shape: CircleBorder(),
+                          child: Icon(
+                            Icons.shopping_cart,
+                            color: Color(0xFF4D9DA7),
+                          ),
+                        ),
+                      ),
+                      Column(children: <Widget>[
+                        Text(
+                          "Wheel Chair",
+                          style: TextStyle(
+                              color: Color(0xFF969696),
+                              fontSize: customFontSize),
+                        ),
+                        Text(
+                          "Request",
+                          style: TextStyle(
+                              color: Color(0xFF969696),
+                              fontSize: customFontSize),
+                        )
+                      ],),
+
+                    ],
+                  ),
+                ],),
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+
+              child: ListTile(
+                contentPadding:
+                EdgeInsets.symmetric(horizontal: 15),
+                title: Text("Airport Navigation"),
+                subtitle: Text("See inside airport view"),
+                trailing: Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xFFd92027),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  child: Text(
+                    "NAVIGATE",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
             Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -301,7 +733,7 @@ Widget createCard(BuildContext context, String imageAssetUrl){
                     children: <Widget>[
                       Container(
                           margin: EdgeInsets.only(right: 5),
-                          child: Icon(Icons.timer, color: Colors.black, )),
+                          child: Icon(Icons.timer, color: Colors.white, )),
                       Text('00h 00m',
                           style: TextStyle(color: Colors.white)),
                     ],)
@@ -332,4 +764,73 @@ Widget createCard(BuildContext context, String imageAssetUrl){
           ],
         ),
       ));
+}
+Widget sectionHeader(String headerTitle, {onViewMore}) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+      Container(
+        margin: EdgeInsets.only(left: 15, top: 10),
+        child: Text(headerTitle,style: TextStyle(fontSize: 19,fontWeight: FontWeight.w700),),
+      ),
+      Container(
+        margin: EdgeInsets.only(left: 15, top: 2),
+        child: FlatButton(
+          onPressed: onViewMore,
+          child: Text('View all'),
+        ),
+      )
+    ],
+  );
+}
+
+// wrap the horizontal listview inside a sizedBox..
+Widget headerTopCategories() {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: <Widget>[
+      sectionHeader('Service', onViewMore: () {}),
+      SizedBox(
+        height: 130,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          children: <Widget>[
+            headerCategoryItem('Frieds', Icons.fastfood, onPressed: () {}),
+            headerCategoryItem('Fast Food', Icons.fastfood, onPressed: () {}),
+            headerCategoryItem('Creamery', Icons.fastfood, onPressed: () {}),
+            headerCategoryItem('Hot Drinks', Icons.fastfood, onPressed: () {}),
+            headerCategoryItem('Vegetables', Icons.fastfood, onPressed: () {}),
+          ],
+        ),
+      )
+    ],
+  );
+}
+
+Widget headerCategoryItem(String name, IconData icon, {onPressed}) {
+  return Container(
+    margin: EdgeInsets.only(left: 15),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Container(
+            margin: EdgeInsets.only(bottom: 10),
+            width: 70,
+            height: 70,
+            child: FloatingActionButton(
+              elevation: 1,
+              shape: CircleBorder(),
+              heroTag: name,
+              onPressed: onPressed,
+              backgroundColor: Colors.white,
+              child: Icon(icon, size: 30, color: Colors.black87),
+            )),
+        Text(name)
+      ],
+    ),
+  );
 }

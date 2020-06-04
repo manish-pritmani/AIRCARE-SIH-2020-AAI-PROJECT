@@ -28,6 +28,8 @@ dependencies:
     sdk: flutter
   google_nav_bar: ^2.2.0
   introduction_screen: ^1.0.8
+  md2_tab_indicator: ^1.0.2
+  wifi_iot: ^0.1.1
 
 
 
