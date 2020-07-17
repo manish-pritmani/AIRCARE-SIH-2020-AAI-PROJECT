@@ -15,7 +15,8 @@ class StepperDemoState extends State<Query> {
   List<Step> steps = [
     Step(
       title: Text('What is AirCare?'),
-      content: Text('AirCare is a platform to provide convient facilities while travelling from flight!'),
+      content: Text(
+          'AirCare is a platform to provide convient facilities while travelling from flight!'),
       isActive: true,
     ),
     Step(
@@ -75,6 +76,7 @@ class StepperDemoState extends State<Query> {
       isActive: true,
     ),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

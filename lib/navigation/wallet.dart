@@ -59,7 +59,6 @@ class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
                 child: Container(
                   child: Column(
                     children: <Widget>[
-
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
                         child: Row(
@@ -275,7 +274,28 @@ Widget _tabSection(BuildContext context) {
           height: MediaQuery.of(context).size.height,
           child: TabBarView(children: [
             Container(
-              child: Text("Promotion Body"),
+              child: Column(
+                children: <Widget> [
+                  SizedBox(height: 5,),
+                  ListView.separated(
+                    physics: ClampingScrollPhysics(),
+                    shrinkWrap: true,
+                    separatorBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 85.0),
+                        child: Divider(),
+                      );
+                    },
+                    padding: EdgeInsets.zero,
+                    itemCount: getPaymentsCard().length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return PaymentCardWidget(
+                        payment: getPaymentsCard()[index],
+                      );
+                    },
+                  ),
+                ]
+              )
             ),
             Container(
                 child: Column(
@@ -290,4 +310,120 @@ Widget _tabSection(BuildContext context) {
       ],
     ),
   );
+}
+
+class PaymentCardWidget extends StatefulWidget {
+  final PaymentModel payment;
+
+  const PaymentCardWidget({Key key, this.payment}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _PaymentCardWidgetState();
+}
+
+class _PaymentCardWidgetState extends State<PaymentCardWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ListTile(
+        dense: true,
+        trailing: Text(
+          "${widget.payment.type > 0 ? "+" : "-"} ${widget.payment.amount}",
+          style: TextStyle(
+              inherit: true, fontWeight: FontWeight.w700, fontSize: 16.0),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+          child: Material(
+            elevation: 1,
+            shape: CircleBorder(),
+            shadowColor: widget.payment.color.withOpacity(0.4),
+            child: Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                color: widget.payment.color,
+                shape: BoxShape.circle,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Icon(
+                  widget.payment.icon,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+           Expanded(child:  Text(
+             widget.payment.name,
+             style: TextStyle(
+                 inherit: true, fontWeight: FontWeight.w700, fontSize: 16.0),
+           ),)
+          ],
+        ),
+        subtitle: Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(widget.payment.date,
+                  style: TextStyle(
+                      inherit: true, fontSize: 12.0, color: Colors.black45)),
+              SizedBox(
+                width: 20,
+              ),
+              Text(widget.payment.hour,
+                  style: TextStyle(
+                      inherit: true, fontSize: 12.0, color: Colors.black45)),
+              Spacer(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PaymentModel {
+  IconData _icon;
+  String _name, _date, _hour;
+  Color _color;
+  double _amount;
+  int _paymentType;
+
+  PaymentModel(this._icon, this._color, this._name, this._date, this._hour,
+      this._amount, this._paymentType);
+
+  String get name => _name;
+
+  String get date => _date;
+
+  String get hour => _hour;
+
+  double get amount => _amount;
+
+  int get type => _paymentType;
+
+  IconData get icon => _icon;
+
+  Color get color => _color;
+}
+
+List<PaymentModel> getPaymentsCard() {
+  List<PaymentModel> paymentCards = [
+    PaymentModel(Icons.add_circle_outline, Colors.green, "Added Money in Wallet",
+        "23 June 2020", "20.04 AM", 251.40, 1),
+    PaymentModel(Icons.receipt, Color(0xFFff415f), "Transfer To Mihir Bhasin",
+        "19 June 2020", "14.30 PM", 64.80, -1),
+    PaymentModel(Icons.hotel, Colors.deepOrange, "Restroom Charges",
+        "15 June 2020", "10.04 PM", 115.00, -1),
+    PaymentModel(Icons.train, Color(0xFF50f3e2), "Train ticket to Turkey", "07-23",
+        "13 June 2020", 37.00, -1),
+  ];
+
+  return paymentCards;
 }

@@ -27,7 +27,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   Widget build(BuildContext context) {
     const bodyStyle = TextStyle(fontSize: 19.0);
     const pageDecoration = const PageDecoration(
-      titleTextStyle: TextStyle(fontSize: 30.0,fontWeight: FontWeight.w700),
+      titleTextStyle: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w700),
       bodyTextStyle: bodyStyle,
       descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
       pageColor: Colors.white,
@@ -40,7 +40,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         PageViewModel(
           title: "Get Rewarded in VIP",
           body:
-          "Everytime you pay at anything get ONE Pay Rewards, Join VIP Today.",
+              "Everytime you pay at anything get ONE Pay Rewards, Join VIP Today.",
           image: _buildImage('reward'),
           footer: RaisedButton(
             onPressed: () {
@@ -48,9 +48,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             },
             child: const Text(
               'Buy VIP Now',
-              style: TextStyle(color: Colors.white,fontSize: 16),
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
-            padding: EdgeInsets.only(top: 15,bottom: 15,left: 25,right: 25),
+            padding: EdgeInsets.only(top: 15, bottom: 15, left: 25, right: 25),
             color: Color(0xff0437D6),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
@@ -61,7 +61,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         PageViewModel(
           title: "No Worries",
           body:
-          "Easily manage your travels and never geta chance to worry for anythin.",
+              "Easily manage your travels and never geta chance to worry for anythin.",
           image: _buildImage('airport'),
           decoration: pageDecoration,
         ),
@@ -80,7 +80,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         ),
         PageViewModel(
           title: "Pay Quick and Easy",
-          body: "Introducing ONE Wallet Paying at Aiport Shopping Complex,Parking, Hotel,Cabs was never be as easy ",
+          body:
+              "Introducing ONE Wallet Paying at Aiport Shopping Complex,Parking, Hotel,Cabs was never be as easy ",
           image: _buildImage('card'),
           decoration: pageDecoration,
         ),
@@ -94,9 +95,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             },
             child: const Text(
               'Get Started',
-              style: TextStyle(color: Colors.white,fontSize: 16),
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
-            padding: EdgeInsets.only(top: 15,bottom: 15,left: 25,right: 25),
+            padding: EdgeInsets.only(top: 15, bottom: 15, left: 25, right: 25),
             color: Color(0xff0437D6),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
@@ -106,7 +107,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         ),
       ],
       onDone: () => _onIntroEnd(context),
-      onSkip: () => _onIntroEnd(context), // You can override onSkip callback
+      onSkip: () => _onIntroEnd(context),
+      // You can override onSkip callback
       showSkipButton: true,
       skipFlex: 0,
       nextFlex: 0,

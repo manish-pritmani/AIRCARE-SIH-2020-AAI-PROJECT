@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:sih/Help/qna.dart';
+import 'package:sih/features/help_desk.dart';
+import 'package:sih/features/wheel_chair_request.dart';
 import 'package:sih/features/wifi.dart';
 import 'file:///C:/Users/manis/AndroidStudioProjects/aircare-sih/lib/onboarding.dart';
 import 'package:sih/navigation/test.dart';
@@ -13,12 +15,13 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-  double width, height = 55.0;
+  double width, height = 50.0;
   double customFontSize = 13;
   final TextEditingController _searchControl = new TextEditingController();
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   Position _currentPosition;
   String _currentAddress;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,17 +33,24 @@ class _ExploreState extends State<Explore> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Icon(LineIcons.map_marker,color: Colors.black,),
+                Icon(
+                  LineIcons.map_marker,
+                  color: Colors.black,
+                ),
                 SizedBox(width: 5),
                 Text(
-                  _currentAddress == null ? "Getting Location" : _currentAddress,
+                  _currentAddress == null
+                      ? "Getting Location"
+                      : _currentAddress,
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w400,
                       fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(width: 15,)
+                SizedBox(
+                  width: 15,
+                )
               ],
             ),
           ],
@@ -62,8 +72,8 @@ class _ExploreState extends State<Explore> {
         },
         elevation: 1,
         child: Icon(Icons.chat),
-        backgroundColor: Color(0xffffffff),
-        foregroundColor: Color(0xff0437D6),
+        foregroundColor: Color(0xffffffff),
+        backgroundColor: Color(0xff0437D6),
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -90,10 +100,14 @@ class _ExploreState extends State<Explore> {
                         contentPadding: EdgeInsets.all(10.0),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(color: Colors.white,),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          ),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white,),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          ),
                           borderRadius: BorderRadius.circular(5.0),
                         ),
                         hintText: "How can we help you ?",
@@ -122,359 +136,537 @@ class _ExploreState extends State<Explore> {
               ),
             ),
             sectionHeader('Pick a Services', onViewMore: () {}),
-            SizedBox(
-              height: 100,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        width: width,
-                        height: height,
-                        margin: EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
-                        child: RawMaterialButton(
-                          onPressed: () {},
-                          shape: CircleBorder(),
-                          child: Icon(
-                            Icons.fastfood,
-                            color: Color(0xFFAB436B),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "Fast Food",
-                        style: TextStyle(
-                            color: Color(0xFF969696),
-                            fontFamily: 'Roboto-Light.ttf',
-                            fontSize: customFontSize),
-                      )
-                    ],
+            Card(
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("images/image.png"),
+                    fit: BoxFit.fitWidth,
+                    alignment: Alignment.topCenter,
                   ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        width: width,
-                        height: height,
-                        margin: EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
-                        child: RawMaterialButton(
-                          onPressed: () {},
-                          shape: CircleBorder(),
-                          child: Icon(
-                            Icons.local_taxi,
-                            color: Color(0xFFC1A17C),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "Book Taxi",
-                        style: TextStyle(
-                            color: Color(0xFF969696),
-                            fontSize: customFontSize),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        width: width,
-                        height: height,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
-                        child: RawMaterialButton(
-                          onPressed: () {},
-                          shape: CircleBorder(),
-                          child: Icon(
-                            Icons.hotel,
-                            color: Color(0xFF5EB699),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "Hotels Nearby",
-                        style: TextStyle(
-                            color: Color(0xFF969696),
-                            fontSize: customFontSize),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        width: width,
-                        height: height,
-                        margin: EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
-                        child: RawMaterialButton(
-                          onPressed: () {},
-                          shape: CircleBorder(),
-                          child: Icon(
-                            Icons.shopping_cart,
-                            color: Color(0xFF4D9DA7),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "Shopping",
-                        style: TextStyle(
-                            color: Color(0xFF969696),
-                            fontSize: customFontSize),
-                      )
-                    ],
-                  ),
-                ],),
+                ),
+                child: Text("YOUR TEXT"),
+              ),
             ),
-            SizedBox(
-              height: 100,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        width: width,
-                        height: height,
-                        margin: EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
-                        child: RawMaterialButton(
-                          onPressed: () {},
-                          shape: CircleBorder(),
-                          child: Icon(
-                            Icons.local_parking,
-                            color: Colors.redAccent
+            Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 15, top: 10),
+                      child: Text(
+                        "Find Nearby",
+                        style: headerStyle,
+                      ),
+                    ),
+                    Divider(),
+                    SizedBox(
+                      height: 100,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                width: width,
+                                height: height,
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: RawMaterialButton(
+                                  onPressed: () {},
+                                  shape: CircleBorder(),
+                                  child: Image.asset("assets/food.png"),
+                                ),
+                              ),
+                              Text(
+                                "Fast Food",
+                                style: TextStyle(
+                                    color: Color(0xFF969696),
+                                    fontFamily: 'Roboto-Light.ttf',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: customFontSize),
+                              )
+                            ],
                           ),
-                        ),
-                      ),
-                      Text(
-                        "Park Vehicle",
-                        style: TextStyle(
-                            color: Color(0xFF969696),
-                            fontFamily: 'Roboto-Light.ttf',
-                            fontSize: customFontSize),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        width: width,
-                        height: height,
-                        margin: EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
-                        child: RawMaterialButton(
-                          onPressed: () {},
-                          shape: CircleBorder(),
-                          child: Icon(
-                            Icons.flight,
-                            color: Colors.lightBlueAccent,
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                width: width,
+                                height: height,
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: RawMaterialButton(
+                                    onPressed: () {},
+                                    shape: CircleBorder(),
+                                    child: Image.asset(
+                                        "assets/passengerswait.png")),
+                              ),
+                              Text(
+                                "Book Taxi",
+                                style: TextStyle(
+                                    color: Color(0xFF969696),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: customFontSize),
+                              )
+                            ],
                           ),
-                        ),
-                      ),
-                      Text(
-                        "Book Flight",
-                        style: TextStyle(
-                            color: Color(0xFF969696),
-                            fontSize: customFontSize),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        width: width,
-                        height: height,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
-                        child: RawMaterialButton(
-                          onPressed: () {
-
-                          },
-                          shape: CircleBorder(),
-                          child: Icon(
-                            Icons.wifi,
-                            color: Colors.pinkAccent,
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(bottom: 10),
+                                width: width,
+                                height: height,
+                                child: RawMaterialButton(
+                                  onPressed: () {},
+                                  shape: CircleBorder(),
+                                  child: Image.asset("assets/hotel.png"),
+                                ),
+                              ),
+                              Text(
+                                "Hotels Nearby",
+                                style: TextStyle(
+                                    color: Color(0xFF969696),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: customFontSize),
+                              )
+                            ],
                           ),
-                        ),
-                      ),
-                      Text(
-                        "Wifi Nearby",
-                        style: TextStyle(
-                            color: Color(0xFF969696),
-                            fontSize: customFontSize),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        width: width,
-                        height: height,
-                        margin: EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
-                        child: RawMaterialButton(
-                          onPressed: () {},
-                          shape: CircleBorder(),
-                          child: Icon(
-                            Icons.playlist_add_check,
-                            color: Color(0xFF4D9DA7),
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                width: width,
+                                height: height,
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: RawMaterialButton(
+                                  onPressed: () {},
+                                  shape: CircleBorder(),
+                                  child: Image.asset("assets/shop.png"),
+                                ),
+                              ),
+                              Text(
+                                "Shopping",
+                                style: TextStyle(
+                                    color: Color(0xFF969696),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: customFontSize),
+                              )
+                            ],
                           ),
-                        ),
+                        ],
                       ),
-                      Text(
-                        "Check-in",
-                        style: TextStyle(
-                            color: Color(0xFF969696),
-                            fontSize: customFontSize),
-                      )
-                    ],
-                  ),
-                ],),
-            ),
-            SizedBox(
-              height: 100,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        width: width,
-                        height: height,
-                        margin: EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
-                        child: RawMaterialButton(
-                          onPressed: () {},
-                          shape: CircleBorder(),
-                          child: Icon(
-                            Icons.room_service,
-                            color: Colors.orangeAccent,
+                    ),
+                  ],
+                )),
+            Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 15, top: 10),
+                      child: Text(
+                        "Quick Seacrh",
+                        style: headerStyle,
+                      ),
+                    ),
+                    Divider(),
+                    SizedBox(
+                      height: 100,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                width: width,
+                                height: height,
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: RawMaterialButton(
+                                    onPressed: () {},
+                                    shape: CircleBorder(),
+                                    child: Image.asset("assets/tickets.png")),
+                              ),
+                              Text(
+                                "Book Flight",
+                                style: TextStyle(
+                                    color: Color(0xFF969696),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: customFontSize),
+                              )
+                            ],
                           ),
-                        ),
-                      ),
-                      Column(children: <Widget>[
-                        Text(
-                          "Waiting",
-                          style: TextStyle(
-                              color: Color(0xFF969696),
-                              fontSize: customFontSize),
-                        ),
-                        Text(
-                          "Room",
-                          style: TextStyle(
-                              color: Color(0xFF969696),
-                              fontSize: customFontSize),
-                        )],
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        width: width,
-                        height: height,
-                        margin: EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
-                        child: RawMaterialButton(
-                          onPressed: () {},
-                          shape: CircleBorder(),
-                          child: Icon(
-                            Icons.live_help,
-                            color: Color(0xFFe8A95C),
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(bottom: 10),
+                                width: width,
+                                height: height,
+                                child: RawMaterialButton(
+                                    onPressed: () {},
+                                    shape: CircleBorder(),
+                                    child: Image.asset(
+                                        "assets/wireless-router.png")),
+                              ),
+                              Text(
+                                "Wifi Nearby",
+                                style: TextStyle(
+                                    color: Color(0xFF969696),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: customFontSize),
+                              )
+                            ],
                           ),
-                        ),
-                      ),
-                      Text(
-                        "HelpDesk",
-                        style: TextStyle(
-                            color: Color(0xFF969696),
-                            fontSize: customFontSize),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        width: width,
-                        height: height,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
-                        child: RawMaterialButton(
-                          onPressed: () {},
-                          shape: CircleBorder(),
-                          child: Icon(
-                            Icons.supervisor_account,
-                            color: Color(0xFF5EB699),
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                width: width,
+                                height: height,
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: RawMaterialButton(
+                                    onPressed: () {},
+                                    shape: CircleBorder(),
+                                    child: Image.asset("assets/baggage.png")),
+                              ),
+                              Text(
+                                "Check-in",
+                                style: TextStyle(
+                                    color: Color(0xFF969696),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: customFontSize),
+                              )
+                            ],
                           ),
-                        ),
+                        ],
                       ),
-                      Text(
-                        "Tour Guide",
-                        style: TextStyle(
-                            color: Color(0xFF969696),
-                            fontSize: customFontSize),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        width: width,
-                        height: height,
-                        margin: EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
-                        child: RawMaterialButton(
-                          onPressed: () {},
-                          shape: CircleBorder(),
-                          child: Icon(
-                            Icons.shopping_cart,
-                            color: Color(0xFF4D9DA7),
+                    ),
+                  ],
+                )),
+            Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 15, top: 10),
+                      child: Text(
+                        "Services",
+                        style: headerStyle,
+                      ),
+                    ),
+                    Divider(),
+                    SizedBox(
+                      height: 100,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                width: width,
+                                height: height,
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: RawMaterialButton(
+                                    onPressed: () {},
+                                    shape: CircleBorder(),
+                                    child:
+                                        Image.asset("assets/waiting-room.png")),
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    "Waiting",
+                                    style: TextStyle(
+                                        color: Color(0xFF969696),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: customFontSize),
+                                  ),
+                                  Text(
+                                    "Room",
+                                    style: TextStyle(
+                                        color: Color(0xFF969696),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: customFontSize),
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
-                        ),
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                width: width,
+                                height: height,
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: RawMaterialButton(
+                                    onPressed: () {},
+                                    shape: CircleBorder(),
+                                    child: Image.asset("assets/parking.png")),
+                              ),
+                              Text(
+                                "Park Vehicle",
+                                style: TextStyle(
+                                    color: Color(0xFF969696),
+                                    fontFamily: 'Roboto-Light.ttf',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: customFontSize),
+                              )
+                            ],
+                          ),
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                width: width,
+                                height: height,
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: RawMaterialButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  WheelChairRequest()));
+                                    },
+                                    shape: CircleBorder(),
+                                    child:
+                                        Image.asset("assets/water-bottle.png")),
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    "Drinking Water",
+                                    style: TextStyle(
+                                        color: Color(0xFF969696),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: customFontSize),
+                                  ),
+                                  Text(
+                                    "Station",
+                                    style: TextStyle(
+                                        color: Color(0xFF969696),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: customFontSize),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                width: width,
+                                height: height,
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: RawMaterialButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  WheelChairRequest()));
+                                    },
+                                    shape: CircleBorder(),
+                                    child:
+                                        Image.asset("assets/wheelchair.png")),
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    "Wheel Chair",
+                                    style: TextStyle(
+                                        color: Color(0xFF969696),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: customFontSize),
+                                  ),
+                                  Text(
+                                    "Request",
+                                    style: TextStyle(
+                                        color: Color(0xFF969696),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: customFontSize),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      Column(children: <Widget>[
-                        Text(
-                          "Wheel Chair",
-                          style: TextStyle(
-                              color: Color(0xFF969696),
-                              fontSize: customFontSize),
-                        ),
-                        Text(
-                          "Request",
-                          style: TextStyle(
-                              color: Color(0xFF969696),
-                              fontSize: customFontSize),
-                        )
-                      ],),
-
-                    ],
-                  ),
-                ],),
-            ),
+                    ),
+                  ],
+                )),
+            Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 15, top: 10),
+                      child: Text(
+                        "Convenience",
+                        style: headerStyle,
+                      ),
+                    ),
+                    Divider(),
+                    SizedBox(
+                      height: 100,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                width: width,
+                                height: height,
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: RawMaterialButton(
+                                    onPressed: () {},
+                                    shape: CircleBorder(),
+                                    child: Image.asset("assets/hand-wash.png")),
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    "Covid-19",
+                                    style: TextStyle(
+                                        color: Color(0xFF969696),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: customFontSize),
+                                  ),
+                                  Text(
+                                    "Response",
+                                    style: TextStyle(
+                                        color: Color(0xFF969696),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: customFontSize),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                width: width,
+                                height: height,
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: RawMaterialButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => HelpDesk()),
+                                      );
+                                    },
+                                    shape: CircleBorder(),
+                                    child:
+                                        Image.asset("assets/telemarketer.png")),
+                              ),
+                              Text(
+                                "HelpDesk",
+                                style: TextStyle(
+                                    color: Color(0xFF969696),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: customFontSize),
+                              )
+                            ],
+                          ),
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                width: width,
+                                height: height,
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: RawMaterialButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  WheelChairRequest()));
+                                    },
+                                    shape: CircleBorder(),
+                                    child:
+                                        Image.asset("assets/water-bottle.png")),
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    "Drinking Water",
+                                    style: TextStyle(
+                                        color: Color(0xFF969696),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: customFontSize),
+                                  ),
+                                  Text(
+                                    "Station",
+                                    style: TextStyle(
+                                        color: Color(0xFF969696),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: customFontSize),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                width: width,
+                                height: height,
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: RawMaterialButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  WheelChairRequest()));
+                                    },
+                                    shape: CircleBorder(),
+                                    child:
+                                        Image.asset("assets/wheelchair.png")),
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    "Wheel Chair",
+                                    style: TextStyle(
+                                        color: Color(0xFF969696),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: customFontSize),
+                                  ),
+                                  Text(
+                                    "Request",
+                                    style: TextStyle(
+                                        color: Color(0xFF969696),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: customFontSize),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )),
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
-
               child: ListTile(
-                contentPadding:
-                EdgeInsets.symmetric(horizontal: 15),
+                contentPadding: EdgeInsets.symmetric(horizontal: 15),
                 title: Text("Airport Navigation"),
                 subtitle: Text("See inside airport view"),
                 trailing: Container(
@@ -500,15 +692,15 @@ class _ExploreState extends State<Explore> {
                 children: <Widget>[
                   Container(
                       height: 250,
-                      child:
-                      ListView(
+                      child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: <Widget>[
-                          createCard(context, 'https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/201802231621388236-77015efa221711e98be80242ac110002.jpg?&output-quality=75&downsize=520:350&crop=520:350;23,0&output-format=jpg'),
-                          createCard(context, 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg'),
+                          createCard(context,
+                              'https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/201802231621388236-77015efa221711e98be80242ac110002.jpg?&output-quality=75&downsize=520:350&crop=520:350;23,0&output-format=jpg'),
+                          createCard(context,
+                              'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg'),
                         ],
-                      )
-                  )
+                      ))
                 ],
               ),
             ),
@@ -518,7 +710,7 @@ class _ExploreState extends State<Explore> {
               ),
               child: ListTile(
                 contentPadding:
-                EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 leading: CircleAvatar(
                   backgroundColor: Color(0xffecf0f1),
                   child: Icon(Icons.fastfood, color: Colors.redAccent),
@@ -546,7 +738,7 @@ class _ExploreState extends State<Explore> {
               ),
               child: ListTile(
                 contentPadding:
-                EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 leading: CircleAvatar(
                   backgroundColor: Color(0xffecf0f1),
                   child: Icon(
@@ -577,7 +769,7 @@ class _ExploreState extends State<Explore> {
               ),
               child: ListTile(
                 contentPadding:
-                EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 leading: CircleAvatar(
                   backgroundColor: Color(0xffecf0f1),
                   child: Icon(
@@ -608,7 +800,7 @@ class _ExploreState extends State<Explore> {
               ),
               child: ListTile(
                 contentPadding:
-                EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 leading: CircleAvatar(
                   backgroundColor: Color(0xffecf0f1),
                   child: Icon(Icons.hotel, color: Colors.redAccent),
@@ -630,7 +822,6 @@ class _ExploreState extends State<Explore> {
                 ),
               ),
             ),
-
             if (_currentPosition != null)
               Text(
                   "LAT: ${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}"),
@@ -678,7 +869,7 @@ class _ExploreState extends State<Explore> {
 
       setState(() {
         _currentAddress =
-        "${place.locality}, ${place.postalCode}, ${place.country}";
+            "${place.locality}, ${place.postalCode}, ${place.country}";
       });
     } catch (e) {
       print(e);
@@ -686,27 +877,30 @@ class _ExploreState extends State<Explore> {
   }
 }
 
-Widget createCard(BuildContext context, String imageAssetUrl){
+Widget createCard(BuildContext context, String imageAssetUrl) {
   //TODO replace all constants with variables passed in an object
   return GestureDetector(
-      onTap:  ()=>Navigator.push(context, MaterialPageRoute(builder: (context) => Query())),
+      onTap: () => Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Query())),
       child: Container(
         ///check orientation
-        width: MediaQuery.of(context).orientation== Orientation.portrait?
-        ///then set the card's width limits (relative or absolute max)
-        MediaQuery.of(context).size.width * 0.85 : 350,
+        width: MediaQuery.of(context).orientation == Orientation.portrait
+            ?
+
+            ///then set the card's width limits (relative or absolute max)
+            MediaQuery.of(context).size.width * 0.85
+            : 350,
         //TODO add a special case for tablets
         padding: EdgeInsets.all(10.0),
         margin: EdgeInsets.only(left: 10.0, top: 10, bottom: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6.0),
           color: Colors.blueGrey[100],
-          image:  DecorationImage(
-            //TODO add black vignette
+          image: DecorationImage(
+              //TODO add black vignette
               image: NetworkImage(imageAssetUrl),
               fit: BoxFit.cover,
-              alignment: Alignment.center
-          ),
+              alignment: Alignment.center),
         ),
         child: Row(
           children: <Widget>[
@@ -716,30 +910,44 @@ Widget createCard(BuildContext context, String imageAssetUrl){
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Expanded(
-                      child:Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(child:  Text('Book Now the Hotels at best price in Jabalpur'.toUpperCase(),
-                              overflow: TextOverflow.fade,
-                              style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 19)),),
-                          Expanded(child: Text('Buy VIP Membership for Exciting discounts',
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                            'Book Now the Hotels at best price in Jabalpur'
+                                .toUpperCase(),
                             overflow: TextOverflow.fade,
-                            style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 14
-                            ),
-                          ),)
-                        ],)
-                  ),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 19)),
+                      ),
+                      Expanded(
+                        child: Text(
+                          'Buy VIP Membership for Exciting discounts',
+                          overflow: TextOverflow.fade,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14),
+                        ),
+                      )
+                    ],
+                  )),
                   Row(
                     children: <Widget>[
                       Container(
                           margin: EdgeInsets.only(right: 5),
-                          child: Icon(Icons.timer, color: Colors.white, )),
-                      Text('00h 00m',
-                          style: TextStyle(color: Colors.white)),
-                    ],)
+                          child: Icon(
+                            Icons.timer,
+                            color: Colors.white,
+                          )),
+                      Text('00h 00m', style: TextStyle(color: Colors.white)),
+                    ],
+                  )
                 ],
               ),
-
             ),
             Expanded(
               flex: 2,
@@ -747,24 +955,26 @@ Widget createCard(BuildContext context, String imageAssetUrl){
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   FlatButton(
-                    child: Text('BOOK NOW', style: TextStyle(color: Colors.white)),
+                    child:
+                        Text('BOOK NOW', style: TextStyle(color: Colors.white)),
                     color: Color(0xff0437D6),
-                    onPressed: (){
+                    onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => Query()),
                       );
                     },
-                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)) ,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(6.0)),
                   )
                 ],
               ),
             ),
-
           ],
         ),
       ));
 }
+
 Widget sectionHeader(String headerTitle, {onViewMore}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -772,7 +982,10 @@ Widget sectionHeader(String headerTitle, {onViewMore}) {
     children: <Widget>[
       Container(
         margin: EdgeInsets.only(left: 15, top: 10),
-        child: Text(headerTitle,style: TextStyle(fontSize: 19,fontWeight: FontWeight.w700),),
+        child: Text(
+          headerTitle,
+          style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
+        ),
       ),
       Container(
         margin: EdgeInsets.only(left: 15, top: 2),
@@ -834,3 +1047,9 @@ Widget headerCategoryItem(String name, IconData icon, {onPressed}) {
     ),
   );
 }
+
+final TextStyle headerStyle = TextStyle(
+  color: Colors.grey.shade800,
+  fontWeight: FontWeight.w600,
+  fontSize: 18.0,
+);

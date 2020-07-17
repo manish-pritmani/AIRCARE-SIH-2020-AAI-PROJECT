@@ -30,6 +30,9 @@ dependencies:
   introduction_screen: ^1.0.8
   md2_tab_indicator: ^1.0.2
   wifi_iot: ^0.1.1
+  lottie: ^0.4.1
+  random_string: ^2.1.0
+  cloud_firestore: ^0.13.4+2
 
 
 
@@ -53,7 +56,44 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+    - assets/food.png
     - assets/
+    - assets/waiting-room.png
+    - assets/company.png
+    - assets/shop.png
+    - assets/gps-navigation.png
+    - assets/parking.png
+    - assets/customer-support.png
+    - assets/lighthouse.png
+    - assets/wireless-router.png
+    - assets/hotel.png
+    - assets/wheelchair.png
+    - assets/baggage.png
+    - assets/flight.png
+    - assets/passenger.png
+    - assets/passengerswait.png
+    - assets/tickets.png
+    - assets/water-bottle.png
+    - assets/telemarketer.png
+    - assets/hand-wash.png
+    - assets/433-checked-done.json
+    - assets/23749-successful.json
+    - assets/6936-class-ninjas-floating-ninja.json
+    - assets/12821-failed-attempt.json
+    - assets/21332-teamwork.json
+    - assets/lifebuoy.png
+    - assets/tele.png
+    - assets/mail.png
+    - assets/percent.png
+    - assets/icons8-help-64.png
+    - assets/icons8-email-64.png
+    - assets/icons8-call-64.png
+    - assets/icons8-chat-bubble-64.png
+
+
+
+
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

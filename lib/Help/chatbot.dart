@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 
 class Chatbot extends StatelessWidget {
-
   MaterialColor colorCustom = MaterialColor(0xff0437D6, color);
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'AirCare Assistant',
-      theme: new ThemeData(
-          primarySwatch: colorCustom,
-          accentColor: colorCustom
-      ),
+      theme:
+          new ThemeData(primarySwatch: colorCustom, accentColor: colorCustom),
       debugShowCheckedModeBanner: false,
       home: new HomePageDialogflow(),
     );
   }
 }
-
 
 class HomePageDialogflow extends StatefulWidget {
   HomePageDialogflow({Key key, this.title}) : super(key: key);
@@ -42,7 +39,7 @@ class _HomePageDialogflow extends State<HomePageDialogflow> {
                 controller: _textController,
                 onSubmitted: _handleSubmitted,
                 decoration:
-                new InputDecoration.collapsed(hintText: "Send a message"),
+                    new InputDecoration.collapsed(hintText: "Send a message"),
               ),
             ),
             new Container(
@@ -60,16 +57,15 @@ class _HomePageDialogflow extends State<HomePageDialogflow> {
   void Response(query) async {
     _textController.clear();
     AuthGoogle authGoogle =
-    await AuthGoogle(fileJson: "assets/credentials.json")
-        .build();
+        await AuthGoogle(fileJson: "assets/credentials.json").build();
     Dialogflow dialogflow =
-    Dialogflow(authGoogle: authGoogle, language: Language.english);
+        Dialogflow(authGoogle: authGoogle, language: Language.english);
     AIResponse response = await dialogflow.detectIntent(query);
     ChatMessage message = new ChatMessage(
       text: response.getMessage() ??
           new CardDialogflow(response.getListMessage()[0]).title,
       name: "AirCare Assistant",
-      type:false,
+      type: false,
     );
     setState(() {
       _messages.insert(0, message);
@@ -107,7 +103,7 @@ class _HomePageDialogflow extends State<HomePageDialogflow> {
       ),
       body: new Column(children: <Widget>[
         new Card(
-          color :Color(0xffd2f8d2),
+          color: Color(0xffd2f8d2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -117,7 +113,8 @@ class _HomePageDialogflow extends State<HomePageDialogflow> {
               const ListTile(
                 //leading: Icon(Icons.help),
                 title: Text('AirCare Assistant'),
-                subtitle: Text('We\'re always there to help you out! If in case assistant is unable to meet your queries, you can see F.A.Q section or speak to customer executive.'),
+                subtitle: Text(
+                    'We\'re always there to help you out! If in case assistant is unable to meet your queries, you can see F.A.Q section or speak to customer executive.'),
               ),
               ButtonBar(
                 children: <Widget>[
@@ -127,7 +124,8 @@ class _HomePageDialogflow extends State<HomePageDialogflow> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => Query()),
-                      ); },
+                      );
+                    },
                   ),
                   FlatButton(
                     child: const Text('CANCEL'),
@@ -145,11 +143,11 @@ class _HomePageDialogflow extends State<HomePageDialogflow> {
         ),
         new Flexible(
             child: new ListView.builder(
-              padding: new EdgeInsets.all(8.0),
-              reverse: true,
-              itemBuilder: (_, int index) => _messages[index],
-              itemCount: _messages.length,
-            )),
+          padding: new EdgeInsets.all(8.0),
+          reverse: true,
+          itemBuilder: (_, int index) => _messages[index],
+          itemCount: _messages.length,
+        )),
         new Divider(height: 1.0),
         new Container(
           decoration: new BoxDecoration(color: Theme.of(context).cardColor),
@@ -171,7 +169,11 @@ class ChatMessage extends StatelessWidget {
     return <Widget>[
       new Container(
         margin: const EdgeInsets.only(right: 16.0),
-        child: new CircleAvatar(child: new Icon(Icons.face),backgroundColor: Color(0xff0437D6),foregroundColor: Colors.white,),
+        child: new CircleAvatar(
+          child: new Icon(Icons.face),
+          backgroundColor: Color(0xff0437D6),
+          foregroundColor: Colors.white,
+        ),
       ),
       new Expanded(
         child: new Column(
@@ -228,16 +230,15 @@ class ChatMessage extends StatelessWidget {
   }
 }
 
-Map<int, Color> color =
-{
-  50:Color.fromRGBO(136,14,79, .1),
-  100:Color.fromRGBO(136,14,79, .2),
-  200:Color.fromRGBO(136,14,79, .3),
-  300:Color.fromRGBO(136,14,79, .4),
-  400:Color.fromRGBO(136,14,79, .5),
-  500:Color.fromRGBO(136,14,79, .6),
-  600:Color.fromRGBO(136,14,79, .7),
-  700:Color.fromRGBO(136,14,79, .8),
-  800:Color.fromRGBO(136,14,79, .9),
-  900:Color.fromRGBO(136,14,79, 1),
+Map<int, Color> color = {
+  50: Color.fromRGBO(136, 14, 79, .1),
+  100: Color.fromRGBO(136, 14, 79, .2),
+  200: Color.fromRGBO(136, 14, 79, .3),
+  300: Color.fromRGBO(136, 14, 79, .4),
+  400: Color.fromRGBO(136, 14, 79, .5),
+  500: Color.fromRGBO(136, 14, 79, .6),
+  600: Color.fromRGBO(136, 14, 79, .7),
+  700: Color.fromRGBO(136, 14, 79, .8),
+  800: Color.fromRGBO(136, 14, 79, .9),
+  900: Color.fromRGBO(136, 14, 79, 1),
 };
