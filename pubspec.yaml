@@ -32,7 +32,22 @@ dependencies:
   wifi_iot: ^0.1.1
   lottie: ^0.4.1
   random_string: ^2.1.0
+  flutter_dialogflow: ^0.1.3
   cloud_firestore: ^0.13.4+2
+  mapwize: ^0.0.1-beta.4
+  wifi_hunter: ^1.0.3
+  android_wifi_info: ^0.1.1
+  provider: ^3.1.0+1
+  google_maps_flutter: ^0.5.21+8
+  location: ^2.3.5
+  google_maps_webservice: ^0.0.14
+  pin_code_text_field: ^1.4.0
+  shared_preferences: ^0.5.4
+  sliding_up_panel: ^0.3.6
+  carousel_slider: ^1.3.0
+  connectivity: ^0.4.5+2
+  flutter_spinkit: ^4.0.0
+
 
 
 
@@ -89,6 +104,15 @@ flutter:
     - assets/icons8-email-64.png
     - assets/icons8-call-64.png
     - assets/icons8-chat-bubble-64.png
+    - assets/pointer.json
+    - assets/lf30_editor_zzpgEe.json
+    - assets/lf30_editor_muUzxw.json
+    - assets/bg.jpg
+    - assets/8014-joyful-background.json
+    - assets/animation_500_kcre1tf4.gif
+    - assets/credentials.json
+    - assets/men.png
+    - assets/3603-chat-animation.json
 
 
 

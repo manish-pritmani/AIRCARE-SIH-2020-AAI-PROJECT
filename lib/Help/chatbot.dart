@@ -1,22 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-class Chatbot extends StatelessWidget {
-  MaterialColor colorCustom = MaterialColor(0xff0437D6, color);
-
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'AirCare Assistant',
-      theme:
-          new ThemeData(primarySwatch: colorCustom, accentColor: colorCustom),
-      debugShowCheckedModeBanner: false,
-      home: new HomePageDialogflow(),
-    );
-  }
-}
+import 'package:flutter_dialogflow/dialogflow_v2.dart';
+import 'package:flutter_dialogflow/utils/language.dart';
+import 'package:flutter_dialogflow/v2/auth_google.dart';
+import 'package:lottie/lottie.dart';
 
 class HomePageDialogflow extends StatefulWidget {
   HomePageDialogflow({Key key, this.title}) : super(key: key);
+
   final String title;
 
   @override
@@ -39,7 +30,7 @@ class _HomePageDialogflow extends State<HomePageDialogflow> {
                 controller: _textController,
                 onSubmitted: _handleSubmitted,
                 decoration:
-                    new InputDecoration.collapsed(hintText: "Send a message"),
+                new InputDecoration.collapsed(hintText: "Send a message"),
               ),
             ),
             new Container(
@@ -57,14 +48,15 @@ class _HomePageDialogflow extends State<HomePageDialogflow> {
   void Response(query) async {
     _textController.clear();
     AuthGoogle authGoogle =
-        await AuthGoogle(fileJson: "assets/credentials.json").build();
+    await AuthGoogle(fileJson: "assets/credentials.json")
+        .build();
     Dialogflow dialogflow =
-        Dialogflow(authGoogle: authGoogle, language: Language.english);
+    Dialogflow(authGoogle: authGoogle, language: Language.english);
     AIResponse response = await dialogflow.detectIntent(query);
     ChatMessage message = new ChatMessage(
       text: response.getMessage() ??
           new CardDialogflow(response.getListMessage()[0]).title,
-      name: "AirCare Assistant",
+      name: "Alessa",
       type: false,
     );
     setState(() {
@@ -88,66 +80,81 @@ class _HomePageDialogflow extends State<HomePageDialogflow> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-//            Navigator.push(
-//              context,
-//              MaterialPageRoute(builder: (context) => HelpHome()),
-//            );
-          },
-        ),
-        centerTitle: true,
-        title: new Text("AirCare Assistant"),
-      ),
-      body: new Column(children: <Widget>[
-        new Card(
-          color: Color(0xffd2f8d2),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              SizedBox(height: 15),
-              const ListTile(
-                //leading: Icon(Icons.help),
-                title: Text('AirCare Assistant'),
-                subtitle: Text(
-                    'We\'re always there to help you out! If in case assistant is unable to meet your queries, you can see F.A.Q section or speak to customer executive.'),
-              ),
-              ButtonBar(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              color: Colors.black,
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          title: Text(
+            "Alessa : Automated Helpbot",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w400,
+              fontFamily: "Circular",
+            ),
+          )),
+      backgroundColor: Colors.white,
+      body: Column(children: <Widget>[
+        _messages.length == 0 ? Flexible(
+          child: Container(
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  FlatButton(
-                    child: const Text('F.A.Q'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Query()),
-                      );
-                    },
+                  Center(
+                    child:
+                    Lottie.asset("assets/3603-chat-animation.json",height: 250),
                   ),
-                  FlatButton(
-                    child: const Text('CANCEL'),
-                    onPressed: () {
-//                      Navigator.push(
-//                      context,
-//                      MaterialPageRoute(builder: (context) => HelpHome()),
-//                    );
-                    },
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Meet Alessa",
+                    style: TextStyle(
+                        fontSize: 30, color: Colors.black, fontWeight: FontWeight.w300),
+                  ),
+                  Text(
+                    "AI Powered help assistant",
+                    style: TextStyle(fontSize: 15, color: Colors.black),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          "1. Help you answer queries",
+                          style: TextStyle(fontSize: 15, color: Colors.black),
+                        ),
+                        Text(
+                          "2. Help you order and buy stuff",
+                          style: TextStyle(fontSize: 15, color: Colors.black),
+                        ),
+                        Text(
+                          "3. Help you guide and solve problems",
+                          style: TextStyle(fontSize: 15, color: Colors.black),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ],
+            ),
           ),
-        ),
-        new Flexible(
+        ): new Flexible(
             child: new ListView.builder(
-          padding: new EdgeInsets.all(8.0),
-          reverse: true,
-          itemBuilder: (_, int index) => _messages[index],
-          itemCount: _messages.length,
-        )),
+              padding: new EdgeInsets.all(8.0),
+              reverse: true,
+              itemBuilder: (_, int index) => _messages[index],
+              itemCount: _messages.length,
+            )
+        ),
         new Divider(height: 1.0),
         new Container(
           decoration: new BoxDecoration(color: Theme.of(context).cardColor),
@@ -169,11 +176,7 @@ class ChatMessage extends StatelessWidget {
     return <Widget>[
       new Container(
         margin: const EdgeInsets.only(right: 16.0),
-        child: new CircleAvatar(
-          child: new Icon(Icons.face),
-          backgroundColor: Color(0xff0437D6),
-          foregroundColor: Colors.white,
-        ),
+        child: new CircleAvatar(backgroundImage: AssetImage("assets/men.png"),),
       ),
       new Expanded(
         child: new Column(
@@ -208,8 +211,6 @@ class ChatMessage extends StatelessWidget {
       new Container(
         margin: const EdgeInsets.only(left: 16.0),
         child: new CircleAvatar(
-            backgroundColor: Colors.redAccent,
-            foregroundColor: Colors.white,
             child: new Text(
               this.name[0],
               style: new TextStyle(fontWeight: FontWeight.bold),
@@ -229,16 +230,3 @@ class ChatMessage extends StatelessWidget {
     );
   }
 }
-
-Map<int, Color> color = {
-  50: Color.fromRGBO(136, 14, 79, .1),
-  100: Color.fromRGBO(136, 14, 79, .2),
-  200: Color.fromRGBO(136, 14, 79, .3),
-  300: Color.fromRGBO(136, 14, 79, .4),
-  400: Color.fromRGBO(136, 14, 79, .5),
-  500: Color.fromRGBO(136, 14, 79, .6),
-  600: Color.fromRGBO(136, 14, 79, .7),
-  700: Color.fromRGBO(136, 14, 79, .8),
-  800: Color.fromRGBO(136, 14, 79, .9),
-  900: Color.fromRGBO(136, 14, 79, 1),
-};

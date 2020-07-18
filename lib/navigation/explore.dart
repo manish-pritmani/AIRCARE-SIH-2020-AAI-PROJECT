@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:sih/Help/chatbot.dart';
 import 'package:sih/Help/qna.dart';
 import 'package:sih/features/help_desk.dart';
 import 'package:sih/features/wheel_chair_request.dart';
-import 'package:sih/features/wifi.dart';
-import 'file:///C:/Users/manis/AndroidStudioProjects/aircare-sih/lib/onboarding.dart';
-import 'package:sih/navigation/test.dart';
+import 'package:sih/features/wifi_hunt.dart';
+import 'package:sih/navigation/indoor_navigation.dart';
 
 class Explore extends StatefulWidget {
   @override
@@ -67,7 +67,7 @@ class _ExploreState extends State<Explore> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Query()),
+            MaterialPageRoute(builder: (context) => HomePageDialogflow()),
           );
         },
         elevation: 1,
@@ -75,7 +75,7 @@ class _ExploreState extends State<Explore> {
         foregroundColor: Color(0xffffffff),
         backgroundColor: Color(0xff0437D6),
       ),
-      backgroundColor: Colors.white,
+
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -135,19 +135,52 @@ class _ExploreState extends State<Explore> {
                 60.0,
               ),
             ),
-            sectionHeader('Pick a Services', onViewMore: () {}),
             Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
               child: Container(
+                width: double.maxFinite,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("images/image.png"),
-                    fit: BoxFit.fitWidth,
+                    image: AssetImage("assets/bg.jpg"),
+                    fit: BoxFit.cover,
                     alignment: Alignment.topCenter,
                   ),
                 ),
-                child: Text("YOUR TEXT"),
+                child:  ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                  title: Text("Airport Navigation"),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MapViewExample()));
+                  },
+                  subtitle: Text("See inside airport view"),
+                  trailing: Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xFF0437d6),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    child: Text(
+                      "NAVIGATE",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
               ),
             ),
+
+            sectionHeader('Pick a Services', onViewMore: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => ViewMore()));
+            }),
+
             Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -159,7 +192,7 @@ class _ExploreState extends State<Explore> {
                       padding: EdgeInsets.only(left: 15, top: 10),
                       child: Text(
                         "Find Nearby",
-                        style: headerStyle,
+                        style: serviceStyle,
                       ),
                     ),
                     Divider(),
@@ -269,8 +302,8 @@ class _ExploreState extends State<Explore> {
                     Padding(
                       padding: EdgeInsets.only(left: 15, top: 10),
                       child: Text(
-                        "Quick Seacrh",
-                        style: headerStyle,
+                        "Quick Search",
+                        style: serviceStyle,
                       ),
                     ),
                     Divider(),
@@ -313,7 +346,7 @@ class _ExploreState extends State<Explore> {
                                         "assets/wireless-router.png")),
                               ),
                               Text(
-                                "Wifi Nearby",
+                                "Tour Guide",
                                 style: TextStyle(
                                     color: Color(0xFF969696),
                                     fontWeight: FontWeight.w500,
@@ -333,7 +366,7 @@ class _ExploreState extends State<Explore> {
                                     child: Image.asset("assets/baggage.png")),
                               ),
                               Text(
-                                "Check-in",
+                                "Exchange Bank",
                                 style: TextStyle(
                                     color: Color(0xFF969696),
                                     fontWeight: FontWeight.w500,
@@ -357,7 +390,7 @@ class _ExploreState extends State<Explore> {
                       padding: EdgeInsets.only(left: 15, top: 10),
                       child: Text(
                         "Services",
-                        style: headerStyle,
+                        style: serviceStyle,
                       ),
                     ),
                     Divider(),
@@ -423,39 +456,24 @@ class _ExploreState extends State<Explore> {
                           Column(
                             children: <Widget>[
                               Container(
+                                margin: EdgeInsets.only(bottom: 10),
                                 width: width,
                                 height: height,
-                                margin: EdgeInsets.only(bottom: 10),
                                 child: RawMaterialButton(
                                     onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  WheelChairRequest()));
+                                      
                                     },
                                     shape: CircleBorder(),
-                                    child:
-                                        Image.asset("assets/water-bottle.png")),
+                                    child: Image.asset(
+                                        "assets/wireless-router.png")),
                               ),
-                              Column(
-                                children: <Widget>[
-                                  Text(
-                                    "Drinking Water",
-                                    style: TextStyle(
-                                        color: Color(0xFF969696),
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: customFontSize),
-                                  ),
-                                  Text(
-                                    "Station",
-                                    style: TextStyle(
-                                        color: Color(0xFF969696),
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: customFontSize),
-                                  )
-                                ],
-                              ),
+                              Text(
+                                "Wifi Nearby",
+                                style: TextStyle(
+                                    color: Color(0xFF969696),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: customFontSize),
+                              )
                             ],
                           ),
                           Column(
@@ -465,35 +483,17 @@ class _ExploreState extends State<Explore> {
                                 height: height,
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: RawMaterialButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  WheelChairRequest()));
-                                    },
+                                    onPressed: () {},
                                     shape: CircleBorder(),
-                                    child:
-                                        Image.asset("assets/wheelchair.png")),
+                                    child: Image.asset("assets/baggage.png")),
                               ),
-                              Column(
-                                children: <Widget>[
-                                  Text(
-                                    "Wheel Chair",
-                                    style: TextStyle(
-                                        color: Color(0xFF969696),
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: customFontSize),
-                                  ),
-                                  Text(
-                                    "Request",
-                                    style: TextStyle(
-                                        color: Color(0xFF969696),
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: customFontSize),
-                                  )
-                                ],
-                              ),
+                              Text(
+                                "Check-in",
+                                style: TextStyle(
+                                    color: Color(0xFF969696),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: customFontSize),
+                              )
                             ],
                           ),
                         ],
@@ -512,7 +512,7 @@ class _ExploreState extends State<Explore> {
                       padding: EdgeInsets.only(left: 15, top: 10),
                       child: Text(
                         "Convenience",
-                        style: headerStyle,
+                        style: serviceStyle,
                       ),
                     ),
                     Divider(),
@@ -661,30 +661,10 @@ class _ExploreState extends State<Explore> {
                     ),
                   ],
                 )),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                title: Text("Airport Navigation"),
-                subtitle: Text("See inside airport view"),
-                trailing: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xFFd92027),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  child: Text(
-                    "NAVIGATE",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
+            sectionHeader('Offers and Discounts', onViewMore: () {
+//              Navigator.push(
+//                  context, MaterialPageRoute(builder: (context) => ViewMore()));
+            }),
             Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -704,142 +684,231 @@ class _ExploreState extends State<Explore> {
                 ],
               ),
             ),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                leading: CircleAvatar(
-                  backgroundColor: Color(0xffecf0f1),
-                  child: Icon(Icons.fastfood, color: Colors.redAccent),
-                ),
-                title: Text("Food Order"),
-                trailing: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xFF2ecc71),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  child: Text(
-                    "ORDER NOW",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                leading: CircleAvatar(
-                  backgroundColor: Color(0xffecf0f1),
-                  child: Icon(
-                    Icons.local_taxi,
-                    color: Color(0xFF2980b9),
-                  ),
-                ),
-                title: Text("Cab Ride"),
-                trailing: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xff3498db),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  child: Text(
-                    "BOOK NOW",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                leading: CircleAvatar(
-                  backgroundColor: Color(0xffecf0f1),
-                  child: Icon(
-                    Icons.shopping_basket,
-                    color: Color(0xff3f3f44),
-                  ),
-                ),
-                title: Text("Shopping Mall"),
-                trailing: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xffffcd3c),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  child: Text(
-                    "SHOWCASE",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                leading: CircleAvatar(
-                  backgroundColor: Color(0xffecf0f1),
-                  child: Icon(Icons.hotel, color: Colors.redAccent),
-                ),
-                title: Text("Hotels Nearby"),
-                trailing: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xFFd92027),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  child: Text(
-                    "SEARCH NOW",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
+//            Card(
+//              shape: RoundedRectangleBorder(
+//                borderRadius: BorderRadius.circular(8),
+//              ),
+//              child: ListTile(
+//                contentPadding:
+//                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+//                leading: CircleAvatar(
+//                  backgroundColor: Color(0xffecf0f1),
+//                  child: Icon(Icons.fastfood, color: Colors.redAccent),
+//                ),
+//                title: Text("Food Order"),
+//                trailing: Container(
+//                  decoration: BoxDecoration(
+//                    color: Color(0xFF2ecc71),
+//                    borderRadius: BorderRadius.circular(4),
+//                  ),
+//                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+//                  child: Text(
+//                    "ORDER NOW",
+//                    style: TextStyle(
+//                        color: Colors.white,
+//                        fontSize: 16,
+//                        fontWeight: FontWeight.bold),
+//                  ),
+//                ),
+//              ),
+//            ),
+//            Card(
+//              shape: RoundedRectangleBorder(
+//                borderRadius: BorderRadius.circular(8),
+//              ),
+//              child: ListTile(
+//                contentPadding:
+//                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+//                leading: CircleAvatar(
+//                  backgroundColor: Color(0xffecf0f1),
+//                  child: Icon(
+//                    Icons.local_taxi,
+//                    color: Color(0xFF2980b9),
+//                  ),
+//                ),
+//                title: Text("Cab Ride"),
+//                trailing: Container(
+//                  decoration: BoxDecoration(
+//                    color: Color(0xff3498db),
+//                    borderRadius: BorderRadius.circular(4),
+//                  ),
+//                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+//                  child: Text(
+//                    "BOOK NOW",
+//                    style: TextStyle(
+//                        color: Colors.white,
+//                        fontSize: 16,
+//                        fontWeight: FontWeight.bold),
+//                  ),
+//                ),
+//              ),
+//            ),
+//            Card(
+//              shape: RoundedRectangleBorder(
+//                borderRadius: BorderRadius.circular(8),
+//              ),
+//              child: ListTile(
+//                contentPadding:
+//                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+//                leading: CircleAvatar(
+//                  backgroundColor: Color(0xffecf0f1),
+//                  child: Icon(
+//                    Icons.shopping_basket,
+//                    color: Color(0xff3f3f44),
+//                  ),
+//                ),
+//                title: Text("Shopping Mall"),
+//                trailing: Container(
+//                  decoration: BoxDecoration(
+//                    color: Color(0xffffcd3c),
+//                    borderRadius: BorderRadius.circular(4),
+//                  ),
+//                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+//                  child: Text(
+//                    "SHOWCASE",
+//                    style: TextStyle(
+//                        color: Colors.white,
+//                        fontSize: 16,
+//                        fontWeight: FontWeight.bold),
+//                  ),
+//                ),
+//              ),
+//            ),
+//            Card(
+//              shape: RoundedRectangleBorder(
+//                borderRadius: BorderRadius.circular(8),
+//              ),
+//              child: ListTile(
+//                contentPadding:
+//                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+//                leading: CircleAvatar(
+//                  backgroundColor: Color(0xffecf0f1),
+//                  child: Icon(Icons.hotel, color: Colors.redAccent),
+//                ),
+//                title: Text("Hotels Nearby"),
+//                trailing: Container(
+//                  decoration: BoxDecoration(
+//                    color: Color(0xFFd92027),
+//                    borderRadius: BorderRadius.circular(4),
+//                  ),
+//                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+//                  child: Text(
+//                    "SEARCH NOW",
+//                    style: TextStyle(
+//                        color: Colors.white,
+//                        fontSize: 16,
+//                        fontWeight: FontWeight.bold),
+//                  ),
+//                ),
+//              ),
+//            ),
             if (_currentPosition != null)
               Text(
                   "LAT: ${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}"),
-            FlatButton(
-              child: Text("Get location"),
-              onPressed: () {
-                _getCurrentLocation();
-              },
+            Container(
+              width: double.maxFinite,
+
+              child:  ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                title: Text("Buy VIP Subscription"),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MapViewExample()));
+                },
+                subtitle: Text("Get exciting offers and save more."),
+                trailing: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.redAccent,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  child: Text(
+                    "BUY NOW",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
             ),
-            FlatButton(
-              child: Text("Get location"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => OnBoardingPage()),
-                );
-              },
+            Container(
+              width: double.maxFinite,
+
+              child:  ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                title: Text("Airport Navigation"),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MapViewExample()));
+                },
+                subtitle: Text("See inside airport view"),
+                trailing: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.blueAccent,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  child: Text(
+                    "NAVIGATE",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
             ),
+            Container(
+              width: double.maxFinite,
+              child:  ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                title: Text("Airport Navigation"),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MapViewExample()));
+                },
+                subtitle: Text("See inside airport view"),
+                trailing: Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xFF0437d6),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  child: Text(
+                    "NAVIGATE",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 70,),
+            Text("Project Developed by Six Muskeeters for SIH-2020"),
+            SizedBox(height: 20,),
+//            FlatButton(
+//              child: Text("Get location"),
+//              onPressed: () {
+//                _getCurrentLocation();
+//              },
+//            ),
+//            FlatButton(
+//              child: Text("Get location"),
+//              onPressed: () {
+//                Navigator.push(
+//                  context,
+//                  MaterialPageRoute(builder: (context) => OnBoardingPage()),
+//                );
+//              },
+//            ),
           ],
         ),
       ),
@@ -1053,3 +1122,39 @@ final TextStyle headerStyle = TextStyle(
   fontWeight: FontWeight.w600,
   fontSize: 18.0,
 );
+
+final TextStyle serviceStyle = TextStyle(
+  color: Colors.grey.shade800,
+  fontWeight: FontWeight.w600,
+  fontSize: 16.0,
+);
+
+class ViewMore extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 1,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            color: Colors.black,
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+        title: Text(
+          "Explore Everything",
+          style: TextStyle(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.black,
+            fontFamily: "Circular",
+          ),
+        ),
+      ),
+      body: Column(
+        children: <Widget>[],
+      ),
+    );
+  }
+}
