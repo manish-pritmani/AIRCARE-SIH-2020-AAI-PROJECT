@@ -1,5 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dialogflow/dialogflow_v2.dart';
+import 'package:sih/profile/manage_sub.dart';
+import 'package:sih/profile/language.dart';
+import 'package:sih/profile/dev_contact.dart';
+import 'package:sih/profile/connected_acc.dart';
+
 
 class Profile extends StatefulWidget {
   @override
@@ -7,6 +13,17 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  double width, height = 55.0;
+  double customFontSize = 13;
+  final TextStyle whiteText = TextStyle(
+    color: Colors.white,
+  );
+  final TextStyle greyText = TextStyle(
+    color: Colors.grey.shade600,
+  );
+  final TextStyle whiteBoldText = TextStyle(
+    color: Colors.black,
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,22 +31,59 @@ class _ProfileState extends State<Profile> {
           elevation: 0,
           backgroundColor: Colors.white,
           leading: IconButton(
-            icon: Icon(Icons.account_balance_wallet),
+            icon: Icon(Icons.person),
             color: Colors.black,
           ),
           title: Text(
-            "My Profile",
+            "User Profile",
             style: TextStyle(
               color: Theme.of(context).brightness == Brightness.dark ? Colors.white :Colors.black,
               fontFamily: "Circular",
             ),
           )
       ),
+      backgroundColor: Colors.white,
       body:  SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+              children:<Widget>[
+               Center(
+                 child: Container(
+                     height: 100,
+                     margin: EdgeInsets.only(top: 30),
+                     child: CircleAvatar(
+                       radius: 50,
+                       backgroundColor: Colors.white,
+                       backgroundImage: AssetImage("assets/men.png"),
+                     )),
+               ),
+                Padding(
+                  padding: EdgeInsets.all(4),
+                ),
+                Text(
+                  "Manish Pritmani",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(4),
+                ),
+                Text(
+                  "+91-7879365300",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+              ]
+            ),
+            const SizedBox(height: 20.0),
             Text(
               "ACCOUNT",
               style: headerStyle,
@@ -44,11 +98,9 @@ class _ProfileState extends State<Profile> {
               child: Column(
                 children: <Widget>[
                   ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTiaeo4KRf4TB86TnhHUWOcUT6tS_I50CFZUEFweCQHX4yBA2so&usqp=CAU'),
-                    ),
-                    title: Text("Narendra Modi"),
+                    title: Text("My Profile"),
                     onTap: () {},
+                    trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey.shade600,),
                   ),
                   _buildDivider(),
                   SwitchListTile(
@@ -60,7 +112,9 @@ class _ProfileState extends State<Profile> {
                   _buildDivider(),
                   ListTile(
                     title: Text("Connected Accounts"),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ConAcc()));
+                    },
                     trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey.shade600,),
                   ),
                 ],
@@ -79,29 +133,22 @@ class _ProfileState extends State<Profile> {
                   SwitchListTile(
                     activeColor: Color(0xff0437D6),
                     value: true,
-                    title: Text("Received notification"),
-                    onChanged: (val) {},
-                  ),
-                  _buildDivider(),
-                  SwitchListTile(
-                    activeColor: Color(0xff0437D6),
-                    value: false,
-                    title: Text("Received newsletter"),
-                    onChanged: null,
-                  ),
-                  _buildDivider(),
-                  SwitchListTile(
-                    activeColor: Color(0xff0437D6),
-                    value: true,
-                    title: Text("Received Offer Notification"),
+                    title: Text("Receive Travel Notification"),
                     onChanged: (val) {},
                   ),
                   _buildDivider(),
                   SwitchListTile(
                     activeColor: Color(0xff0437D6),
                     value: true,
-                    title: Text("Received App Updates"),
-                    onChanged: null,
+                    title: Text("Receive Offer Notification"),
+                    onChanged: (val) {},
+                  ),
+                  _buildDivider(),
+                  SwitchListTile(
+                    activeColor: Color(0xff0437D6),
+                    value: true,
+                    title: Text("Flight Update Notifications"),
+                    onChanged: (val) {},
                   ),
                 ],
               ),
@@ -146,7 +193,9 @@ class _ProfileState extends State<Profile> {
                 children: <Widget>[
                   ListTile(
                     title: Text("Manage Membership"),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ManageSub()));
+                    },
                     trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey.shade600,),
                   ),
                   _buildDivider(),
@@ -171,7 +220,9 @@ class _ProfileState extends State<Profile> {
                   _buildDivider(),
                   ListTile(
                     title: Text("Language"),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>AppLanguage()));
+                    },
                     trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey.shade600,),
                   ),
                 ],
@@ -197,7 +248,9 @@ class _ProfileState extends State<Profile> {
                   _buildDivider(),
                   ListTile(
                     title: Text("Contact Us"),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>DevContact()));
+                    },
                     trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey.shade600,),
                   ),
                 ],

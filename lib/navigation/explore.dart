@@ -7,7 +7,9 @@ import 'package:sih/Help/qna.dart';
 import 'package:sih/features/help_desk.dart';
 import 'package:sih/features/wheel_chair_request.dart';
 import 'package:sih/features/wifi_hunt.dart';
+import 'package:sih/main.dart';
 import 'package:sih/navigation/indoor_navigation.dart';
+import 'package:sih/vip_zone.dart';
 
 class Explore extends StatefulWidget {
   @override
@@ -231,7 +233,9 @@ class _ExploreState extends State<Explore> {
                                 height: height,
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: RawMaterialButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+
+                                    },
                                     shape: CircleBorder(),
                                     child: Image.asset(
                                         "assets/passengerswait.png")),
@@ -815,7 +819,7 @@ class _ExploreState extends State<Explore> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MapViewExample()));
+                          builder: (context) => VIPZone()));
                 },
                 subtitle: Text("Get exciting offers and save more."),
                 trailing: Container(
