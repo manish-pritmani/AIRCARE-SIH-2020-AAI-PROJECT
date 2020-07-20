@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sih/Help/chatbot.dart';
-import 'package:sih/Help/qna.dart';
+import 'package:sih/Help/faq.dart';
 
 class HelpDesk extends StatefulWidget {
   @override
@@ -204,7 +204,7 @@ class _HelpDeskState extends State<HelpDesk> {
                           margin: EdgeInsets.only(bottom: 10),
                           child: RawMaterialButton(
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>Query()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>FaqPage()));
                               },
                               shape: CircleBorder(),
                               child: Image.asset("assets/icons8-help-64.png")),

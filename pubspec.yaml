@@ -48,6 +48,7 @@ dependencies:
   connectivity: ^0.4.5+2
   flutter_spinkit: ^4.0.0
   google_fonts:
+  flutter_speed_dial: ^1.2.5
 
 
 
@@ -140,7 +141,7 @@ flutter:
     - assets/food12.jpg
     - assets/tour-pic.jpg
     - assets/tour-pic-plan.jpg
-
+    - assets/lf30_editor_1tlcZH.json
 
 
 

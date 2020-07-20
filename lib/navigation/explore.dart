@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:sih/Help/chatbot.dart';
+import 'package:sih/Help/my_favourites.dart';
 import 'package:sih/Help/qna.dart';
 import 'package:sih/features/book_flight.dart';
 import 'package:sih/features/deals_coupons.dart';
@@ -15,6 +16,7 @@ import 'package:sih/navigation/indoor_navigation.dart';
 import 'package:sih/utils/offers.dart';
 import 'package:sih/utils/slider.dart';
 import 'package:sih/vip_zone.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class Explore extends StatefulWidget {
   @override
@@ -29,6 +31,25 @@ class _ExploreState extends State<Explore> {
   Position _currentPosition;
   String _currentAddress;
 
+  ScrollController scrollController;
+  bool dialVisible = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    scrollController = ScrollController()
+      ..addListener(() {
+        setDialVisible(scrollController.position.userScrollDirection ==
+            ScrollDirection.forward);
+      });
+  }
+
+  void setDialVisible(bool value) {
+    setState(() {
+      dialVisible = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,19 +92,68 @@ class _ExploreState extends State<Explore> {
               fontFamily: "Circular",
             ),
           )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => HomePageDialogflow()),
-          );
-        },
-        elevation: 1,
-        child: Icon(Icons.chat),
-        foregroundColor: Color(0xffffffff),
-        backgroundColor: Color(0xff0437D6),
+      floatingActionButton: SpeedDial(
+        // both default to 16
+        marginRight: 18,
+        marginBottom: 20,
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: IconThemeData(size: 22.0),
+        // this is ignored if animatedIcon is non null
+        // child: Icon(Icons.add),
+        visible: dialVisible,
+        // If true user is forced to close dial manually
+        // by tapping main button and overlay is not rendered.
+        closeManually: false,
+        curve: Curves.easeInExpo,
+        overlayColor: Colors.black,
+        overlayOpacity: 0.5,
+        onOpen: () => print('OPENING DIAL'),
+        onClose: () => print('DIAL CLOSED'),
+        tooltip: 'Quick Action',
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 8.0,
+        shape: CircleBorder(),
+        children: [
+          SpeedDialChild(
+              child: Icon(Icons.bubble_chart),
+              backgroundColor:  Color(0xff376AFF),
+              foregroundColor: Colors.white,
+              label: 'HelpBot',
+              labelStyle: TextStyle(fontSize: 18.0),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePageDialogflow()),
+                );
+              }),
+          SpeedDialChild(
+            child: Icon(Icons.star),
+            backgroundColor: Colors.amberAccent,
+            foregroundColor: Colors.white,
+            label: 'Favourites',
+            labelStyle: TextStyle(fontSize: 18.0),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Favourites()),
+                );
+              }),
+          SpeedDialChild(
+            child: Icon(Icons.local_offer),
+            backgroundColor: Colors.redAccent,
+            foregroundColor: Colors.white,
+            label: 'My Coupons',
+            labelStyle: TextStyle(fontSize: 18.0),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Favourites()),
+                );
+              }
+          ),
+        ],
       ),
-
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -156,7 +226,7 @@ class _ExploreState extends State<Explore> {
 //                    alignment: Alignment.topCenter,
 //                  ),
 //                ),
-                child:  ListTile(
+                child: ListTile(
                   contentPadding: EdgeInsets.symmetric(horizontal: 15),
                   title: Text("Airport Navigation"),
                   onTap: () {
@@ -239,9 +309,7 @@ class _ExploreState extends State<Explore> {
                                 height: height,
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: RawMaterialButton(
-                                    onPressed: () {
-
-                                    },
+                                    onPressed: () {},
                                     shape: CircleBorder(),
                                     child: Image.asset(
                                         "assets/passengerswait.png")),
@@ -331,7 +399,11 @@ class _ExploreState extends State<Explore> {
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: RawMaterialButton(
                                     onPressed: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=> FlightSearchPage()));
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  FlightSearchPage()));
                                     },
                                     shape: CircleBorder(),
                                     child: Image.asset("assets/tickets.png")),
@@ -354,8 +426,7 @@ class _ExploreState extends State<Explore> {
                                 child: RawMaterialButton(
                                     onPressed: () {},
                                     shape: CircleBorder(),
-                                    child: Image.asset(
-                                        "assets/tourism.png")),
+                                    child: Image.asset("assets/tourism.png")),
                               ),
                               Text(
                                 "Tour Guide",
@@ -394,7 +465,10 @@ class _ExploreState extends State<Explore> {
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: RawMaterialButton(
                                     onPressed: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Coupon()));
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Coupon()));
                                     },
                                     shape: CircleBorder(),
                                     child: Image.asset("assets/gift.png")),
@@ -505,12 +579,9 @@ class _ExploreState extends State<Explore> {
                                 width: width,
                                 height: height,
                                 child: RawMaterialButton(
-                                    onPressed: () {
-
-                                    },
+                                    onPressed: () {},
                                     shape: CircleBorder(),
-                                    child: Image.asset(
-                                        "assets/location.png")),
+                                    child: Image.asset("assets/location.png")),
                               ),
                               Text(
                                 "Wifi Nearby",
@@ -711,30 +782,30 @@ class _ExploreState extends State<Explore> {
 //                  context, MaterialPageRoute(builder: (context) => ViewMore()));
             }),
             Padding(
-                padding: EdgeInsets.fromLTRB(10.0,0,10.0,0),
-                child: Container(
-              height: MediaQuery.of(context).size.height/2.4,
-              width: MediaQuery.of(context).size.width,
-              child: ListView.builder(
-                primary: false,
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: restaurants == null ? 0 :restaurants.length,
-                itemBuilder: (BuildContext context, int index) {
-                  Map restaurant = restaurants[index];
+              padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+              child: Container(
+                height: MediaQuery.of(context).size.height / 2.4,
+                width: MediaQuery.of(context).size.width,
+                child: ListView.builder(
+                  primary: false,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: restaurants == null ? 0 : restaurants.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    Map restaurant = restaurants[index];
 
-                  return Padding(
-                    padding: EdgeInsets.only(right: 10.0),
-                    child: SlideItem(
-                      img: restaurant["img"],
-                      title: restaurant["title"],
-                      address: restaurant["address"],
-                      rating: restaurant["rating"],
-                    ),
-                  );
-                },
+                    return Padding(
+                      padding: EdgeInsets.only(right: 10.0),
+                      child: SlideItem(
+                        img: restaurant["img"],
+                        title: restaurant["title"],
+                        address: restaurant["address"],
+                        rating: restaurant["rating"],
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
             ),
             Container(
               child: Column(
@@ -878,15 +949,12 @@ class _ExploreState extends State<Explore> {
                   "LAT: ${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}"),
             Container(
               width: double.maxFinite,
-
-              child:  ListTile(
+              child: ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 15),
                 title: Text("Buy VIP Subscription"),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => VIPZone()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => VIPZone()));
                 },
                 subtitle: Text("Get exciting offers and save more."),
                 trailing: Container(
@@ -907,15 +975,12 @@ class _ExploreState extends State<Explore> {
             ),
             Container(
               width: double.maxFinite,
-
-              child:  ListTile(
+              child: ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 15),
                 title: Text("Airport Details"),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => VIPZone()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => VIPZone()));
                 },
                 subtitle: Text("Locate any airport and get details."),
                 trailing: Container(
@@ -936,15 +1001,12 @@ class _ExploreState extends State<Explore> {
             ),
             Container(
               width: double.maxFinite,
-
-              child:  ListTile(
+              child: ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 15),
                 title: Text("Safe Travel Guidelines"),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => VIPZone()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => VIPZone()));
                 },
                 subtitle: Text("Coronavirus guidelines for airports."),
                 trailing: Container(
@@ -963,7 +1025,9 @@ class _ExploreState extends State<Explore> {
                 ),
               ),
             ),
-            SizedBox(height: 50,),
+            SizedBox(
+              height: 50,
+            ),
 //            Text("Project Developed by Six Muskeeters for SIH-2020"),
 //            SizedBox(height: 20,),
 //            FlatButton(
