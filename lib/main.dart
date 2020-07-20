@@ -5,6 +5,7 @@ import 'package:sih/navigation/explore.dart';
 import 'package:sih/navigation/profile.dart';
 import 'package:sih/navigation/travel.dart';
 import 'package:sih/navigation/wallet.dart';
+import 'package:sih/onboarding.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.grey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: OnBoardingPage(),
     );
   }
 }

@@ -117,6 +117,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       done: const Text('HELP', style: TextStyle(fontWeight: FontWeight.w600)),
       dotsDecorator: const DotsDecorator(
         size: Size(10.0, 10.0),
+        activeColor: Color(0xff0437D6),
         color: Color(0xFFBDBDBD),
         activeSize: Size(22.0, 10.0),
         activeShape: RoundedRectangleBorder(

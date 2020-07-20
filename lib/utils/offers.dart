@@ -1,8 +1,8 @@
 List restaurants = [
   {
     "img": "assets/food1.jpeg",
-    "title": "Happy Jones",
-    "address": "1278 Loving Acres RoadKansas City, MO 64110",
+    "title": "Jabalpur Jones",
+    "address": "1278 Kachnar Acres Road,Jabalpur City, MO 64110",
     "rating": "4.5"
   },
   {
