@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dialogflow/dialogflow_v2.dart';
+import 'package:flutter/services.dart';
 import 'package:sih/profile/manage_sub.dart';
 import 'package:sih/profile/language.dart';
 import 'package:sih/profile/dev_contact.dart';
 import 'package:sih/profile/connected_acc.dart';
-
+import 'package:sih/profile/my_profile.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -24,6 +24,7 @@ class _ProfileState extends State<Profile> {
   final TextStyle whiteBoldText = TextStyle(
     color: Colors.black,
   );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,52 +38,48 @@ class _ProfileState extends State<Profile> {
           title: Text(
             "User Profile",
             style: TextStyle(
-              color: Theme.of(context).brightness == Brightness.dark ? Colors.white :Colors.black,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : Colors.black,
               fontFamily: "Circular",
             ),
-          )
-      ),
+          )),
       backgroundColor: Colors.white,
-      body:  SingleChildScrollView(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-              children:<Widget>[
-               Center(
-                 child: Container(
-                     height: 100,
-                     margin: EdgeInsets.only(top: 30),
-                     child: CircleAvatar(
-                       radius: 50,
-                       backgroundColor: Colors.white,
-                       backgroundImage: AssetImage("assets/men.png"),
-                     )),
-               ),
-                Padding(
-                  padding: EdgeInsets.all(4),
-                ),
-                Text(
-                  "Manish Pritmani",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20),
-                  textAlign: TextAlign.center,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(4),
-                ),
-                Text(
-                  "+91-7879365300",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16),
-                  textAlign: TextAlign.center,
-                ),
-              ]
-            ),
+                children: <Widget>[
+                  Center(
+                    child: Container(
+                        height: 100,
+                        margin: EdgeInsets.only(top: 10),
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundColor: Colors.white,
+                          backgroundImage: AssetImage("assets/men.png"),
+                        )),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(4),
+                  ),
+                  Text(
+                    "Manish Pritmani",
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+                    textAlign: TextAlign.center,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(4),
+                  ),
+                  Text(
+                    "+91-7879365300",
+                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+                    textAlign: TextAlign.center,
+                  ),
+                ]),
             const SizedBox(height: 20.0),
             Text(
               "ACCOUNT",
@@ -99,8 +96,14 @@ class _ProfileState extends State<Profile> {
                 children: <Widget>[
                   ListTile(
                     title: Text("My Profile"),
-                    onTap: () {},
-                    trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey.shade600,),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => ProfileInfo()));
+                    },
+                    trailing: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.grey.shade600,
+                    ),
                   ),
                   _buildDivider(),
                   SwitchListTile(
@@ -113,9 +116,13 @@ class _ProfileState extends State<Profile> {
                   ListTile(
                     title: Text("Connected Accounts"),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ConAcc()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => ConAcc()));
                     },
-                    trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey.shade600,),
+                    trailing: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.grey.shade600,
+                    ),
                   ),
                 ],
               ),
@@ -127,20 +134,16 @@ class _ProfileState extends State<Profile> {
             ),
             const SizedBox(height: 10.0),
             Card(
-              margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0,),
+              margin: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 0,
+              ),
               child: Column(
                 children: <Widget>[
                   SwitchListTile(
                     activeColor: Color(0xff0437D6),
                     value: true,
-                    title: Text("Receive Travel Notification"),
-                    onChanged: (val) {},
-                  ),
-                  _buildDivider(),
-                  SwitchListTile(
-                    activeColor: Color(0xff0437D6),
-                    value: true,
-                    title: Text("Receive Offer Notification"),
+                    title: Text("Receive Travel Notifications"),
                     onChanged: (val) {},
                   ),
                   _buildDivider(),
@@ -148,6 +151,20 @@ class _ProfileState extends State<Profile> {
                     activeColor: Color(0xff0437D6),
                     value: true,
                     title: Text("Flight Update Notifications"),
+                    onChanged: (val) {},
+                  ),
+                  _buildDivider(),
+                  SwitchListTile(
+                    activeColor: Color(0xff0437D6),
+                    value: true,
+                    title: Text("Deals and Offers"),
+                    onChanged: (val) {},
+                  ),
+                  _buildDivider(),
+                  SwitchListTile(
+                    activeColor: Color(0xff0437D6),
+                    value: true,
+                    title: Text("Baggage Status"),
                     onChanged: (val) {},
                   ),
                 ],
@@ -173,8 +190,7 @@ class _ProfileState extends State<Profile> {
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
-                        fontWeight: FontWeight.bold
-                    ),
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -188,15 +204,22 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             Card(
-              margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0,),
+              margin: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 0,
+              ),
               child: Column(
                 children: <Widget>[
                   ListTile(
                     title: Text("Manage Membership"),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ManageSub()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => ManageSub()));
                     },
-                    trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey.shade600,),
+                    trailing: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.grey.shade600,
+                    ),
                   ),
                   _buildDivider(),
                 ],
@@ -208,7 +231,10 @@ class _ProfileState extends State<Profile> {
               style: headerStyle,
             ),
             Card(
-              margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0,),
+              margin: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 0,
+              ),
               child: Column(
                 children: <Widget>[
                   SwitchListTile(
@@ -221,9 +247,15 @@ class _ProfileState extends State<Profile> {
                   ListTile(
                     title: Text("Language"),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>AppLanguage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AppLanguage()));
                     },
-                    trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey.shade600,),
+                    trailing: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.grey.shade600,
+                    ),
                   ),
                 ],
               ),
@@ -234,34 +266,59 @@ class _ProfileState extends State<Profile> {
               style: headerStyle,
             ),
             Card(
-              margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0,),
+              margin: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 0,
+              ),
               child: Column(
                 children: <Widget>[
                   ListTile(
                       title: Text("App Version"),
-                      onTap:(){
-
-                      },
-                      trailing: Text("2.3.84",style: TextStyle(fontSize: 15,
-                          fontWeight: FontWeight.w600),)
-                  ),
+                      onTap: () {},
+                      trailing: Text(
+                        "2.3.84",
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w600),
+                      )),
                   _buildDivider(),
                   ListTile(
                     title: Text("Contact Us"),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>DevContact()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DevContact()));
                     },
-                    trailing: Icon(Icons.keyboard_arrow_right,color: Colors.grey.shade600,),
+                    trailing: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                  _buildDivider(),
+                  ListTile(
+                    title: Text("Rate Us"),
+                    trailing: Icon(Icons.star, color: Colors.amberAccent),
+                    onTap: () {
+                      
+                    },
                   ),
                 ],
               ),
             ),
             Card(
-              margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0,),
+              margin: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 0,
+              ),
               child: ListTile(
                 leading: Icon(Icons.exit_to_app),
                 title: Text("Logout"),
-                onTap: (){},
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) => LogoutOverlay(),
+                  );
+                },
               ),
             ),
             const SizedBox(height: 30.0),
@@ -271,7 +328,6 @@ class _ProfileState extends State<Profile> {
     );
   }
 }
-
 
 Container _buildDivider() {
   return Container(
@@ -289,3 +345,124 @@ final TextStyle headerStyle = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 20.0,
 );
+
+
+class LogoutOverlay extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => LogoutOverlayState();
+}
+
+class LogoutOverlayState extends State<LogoutOverlay>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+  Animation<double> scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
+    scaleAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+
+    controller.addListener(() {
+      setState(() {});
+    });
+
+    controller.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Material(
+        color: Colors.transparent,
+        child: ScaleTransition(
+          scale: scaleAnimation,
+          child: Container(
+              margin: EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(15.0),
+              height: 180.0,
+              decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0))),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 30.0, left: 20.0, right: 20.0),
+                        child: Text(
+                          "Are you sure, you want to logout?",
+                          style: TextStyle(color: Colors.black, fontSize: 16.0),
+                        ),
+                      )),
+                  Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: ButtonTheme(
+                                height: 35.0,
+                                minWidth: 110.0,
+                                child: RaisedButton(
+                                  color: Color(0xff376AFF),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(2.0)),
+                                  splashColor: Colors.white.withAlpha(40),
+                                  child: Text(
+                                    'Logout',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13.0),
+                                  ),
+                                  onPressed: () {
+                                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+//                                    setState(() {
+//                                      Route route = MaterialPageRoute(
+//                                          builder: (context) => Profile());
+//                                      Navigator.pushReplacement(context, route);
+//                                    });
+                                  },
+                                )),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20.0, right: 10.0, top: 10.0, bottom: 10.0),
+                              child:  ButtonTheme(
+                                  height: 35.0,
+                                  minWidth: 110.0,
+                                  child: RaisedButton(
+                                    color: Color(0xff376AFF),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(2.0)),
+                                    splashColor: Colors.white.withAlpha(40),
+                                    child: Text(
+                                      'Cancel',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13.0),
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        Navigator.pop(context);
+                                       });
+                                    },
+                                  ))
+                          ),
+                        ],
+                      ))
+                ],
+              )),
+        ),
+      ),
+    );
+  }
+}

@@ -47,6 +47,7 @@ dependencies:
   carousel_slider: ^1.3.0
   connectivity: ^0.4.5+2
   flutter_spinkit: ^4.0.0
+  google_fonts:
 
 
 
@@ -114,6 +115,31 @@ flutter:
     - assets/men.png
     - assets/3603-chat-animation.json
     - assets/ic_launcher.png
+    - assets/euro.png
+    - assets/location.png
+    - assets/tourism.png
+    - assets/car.png
+    - assets/gift.png
+    - assets/qr_ticket.png
+    - assets/qr-code.png
+    - assets/cm1.png
+    - assets/cm2.png
+    - assets/cm3.png
+    - assets/cm4.png
+    - assets/food1.png
+    - assets/food2.png
+    - assets/food3.png
+    - assets/food4.png
+    - assets/food5.png
+    - assets/food6.png
+    - assets/food7.png
+    - assets/food8.png
+    - assets/food9.png
+    - assets/food10.png
+    - assets/food11.png
+    - assets/food12.png
+    - assets/tour-pic.jpg
+    - assets/tour-pic-plan.jpg
 
 
 

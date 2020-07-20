@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sih/Help/chatbot.dart';
+import 'package:sih/Help/qna.dart';
 
 class HelpDesk extends StatefulWidget {
   @override
@@ -85,7 +87,9 @@ class _HelpDeskState extends State<HelpDesk> {
                           height: height,
                           margin: EdgeInsets.only(bottom: 10),
                           child: RawMaterialButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePageDialogflow()));
+                              },
                               shape: CircleBorder(),
                               child:
                               Image.asset("assets/icons8-chat-bubble-64.png")),
@@ -199,7 +203,9 @@ class _HelpDeskState extends State<HelpDesk> {
                           height: height,
                           margin: EdgeInsets.only(bottom: 10),
                           child: RawMaterialButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>Query()));
+                              },
                               shape: CircleBorder(),
                               child: Image.asset("assets/icons8-help-64.png")),
                         ),

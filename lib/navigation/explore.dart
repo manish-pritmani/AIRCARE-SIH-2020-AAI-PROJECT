@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:sih/Help/chatbot.dart';
 import 'package:sih/Help/qna.dart';
+import 'package:sih/features/book_flight.dart';
+import 'package:sih/features/deals_coupons.dart';
 import 'package:sih/features/help_desk.dart';
 import 'package:sih/features/wheel_chair_request.dart';
 import 'package:sih/features/wifi_hunt.dart';
 import 'package:sih/main.dart';
 import 'package:sih/navigation/indoor_navigation.dart';
+import 'package:sih/utils/offers.dart';
+import 'package:sih/utils/slider.dart';
 import 'package:sih/vip_zone.dart';
 
 class Explore extends StatefulWidget {
@@ -23,6 +28,7 @@ class _ExploreState extends State<Explore> {
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   Position _currentPosition;
   String _currentAddress;
+
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +118,7 @@ class _ExploreState extends State<Explore> {
                           ),
                           borderRadius: BorderRadius.circular(5.0),
                         ),
-                        hintText: "How can we help you ?",
+                        hintText: "Search flights, shops, services etc",
                         prefixIcon: Icon(
                           LineIcons.search,
                           color: Colors.black,
@@ -143,13 +149,13 @@ class _ExploreState extends State<Explore> {
               ),
               child: Container(
                 width: double.maxFinite,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/bg.jpg"),
-                    fit: BoxFit.cover,
-                    alignment: Alignment.topCenter,
-                  ),
-                ),
+//                decoration: BoxDecoration(
+//                  image: DecorationImage(
+//                    image: AssetImage("assets/bg.jpg"),
+//                    fit: BoxFit.cover,
+//                    alignment: Alignment.topCenter,
+//                  ),
+//                ),
                 child:  ListTile(
                   contentPadding: EdgeInsets.symmetric(horizontal: 15),
                   title: Text("Airport Navigation"),
@@ -217,7 +223,7 @@ class _ExploreState extends State<Explore> {
                                 ),
                               ),
                               Text(
-                                "Fast Food",
+                                "Dining",
                                 style: TextStyle(
                                     color: Color(0xFF969696),
                                     fontFamily: 'Roboto-Light.ttf',
@@ -262,7 +268,7 @@ class _ExploreState extends State<Explore> {
                                 ),
                               ),
                               Text(
-                                "Hotels Nearby",
+                                "Hotels",
                                 style: TextStyle(
                                     color: Color(0xFF969696),
                                     fontWeight: FontWeight.w500,
@@ -324,7 +330,9 @@ class _ExploreState extends State<Explore> {
                                 height: height,
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: RawMaterialButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=> FlightSearchPage()));
+                                    },
                                     shape: CircleBorder(),
                                     child: Image.asset("assets/tickets.png")),
                               ),
@@ -347,7 +355,7 @@ class _ExploreState extends State<Explore> {
                                     onPressed: () {},
                                     shape: CircleBorder(),
                                     child: Image.asset(
-                                        "assets/wireless-router.png")),
+                                        "assets/tourism.png")),
                               ),
                               Text(
                                 "Tour Guide",
@@ -367,15 +375,48 @@ class _ExploreState extends State<Explore> {
                                 child: RawMaterialButton(
                                     onPressed: () {},
                                     shape: CircleBorder(),
-                                    child: Image.asset("assets/baggage.png")),
+                                    child: Image.asset("assets/euro.png")),
                               ),
                               Text(
-                                "Exchange Bank",
+                                "Exchange",
                                 style: TextStyle(
                                     color: Color(0xFF969696),
                                     fontWeight: FontWeight.w500,
                                     fontSize: customFontSize),
                               )
+                            ],
+                          ),
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                width: width,
+                                height: height,
+                                margin: EdgeInsets.only(bottom: 10),
+                                child: RawMaterialButton(
+                                    onPressed: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Coupon()));
+                                    },
+                                    shape: CircleBorder(),
+                                    child: Image.asset("assets/gift.png")),
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    "Deals and",
+                                    style: TextStyle(
+                                        color: Color(0xFF969696),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: customFontSize),
+                                  ),
+                                  Text(
+                                    "offers",
+                                    style: TextStyle(
+                                        color: Color(0xFF969696),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: customFontSize),
+                                  )
+                                ],
+                              ),
                             ],
                           ),
                         ],
@@ -448,7 +489,7 @@ class _ExploreState extends State<Explore> {
                                     child: Image.asset("assets/parking.png")),
                               ),
                               Text(
-                                "Park Vehicle",
+                                "Parking",
                                 style: TextStyle(
                                     color: Color(0xFF969696),
                                     fontFamily: 'Roboto-Light.ttf',
@@ -465,11 +506,11 @@ class _ExploreState extends State<Explore> {
                                 height: height,
                                 child: RawMaterialButton(
                                     onPressed: () {
-                                      
+
                                     },
                                     shape: CircleBorder(),
                                     child: Image.asset(
-                                        "assets/wireless-router.png")),
+                                        "assets/location.png")),
                               ),
                               Text(
                                 "Wifi Nearby",
@@ -669,6 +710,32 @@ class _ExploreState extends State<Explore> {
 //              Navigator.push(
 //                  context, MaterialPageRoute(builder: (context) => ViewMore()));
             }),
+            Padding(
+                padding: EdgeInsets.fromLTRB(10.0,0,10.0,0),
+                child: Container(
+              height: MediaQuery.of(context).size.height/2.4,
+              width: MediaQuery.of(context).size.width,
+              child: ListView.builder(
+                primary: false,
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: restaurants == null ? 0 :restaurants.length,
+                itemBuilder: (BuildContext context, int index) {
+                  Map restaurant = restaurants[index];
+
+                  return Padding(
+                    padding: EdgeInsets.only(right: 10.0),
+                    child: SlideItem(
+                      img: restaurant["img"],
+                      title: restaurant["title"],
+                      address: restaurant["address"],
+                      rating: restaurant["rating"],
+                    ),
+                  );
+                },
+              ),
+            ),
+            ),
             Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -843,14 +910,14 @@ class _ExploreState extends State<Explore> {
 
               child:  ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                title: Text("Airport Navigation"),
+                title: Text("Airport Details"),
                 onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MapViewExample()));
+                          builder: (context) => VIPZone()));
                 },
-                subtitle: Text("See inside airport view"),
+                subtitle: Text("Locate any airport and get details."),
                 trailing: Container(
                   decoration: BoxDecoration(
                     color: Colors.blueAccent,
@@ -858,7 +925,7 @@ class _ExploreState extends State<Explore> {
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   child: Text(
-                    "NAVIGATE",
+                    "LOCATE",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -869,24 +936,25 @@ class _ExploreState extends State<Explore> {
             ),
             Container(
               width: double.maxFinite,
+
               child:  ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                title: Text("Airport Navigation"),
+                title: Text("Safe Travel Guidelines"),
                 onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MapViewExample()));
+                          builder: (context) => VIPZone()));
                 },
-                subtitle: Text("See inside airport view"),
+                subtitle: Text("Coronavirus guidelines for airports."),
                 trailing: Container(
                   decoration: BoxDecoration(
-                    color: Color(0xFF0437d6),
+                    color: Colors.deepOrange,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   child: Text(
-                    "NAVIGATE",
+                    "SEE GUIDE",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -895,9 +963,9 @@ class _ExploreState extends State<Explore> {
                 ),
               ),
             ),
-            SizedBox(height: 70,),
-            Text("Project Developed by Six Muskeeters for SIH-2020"),
-            SizedBox(height: 20,),
+            SizedBox(height: 50,),
+//            Text("Project Developed by Six Muskeeters for SIH-2020"),
+//            SizedBox(height: 20,),
 //            FlatButton(
 //              child: Text("Get location"),
 //              onPressed: () {

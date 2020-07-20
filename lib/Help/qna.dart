@@ -80,12 +80,24 @@ class StepperDemoState extends State<Query> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Appbar
       appBar: AppBar(
-        // Title
-        title: Text("Frequently Asked Questions"),
-      ),
-      // Body
+          elevation: 0,
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              color: Colors.black,
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          title: Text(
+            "Frequently Asked Questions",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w400,
+              fontFamily: "Circular",
+            ),
+          )),
       body: Container(
         child: Stepper(
           currentStep: this.current_step,
