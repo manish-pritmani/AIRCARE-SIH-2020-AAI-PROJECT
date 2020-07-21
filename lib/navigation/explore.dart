@@ -17,7 +17,7 @@ import 'package:sih/utils/offers.dart';
 import 'package:sih/utils/slider.dart';
 import 'package:sih/vip_zone.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-
+import 'package:sih/features/covid_response.dart';
 class Explore extends StatefulWidget {
   @override
   _ExploreState createState() => _ExploreState();
@@ -645,7 +645,13 @@ class _ExploreState extends State<Explore> {
                                 height: height,
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: RawMaterialButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => CovidResp()),
+                                      );
+                                    },
                                     shape: CircleBorder(),
                                     child: Image.asset("assets/hand-wash.png")),
                               ),
