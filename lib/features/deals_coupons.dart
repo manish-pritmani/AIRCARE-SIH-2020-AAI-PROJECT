@@ -55,6 +55,12 @@ class _WalletState extends State<Coupon> with SingleTickerProviderStateMixin {
   }
 }
 
+var titleTextStyle = TextStyle(
+  color: Colors.black87,
+  fontSize: 20.0,
+  fontWeight: FontWeight.bold,
+);
+
 Widget _tabSection(BuildContext context) {
   return DefaultTabController(
     length: 2,
@@ -78,13 +84,164 @@ Widget _tabSection(BuildContext context) {
           //Add this to give height
           height: MediaQuery.of(context).size.height,
           child: TabBarView(children: [
-            Container(
-                child: Column(
-                    children: <Widget> [
-
-                    ]
-                )
-            ),
+           SingleChildScrollView(
+             child:  Container(
+                 child: Column(
+                     children: <Widget> [
+                       Card(
+                         elevation: 4.0,
+                         shape: RoundedRectangleBorder(
+                           borderRadius: BorderRadius.circular(10.0),
+                         ),
+                         child: Stack(
+                           children: <Widget>[
+                             Column(
+                               children: <Widget>[
+                                 Container(
+                                   height: 150.0,
+                                   decoration: BoxDecoration(
+                                       borderRadius: BorderRadius.only(
+                                         topLeft: Radius.circular(10.0),
+                                         topRight: Radius.circular(10.0),
+                                       ),
+                                       image: DecorationImage(
+                                         image: AssetImage("assets/8.jfif"),
+                                         fit: BoxFit.cover,
+                                       )),
+                                 ),
+                                 Padding(
+                                   padding: const EdgeInsets.all(16.0),
+                                   child: Text(
+                                     "Get upto 25% off on your FIRST cab ride. USE CODE : FIRST25",
+                                     style: titleTextStyle,
+                                   ),
+                                 ),
+                                 Padding(
+                                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                   child: Row(
+                                     children: <Widget>[
+                                       Text(
+                                         "T&C Apply (For VIP User only)",
+                                         style: TextStyle(
+                                           color: Colors.grey,
+                                           fontSize: 14.0,
+                                         ),
+                                       ),
+                                       Spacer(),
+                                       Text(
+                                         "Valid till : 29 Aug",
+                                         style: TextStyle(
+                                           color: Colors.grey,
+                                           fontSize: 14.0,
+                                         ),
+                                       ),
+                                     ],
+                                   ),
+                                 ),
+                                 const SizedBox(height: 20.0),
+                               ],
+                             ),
+                             Positioned(
+                               top: 140,
+                               left: 10.0,
+                               child:Container(
+                                 decoration: BoxDecoration(
+                                   color: Color(0xFF2ecc71),
+                                   borderRadius: BorderRadius.circular(16),
+                                 ),
+                                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                 child: Text(
+                                   "VIP USER",
+                                   style: TextStyle(
+                                       color: Colors.white,
+                                       fontSize: 16,
+                                       fontWeight: FontWeight.bold
+                                   ),
+                                 ),
+                               ),
+                             )
+                           ],
+                         ),
+                       ),
+                       Card(
+                         elevation: 4.0,
+                         shape: RoundedRectangleBorder(
+                           borderRadius: BorderRadius.circular(10.0),
+                         ),
+                         child: Stack(
+                           children: <Widget>[
+                             Column(
+                               children: <Widget>[
+                                 Container(
+                                   height: 150.0,
+                                   decoration: BoxDecoration(
+                                       borderRadius: BorderRadius.only(
+                                         topLeft: Radius.circular(10.0),
+                                         topRight: Radius.circular(10.0),
+                                       ),
+                                       image: DecorationImage(
+                                         image: AssetImage("assets/5.jpg"),
+                                         fit: BoxFit.cover,
+                                       )),
+                                 ),
+                                 Padding(
+                                   padding: const EdgeInsets.all(16.0),
+                                   child: Text(
+                                     "Shop on any duty free shop and get additional discount on payment using ONE WALLET.",
+                                     style: titleTextStyle,
+                                   ),
+                                 ),
+                                 Padding(
+                                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                   child: Row(
+                                     children: <Widget>[
+                                       Text(
+                                         "T&C Apply",
+                                         style: TextStyle(
+                                           color: Colors.grey,
+                                           fontSize: 14.0,
+                                         ),
+                                       ),
+                                       Spacer(),
+                                       Text(
+                                         "Valid till : 31st Dec",
+                                         style: TextStyle(
+                                           color: Colors.grey,
+                                           fontSize: 14.0,
+                                         ),
+                                       ),
+                                     ],
+                                   ),
+                                 ),
+                                 const SizedBox(height: 20.0),
+                               ],
+                             ),
+                             Positioned(
+                               top: 140,
+                               left: 10.0,
+                               child:Container(
+                                 decoration: BoxDecoration(
+                                   color: Colors.redAccent,
+                                   borderRadius: BorderRadius.circular(16),
+                                 ),
+                                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                 child: Text(
+                                   "FREE USER",
+                                   style: TextStyle(
+                                       color: Colors.white,
+                                       fontSize: 16,
+                                       fontWeight: FontWeight.bold
+                                   ),
+                                 ),
+                               ),
+                             )
+                           ],
+                         ),
+                       ),
+                     ]
+                 )
+             ),
+           ),
             Container(
                 child: Column(
                   children: <Widget>[

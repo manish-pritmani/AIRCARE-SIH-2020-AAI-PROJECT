@@ -50,6 +50,7 @@ dependencies:
   google_fonts:
   flutter_speed_dial: ^1.2.5
   webview_flutter:
+  firebase_auth: ^0.15.4
 
 
 
@@ -146,6 +147,28 @@ flutter:
     - assets/0.jpg
     - assets/1.jpg
     - assets/2.jpg
+    - assets/12363-heart.json
+    - assets/5.jpg
+    - assets/6.jfif
+    - assets/8.jfif
+    - assets/ticket_section.png
+    - assets/bell.png
+    - assets/bed.png
+    - assets/taxier.png
+    - assets/shops.png
+    - assets/bed-1.png
+    - assets/wheelchairs.png
+    - assets/router.png
+    - assets/claims.png
+    - assets/notepad.png
+    - assets/support.png
+    - assets/discount.png
+    - assets/money.png
+    - assets/parkings.png
+    - assets/time.png
+    - assets/water.png
+    - assets/airport.png
+    - assets/pilot.png
 
 
 

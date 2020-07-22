@@ -26,33 +26,23 @@ class Favourites extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Lottie.asset("assets/lf30_editor_1tlcZH.json"),
-          SizedBox(
-            height: 20,
-          ),
+          Lottie.asset("assets/12363-heart.json"),
           Text(
-            "Your token number",
-            style: TextStyle(fontSize: 15, color: Colors.black),
-          ),
-          Text(
-            "2XEKDF2",
+            "You're All Caught",
             style: TextStyle(
-                fontSize: 30, color: Colors.black, fontWeight: FontWeight.w800),
-          ),
-          SizedBox(
-            height: 20,
+                fontSize: 30, color: Colors.black, fontWeight: FontWeight.w300),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              "You will receive SMS shortly and",
+              "Save favorite shops, destinations",
               style: TextStyle(fontSize: 15, color: Colors.black),
             ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              "we will reach to you soon.",
+              "and foods to reorder quickly.",
               style: TextStyle(fontSize: 15, color: Colors.black),
             ),
           ),

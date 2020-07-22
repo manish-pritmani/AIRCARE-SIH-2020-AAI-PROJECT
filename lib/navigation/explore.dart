@@ -289,7 +289,7 @@ class _ExploreState extends State<Explore> {
                                 child: RawMaterialButton(
                                   onPressed: () {},
                                   shape: CircleBorder(),
-                                  child: Image.asset("assets/food.png"),
+                                  child: Image.asset("assets/bell.png"),
                                 ),
                               ),
                               Text(
@@ -312,7 +312,7 @@ class _ExploreState extends State<Explore> {
                                     onPressed: () {},
                                     shape: CircleBorder(),
                                     child: Image.asset(
-                                        "assets/passengerswait.png")),
+                                        "assets/taxier.png")),
                               ),
                               Text(
                                 "Book Taxi",
@@ -332,7 +332,7 @@ class _ExploreState extends State<Explore> {
                                 child: RawMaterialButton(
                                   onPressed: () {},
                                   shape: CircleBorder(),
-                                  child: Image.asset("assets/hotel.png"),
+                                  child: Image.asset("assets/bed-1.png"),
                                 ),
                               ),
                               Text(
@@ -353,7 +353,7 @@ class _ExploreState extends State<Explore> {
                                 child: RawMaterialButton(
                                   onPressed: () {},
                                   shape: CircleBorder(),
-                                  child: Image.asset("assets/shop.png"),
+                                  child: Image.asset("assets/shops.png"),
                                 ),
                               ),
                               Text(
@@ -406,7 +406,7 @@ class _ExploreState extends State<Explore> {
                                                   FlightSearchPage()));
                                     },
                                     shape: CircleBorder(),
-                                    child: Image.asset("assets/tickets.png")),
+                                    child: Image.asset("assets/airport.png")),
                               ),
                               Text(
                                 "Book Flight",
@@ -426,7 +426,7 @@ class _ExploreState extends State<Explore> {
                                 child: RawMaterialButton(
                                     onPressed: () {},
                                     shape: CircleBorder(),
-                                    child: Image.asset("assets/tourism.png")),
+                                    child: Image.asset("assets/pilot.png")),
                               ),
                               Text(
                                 "Tour Guide",
@@ -446,7 +446,7 @@ class _ExploreState extends State<Explore> {
                                 child: RawMaterialButton(
                                     onPressed: () {},
                                     shape: CircleBorder(),
-                                    child: Image.asset("assets/euro.png")),
+                                    child: Image.asset("assets/money.png")),
                               ),
                               Text(
                                 "Exchange",
@@ -471,7 +471,7 @@ class _ExploreState extends State<Explore> {
                                               builder: (context) => Coupon()));
                                     },
                                     shape: CircleBorder(),
-                                    child: Image.asset("assets/gift.png")),
+                                    child: Image.asset("assets/discount.png")),
                               ),
                               Column(
                                 children: <Widget>[
@@ -529,7 +529,7 @@ class _ExploreState extends State<Explore> {
                                     onPressed: () {},
                                     shape: CircleBorder(),
                                     child:
-                                        Image.asset("assets/waiting-room.png")),
+                                        Image.asset("assets/time.png")),
                               ),
                               Column(
                                 children: <Widget>[
@@ -560,7 +560,7 @@ class _ExploreState extends State<Explore> {
                                 child: RawMaterialButton(
                                     onPressed: () {},
                                     shape: CircleBorder(),
-                                    child: Image.asset("assets/parking.png")),
+                                    child: Image.asset("assets/parkings.png")),
                               ),
                               Text(
                                 "Parking",
@@ -581,7 +581,7 @@ class _ExploreState extends State<Explore> {
                                 child: RawMaterialButton(
                                     onPressed: () {},
                                     shape: CircleBorder(),
-                                    child: Image.asset("assets/location.png")),
+                                    child: Image.asset("assets/router.png")),
                               ),
                               Text(
                                 "Wifi Nearby",
@@ -601,7 +601,7 @@ class _ExploreState extends State<Explore> {
                                 child: RawMaterialButton(
                                     onPressed: () {},
                                     shape: CircleBorder(),
-                                    child: Image.asset("assets/baggage.png")),
+                                    child: Image.asset("assets/claims.png")),
                               ),
                               Text(
                                 "Check-in",
@@ -653,7 +653,7 @@ class _ExploreState extends State<Explore> {
                                       );
                                     },
                                     shape: CircleBorder(),
-                                    child: Image.asset("assets/hand-wash.png")),
+                                    child: Image.asset("assets/notepad.png")),
                               ),
                               Column(
                                 children: <Widget>[
@@ -691,7 +691,7 @@ class _ExploreState extends State<Explore> {
                                     },
                                     shape: CircleBorder(),
                                     child:
-                                        Image.asset("assets/telemarketer.png")),
+                                        Image.asset("assets/support.png")),
                               ),
                               Text(
                                 "HelpDesk",
@@ -718,7 +718,7 @@ class _ExploreState extends State<Explore> {
                                     },
                                     shape: CircleBorder(),
                                     child:
-                                        Image.asset("assets/water-bottle.png")),
+                                        Image.asset("assets/water.png")),
                               ),
                               Column(
                                 children: <Widget>[
@@ -756,7 +756,7 @@ class _ExploreState extends State<Explore> {
                                     },
                                     shape: CircleBorder(),
                                     child:
-                                        Image.asset("assets/wheelchair.png")),
+                                        Image.asset("assets/wheelchairs.png")),
                               ),
                               Column(
                                 children: <Widget>[

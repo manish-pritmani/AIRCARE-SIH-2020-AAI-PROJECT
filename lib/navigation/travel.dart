@@ -35,47 +35,92 @@ class _TravelState extends State<Travel> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(height: 10,),
-                    SizedBox(
-                      height: 85,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        children: <Widget>[
-                          Column(
+            Row(
+              children: <Widget>[
+                Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height: 10,),
+                        SizedBox(
+                          height: 85,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
                             children: <Widget>[
-                              Container(
-                                width: width,
-                                height: height,
-                                margin: EdgeInsets.only(bottom: 10),
-                                child: RawMaterialButton(
-                                  onPressed: () {},
-                                  shape: CircleBorder(),
-                                  child: Image.asset("assets/qr-code.png"),
-                                ),
+                              Column(
+                                children: <Widget>[
+                                  Container(
+                                    width: width,
+                                    height: height,
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: RawMaterialButton(
+                                      onPressed: () {},
+                                      shape: CircleBorder(),
+                                      child: Image.asset("assets/qr-code.png"),
+                                    ),
+                                  ),
+                                  Text(
+                                    "Scan Ticket",
+                                    style: TextStyle(
+                                        color: Color(0xFF969696),
+                                        fontFamily: 'Roboto-Light.ttf',
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: customFontSize),
+                                  )
+                                ],
                               ),
-                              Text(
-                                "Scan Ticket",
-                                style: TextStyle(
-                                    color: Color(0xFF969696),
-                                    fontFamily: 'Roboto-Light.ttf',
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: customFontSize),
-                              )
                             ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    )),
+                Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                  ],
-                )),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height: 10,),
+                        SizedBox(
+                          height: 85,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            children: <Widget>[
+                              Column(
+                                children: <Widget>[
+                                  Container(
+                                    width: width,
+                                    height: height,
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: RawMaterialButton(
+                                      onPressed: () {},
+                                      shape: CircleBorder(),
+                                      child: Image.asset("assets/ticket_section.png"),
+                                    ),
+                                  ),
+                                  Text(
+                                    "My Tickets",
+                                    style: TextStyle(
+                                        color: Color(0xFF969696),
+                                        fontFamily: 'Roboto-Light.ttf',
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: customFontSize),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )),
+              ],
+            ),
             Padding(
                 padding: EdgeInsets.only(left: 15.0, right: 25.0, top: 10.0),
                 child: new Row(

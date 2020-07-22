@@ -99,11 +99,11 @@ class _CovidRespState extends State<CovidResp> {
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) => WebViewWindow(
                         title: "WHO: Covid-19 Information",
-                        selectedUrl: "https://www.who.int/emergencies/diseases/novel-coronavirus-2019",
+                        selectedUrl: "https://www.who.int/travel-advice",
                       ))),
                   title: "COVID-19 Official Information",
                   textButton: "READ NOW",
-                  thirdTitle:  "Get Updated Information on travelling through airport.",
+                  thirdTitle:  "Get Updated Information on travelling through airport fom official sources.",
                   imageUrl: "assets/2.jpg",
                 ),
               ],
@@ -290,7 +290,7 @@ class BikeListItem extends StatelessWidget {
   }
   Container _buildThumbnail() {
     return Container(
-      height: 120,
+      height: 140,
       width: 100,
       decoration: BoxDecoration(
         borderRadius: imageRight

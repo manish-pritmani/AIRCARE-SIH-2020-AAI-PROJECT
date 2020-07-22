@@ -27,6 +27,7 @@ class _VIPZoneState extends State<VIPZone> {
               fontFamily: "Circular",
             ),
           )),
+
     );
   }
 }
