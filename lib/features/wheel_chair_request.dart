@@ -15,38 +15,31 @@ class _WheelChairRequestState extends State<WheelChairRequest> {
 
   final firestoreInstance = Firestore.instance;
 
-  String _email="fbgff";
-  String _password;
+  String _name,_age,_ticketNumber,_id;
+  String _message =" ";
+
   void _submit() {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      performLogin();
-
+      feedData();
     }
   }
 
   void feedData() {
     String token = randomAlphaNumeric(10);
+    print(_name);
     firestoreInstance.collection("users").document(token).setData(
         {
-          "name" : "john",
-          "age" : 50,
-          "email" : "example@example.com",
-          "address" : {
-            "street" : "street 24",
-            "city" : "new york"
-          }
+          "name" : _name,
+          "age" : _age,
+          "ticket" : _ticketNumber,
+          "id" : _id,
+          "message": _message,
         }).then((_){
       print("success!");
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>Success(token: token)));
     });
-  }
-
-  void performLogin() {
-    final snackbar = new SnackBar(
-      content: new Text("Email : , password : "),
-    );
-    scaffoldKey.currentState.showSnackBar(snackbar);
   }
 
   @override
@@ -121,21 +114,26 @@ class _WheelChairRequestState extends State<WheelChairRequest> {
                   makeInput(
                     label: "Name*",
                     message: "Provide a Name",
+                    onSave: _name,
                   ),
                   makeInput(
                     label: "Age*",
                     message: "Provide an Age",
+                    onSave: _age,
                   ),
                   makeInput(
                     label: "Ticket Number*",
                     message: "Provide an Email",
+                    onSave: _ticketNumber,
                   ),
                   makeInput(
                     label: "Identity Card* (any)",
                     message: "Provide any identity card id",
+                    onSave: _id,
                   ),
                   makeMessage(
                     label: "Any Special Message",
+                    onSave: _message,
                   ),
                 ],
               ),
@@ -229,7 +227,7 @@ class _WheelChairRequestState extends State<WheelChairRequest> {
             border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey[400])),
           ),
-          onSaved: (val) => _password = val,
+          onSaved: (val) => onSave = val,
           maxLines: 5,
         ),
         SizedBox(
@@ -241,6 +239,9 @@ class _WheelChairRequestState extends State<WheelChairRequest> {
 }
 
 class Success extends StatelessWidget {
+  final String token;
+  Success({Key key, @required this.token}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -274,7 +275,7 @@ class Success extends StatelessWidget {
             style: TextStyle(fontSize: 15, color: Colors.black),
           ),
           Text(
-            "2XEKDF2",
+            token.toUpperCase(),
             style: TextStyle(
                 fontSize: 30, color: Colors.black, fontWeight: FontWeight.w800),
           ),

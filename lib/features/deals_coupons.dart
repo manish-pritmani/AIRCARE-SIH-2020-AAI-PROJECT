@@ -89,9 +89,9 @@ Widget _tabSection(BuildContext context) {
                  child: Column(
                      children: <Widget> [
                        Card(
-                         elevation: 4.0,
+                         elevation: 1.0,
                          shape: RoundedRectangleBorder(
-                           borderRadius: BorderRadius.circular(10.0),
+                           borderRadius: BorderRadius.circular(6.0),
                          ),
                          child: Stack(
                            children: <Widget>[
@@ -101,8 +101,8 @@ Widget _tabSection(BuildContext context) {
                                    height: 150.0,
                                    decoration: BoxDecoration(
                                        borderRadius: BorderRadius.only(
-                                         topLeft: Radius.circular(10.0),
-                                         topRight: Radius.circular(10.0),
+                                         topLeft: Radius.circular(6.0),
+                                         topRight: Radius.circular(6.0),
                                        ),
                                        image: DecorationImage(
                                          image: AssetImage("assets/8.jfif"),
@@ -164,9 +164,9 @@ Widget _tabSection(BuildContext context) {
                          ),
                        ),
                        Card(
-                         elevation: 4.0,
+                         elevation: 1.0,
                          shape: RoundedRectangleBorder(
-                           borderRadius: BorderRadius.circular(10.0),
+                           borderRadius: BorderRadius.circular(6.0),
                          ),
                          child: Stack(
                            children: <Widget>[
@@ -176,8 +176,8 @@ Widget _tabSection(BuildContext context) {
                                    height: 150.0,
                                    decoration: BoxDecoration(
                                        borderRadius: BorderRadius.only(
-                                         topLeft: Radius.circular(10.0),
-                                         topRight: Radius.circular(10.0),
+                                         topLeft: Radius.circular(6.0),
+                                         topRight: Radius.circular(6.0),
                                        ),
                                        image: DecorationImage(
                                          image: AssetImage("assets/5.jpg"),

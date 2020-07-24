@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sih/features/testing.dart';
 import 'package:sih/web_view.dart';
 
 class CovidResp extends StatefulWidget {
@@ -74,11 +75,7 @@ class _CovidRespState extends State<CovidResp> {
             Column(
               children: <Widget>[
                 BikeListItem(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => null,
-                      )),
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>SwabTest())),
                   title: "COVID-19 SwabTest",
                   textButton: "BOOK NOW",
                   thirdTitle:  "Book and pay for test before you arrive at airport.",
