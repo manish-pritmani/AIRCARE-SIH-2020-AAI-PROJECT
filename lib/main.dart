@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sih/navigation/explore.dart';
+import 'package:sih/explore.dart';
 import 'package:sih/navigation/profile.dart';
 import 'package:sih/navigation/travel.dart';
 import 'package:sih/navigation/wallet.dart';
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.grey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      darkTheme: ThemeData.dark(),
+//      darkTheme: ThemeData.dark(),
       home: Splash(),
       routes: <String, WidgetBuilder>{
         '/otpScreen': (BuildContext ctx) => OtpScreen(),

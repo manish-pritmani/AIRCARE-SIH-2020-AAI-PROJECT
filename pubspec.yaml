@@ -82,6 +82,9 @@ dependencies:
   charts_flutter: ^0.6.0
   english_words: ^3.1.3
   location:
+  rate_my_app: ^0.6.1+6
+  rate_app_dialog: ^0.1.2
+  datetime_picker_formfield: ^1.0.0
 
 
 

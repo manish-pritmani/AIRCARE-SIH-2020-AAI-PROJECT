@@ -15,13 +15,15 @@ class Body extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
           child: Text(
-            "Women",
+            "Shopping at Jabalpur Airport",
             style: Theme.of(context)
                 .textTheme
                 .headline5
                 .copyWith(fontWeight: FontWeight.bold),
           ),
         ),
+
+        
         Categories(),
         Expanded(
           child: Padding(

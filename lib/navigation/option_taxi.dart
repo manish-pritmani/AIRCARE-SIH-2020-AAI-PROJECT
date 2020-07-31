@@ -1,19 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:random_string/random_string.dart';
+import 'package:sih/taxi/screens/home_screen.dart';
 import 'package:toast/toast.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 class OptionTaxi extends StatefulWidget {
   @override
   _AirportDetailsState createState() => _AirportDetailsState();
 }
 
+final format = DateFormat("yyyy-MM-dd HH:mm");
+
 class _AirportDetailsState extends State<OptionTaxi> {
   String _ticket;
-  bool checkboxValue=false;
-  var _c1 = "Indian Ruppee";
-  var _c2 = "US Dollar";
+  bool checkboxValue1 = false;
+  bool checkboxValue2 = false;
+  bool checkboxValue3 = false;
+
+  var _c1 = "Delhi Flight - BK9SG";
+  var _c2 = "15 minutes";
   double width, height = 55.0;
   double customFontSize = 13;
   final TextStyle whiteText = TextStyle(
@@ -27,10 +35,19 @@ class _AirportDetailsState extends State<OptionTaxi> {
   );
   final firestoreInstance = Firestore.instance;
 
+  TextEditingController dateController = new TextEditingController();
+  var _taxiType = "Standard";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    final _formKey2 = GlobalKey<FormState>();
+    final _schKey = GlobalKey<FormState>();
+    final _formKey3 = GlobalKey<FormState>();
     return Scaffold(
         appBar: AppBar(
             elevation: 0,
@@ -55,67 +72,30 @@ class _AirportDetailsState extends State<OptionTaxi> {
           child: ListView(
             children: <Widget>[
               Container(
-                child: Lottie.asset("assets/lf30_editor_OJeMpc.json"),
+                child: Lottie.asset("assets/4012-fast-car.json", height: 100),
               ),
               Padding(
-                  padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Expanded(
-                        child: new Text(
-                          'Smart-Exchange based on Travel',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
+                padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Expanded(
+                      child: new Text(
+                        'Book Taxi',
+                        style: TextStyle(
+                          fontSize: 20.0,
                         ),
-                      )
-                    ],
-                  )),
+                      ),
+                    )
+                  ],
+                ),
+              ),
               Container(
                   padding: EdgeInsets.fromLTRB(25, 15, 25, 10),
                   child: Center(
                       child: Text(
-                          'Quickly exchange local currency amount, and exchange them with the destination locale currency.'))),
-              Form(
-                key: _formKey,
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(25, 15, 25, 10),
-                  child: Column(children: <Widget>[
-                    makeInput(
-                      label: "Ticket Number*",
-                      message: "Provide a ticket number.",
-                      onSave: _ticket,
-                    ),
-                    makeRup(
-                      label: "Amount",
-                      message: "Provide a amount to exchange.",
-                      onSave: _ticket,
-                    ),
-                    CheckboxListTile(
-                      value: checkboxValue,
-                      onChanged: (val) {
-                        if (checkboxValue == false) {
-                          setState(() {
-                            checkboxValue = true;
-                          });
-                        } else if (checkboxValue == true) {
-                          setState(() {
-                            checkboxValue = false;
-                          });
-                        }
-                      },
-                      title: new Text(
-                        'Allow split between source and destination in international flights.',
-                        style: TextStyle(fontSize: 14.0),
-                      ),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      activeColor: Color(0xff376AFF),
-                    )
-                  ]),
-                ),
-              ),
+                          'Book taxi for Airports,Tourist places and enjoy the ride without any hassles.'))),
               Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: FlatButton(
@@ -124,7 +104,7 @@ class _AirportDetailsState extends State<OptionTaxi> {
                       borderRadius: BorderRadius.circular(6.0)),
                   splashColor: Colors.white.withAlpha(40),
                   child: Text(
-                    'Exchange',
+                    'Search Taxi Nearby and Book',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white,
@@ -132,171 +112,69 @@ class _AirportDetailsState extends State<OptionTaxi> {
                         fontSize: 13.0),
                   ),
                   onPressed: () {
-                    // Validate returns true if the form is valid, otherwise false.
-                    if (_formKey.currentState.validate()) {
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-
-                      Scaffold
-                          .of(context)
-                          .showSnackBar(SnackBar(content: Text('Processing Data')));
-                    }
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()));
                   },
                 ),
               ),
               Divider(),
               Padding(
-                  padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Expanded(
-                        child: new Text(
-                          'Schedule Booking',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
+                padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Expanded(
+                      child: new Text(
+                        'Schedule Booking',
+                        style: TextStyle(
+                          fontSize: 20.0,
                         ),
-                      )
-                    ],
-                  )),
+                      ),
+                    )
+                  ],
+                ),
+              ),
               Container(
                   padding: EdgeInsets.fromLTRB(25, 15, 25, 10),
                   child: Center(
                       child: Text(
                           'Booking taxi in advance for tours and destinations.'))),
               Container(
-                width: width,
-                height: height,
-                margin: EdgeInsets.only(bottom: 10),
-                child: Lottie.asset("assets/lf30_editor_0nC6US.json",),
+                padding: EdgeInsets.fromLTRB(25, 15, 25, 0),
+                child: Text(
+                  "Select Scheduled Date-Time for Booking",
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black),
+                ),
               ),
-              Padding(
-                  padding: EdgeInsets.only(left: 15.0, right: 25.0, top: 10.0),
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      new Text(
-                        'Custom Exchange',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                        ),
-                      ),
-                    ],
-                  )),
-              Container(
-                  padding: EdgeInsets.fromLTRB(25, 15, 25, 10),
-                  child: Center(
-                      child: Text(
-                          'Select currencies from below to exchange.'))),
               Form(
-                key: _formKey2,
-                child: Padding(
+                key: _schKey,
+                child: Container(
                   padding: EdgeInsets.fromLTRB(25, 15, 25, 10),
-                  child: Column(children: <Widget>[
-                    makeRup(
-                      label: "Amount for exchange",
-                      message: "Provide a amount to exchange.",
-                      onSave: _ticket,
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                      height: 50,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          Icon(Icons.attach_money, color: Color(0xff3f81f0)),
-                          SizedBox(width: 20),
-                          Expanded(
-                            child: DropdownButton(
-                              isExpanded: true,
-                              underline: SizedBox(),
-                              icon: Icon(Icons.keyboard_arrow_down,
-                                  color: Color(0xff3f81f0)),
-                              //
-                              value: _c2,
-                              items: [
-                                "US Dollar",
-                                "Indian Ruppee",
-                                "Euro",
-                                "Singapore Dollar",
-                                "UAE Dirham",
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  _c2 = value;
-                                });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Divider(),
-                    makeRup(
-                      label: "Final amount",
-                      message: "Provide a final amount.",
-                      onSave: _ticket,
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 0),
-                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                      height: 50,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          Icon(Icons.attach_money, color: Color(0xff3f81f0)),
-                          SizedBox(width: 20),
-                          Expanded(
-                            child: DropdownButton(
-                              isExpanded: true,
-                              underline: SizedBox(),
-                              icon: Icon(Icons.keyboard_arrow_down,
-                                  color: Color(0xff3f81f0)),
-                              //
-                              value: _c1,
-                              items: [
-                                "Indian Ruppee",
-                                "US Dollar",
-                                "Euro",
-                                "Singapore Dollar",
-                                "UAE Dirham",
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  _c1 = value;
-                                });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ]),
+                  child: DateTimeField(
+                    format: format,
+                    initialValue: DateTime.now(),
+                    onShowPicker: (context, currentValue) async {
+                      final date = await showDatePicker(
+                          context: context,
+                          firstDate: DateTime(1900),
+                          initialDate: currentValue ?? DateTime.now(),
+                          lastDate: DateTime(2100));
+                      if (date != null) {
+                        final time = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.fromDateTime(
+                              currentValue ?? DateTime.now()),
+                        );
+                        return DateTimeField.combine(date, time);
+                      } else {
+                        return currentValue;
+                      }
+                    },
+                  ),
                 ),
               ),
               SizedBox(
@@ -318,11 +196,12 @@ class _AirportDetailsState extends State<OptionTaxi> {
                         fontSize: 13.0),
                   ),
                   onPressed: () {
-                    if(_c1==_c2){
-                      Toast.show("Currency cannot be same.", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
-                    }else{
-                      if (_formKey2.currentState.validate()) {
-                        _formKey2.currentState.save();
+                    if (_c1 == _c2) {
+                      Toast.show("Currency cannot be same.", context,
+                          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                    } else {
+                      if (_formKey3.currentState.validate()) {
+                        _formKey3.currentState.save();
                         feedData();
                       }
                     }
@@ -333,6 +212,209 @@ class _AirportDetailsState extends State<OptionTaxi> {
                 ),
               ),
               Divider(),
+              Padding(
+                  padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+                  child: new Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Expanded(
+                        child: new Text(
+                          'Auto-Book Taxi (Ticket based Taxi)',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      )
+                    ],
+                  )),
+              Container(
+                  padding: EdgeInsets.fromLTRB(25, 15, 25, 10),
+                  child: Center(
+                      child: Text(
+                          'Auto-book taxi just as you reach your destination.'))),
+              Form(
+                key: _formKey3,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(25, 15, 25, 10),
+                  child: Column(children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 0),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      height: 50,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(Icons.airplanemode_active,
+                              color: Color(0xff3f81f0)),
+                          SizedBox(width: 20),
+                          Expanded(
+                            child: DropdownButton(
+                              isExpanded: true,
+                              underline: SizedBox(),
+                              icon: Icon(Icons.keyboard_arrow_down,
+                                  color: Color(0xff3f81f0)),
+                              //
+                              value: _c1,
+                              items: [
+                                "Delhi Flight - BK9SG",
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  _c1 = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                        padding: EdgeInsets.fromLTRB(25, 15, 25, 10),
+                        child: Center(
+                            child: Text('Select Auto-book before time.'))),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 0),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      height: 50,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(Icons.timelapse, color: Color(0xff3f81f0)),
+                          SizedBox(width: 20),
+                          Expanded(
+                            child: DropdownButton(
+                              isExpanded: true,
+                              underline: SizedBox(),
+                              icon: Icon(Icons.keyboard_arrow_down,
+                                  color: Color(0xff3f81f0)),
+                              //
+                              value: _c2,
+                              items: [
+                                "15 minutes",
+                                "30 minutes",
+                                "1 hour",
+                                "2 hours",
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  _c2 = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    CheckboxListTile(
+                      value: checkboxValue1,
+                      onChanged: (val) {
+                        if (checkboxValue1 == false) {
+                          setState(() {
+                            checkboxValue1 = true;
+                          });
+                        } else if (checkboxValue1 == true) {
+                          setState(() {
+                            checkboxValue1 = false;
+                          });
+                        }
+                      },
+                      title: new Text(
+                        'Book for source of this ticket.',
+                        style: TextStyle(fontSize: 14.0),
+                      ),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      activeColor: Color(0xff376AFF),
+                    ),
+                    CheckboxListTile(
+                      value: checkboxValue2,
+                      onChanged: (val) {
+                        if (checkboxValue2 == false) {
+                          setState(() {
+                            checkboxValue2 = true;
+                          });
+                        } else if (checkboxValue2 == true) {
+                          setState(() {
+                            checkboxValue2 = false;
+                          });
+                        }
+                      },
+                      title: new Text(
+                        'Book for destination of this ticket.',
+                        style: TextStyle(fontSize: 14.0),
+                      ),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      activeColor: Color(0xff376AFF),
+                    ),
+                  ]),
+                ),
+              ),
+              CheckboxListTile(
+                value: checkboxValue3,
+                onChanged: (val) {
+                  if (checkboxValue3 == false) {
+                    setState(() {
+                      checkboxValue3 = true;
+                    });
+                  } else if (checkboxValue3 == true) {
+                    setState(() {
+                      checkboxValue3 = false;
+                    });
+                  }
+                },
+                title: new Text(
+                  'Enable Notification for booking updates and taxi details.',
+                  style: TextStyle(fontSize: 14.0),
+                ),
+                controlAffinity: ListTileControlAffinity.leading,
+                activeColor: Color(0xff376AFF),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20, right: 20),
+                child: FlatButton(
+                  color: Color(0xff376AFF),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6.0)),
+                  splashColor: Colors.white.withAlpha(40),
+                  child: Text(
+                    'Auto-Book for selected ticket',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13.0),
+                  ),
+                  onPressed: () {
+                    if (_formKey3.currentState.validate()) {
+                      showAuto(context);
+                    }
+                  },
+                ),
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -341,18 +423,104 @@ class _AirportDetailsState extends State<OptionTaxi> {
         ));
   }
 
+  showAuto(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      title: Text("Autobook Confirm"),
+      content: StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                    'Are you sure, you want to auto-book taxi for Ticket Number BK9SG. We\'ll select nearest taxi available for you.'),
+                SizedBox(height: 10,),
+                Text('Taxi Type'),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 0),
+                  padding: EdgeInsets.symmetric(
+                      vertical: 10, horizontal: 20),
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                      color: Color(0xFFE5E5E5),
+                    ),
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: DropdownButton(
+                          isExpanded: true,
+                          underline: SizedBox(),
+                          icon: Icon(Icons.keyboard_arrow_down,
+                              color: Colors.grey), //
+                          value: _taxiType,
+                          items: [
+                            "Standard",
+                            "Premium",
+                            "Platinum",
+                          ].map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _taxiType = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('Confirm Booking'),
+          onPressed: () {
+            feedData();
+          },
+        ),
+        FlatButton(
+          child: Text('Cancel'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+    showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   void feedData() {
+    Navigator.of(context).pop();
     String token = randomAlphaNumeric(10);
-    firestoreInstance.collection("users").document(token).setData(
-        {
-          "name" : "name of traveller",
-          "id" : "id of traveller",
-          "amount1" : "source amount",
-          "amount2" : "final amount",
-          "token" : "token generated",
-        }).then((_){
+    firestoreInstance.collection("users").document(token).setData({
+      "name": "name of traveller",
+      "id": "id of traveller",
+      "amount1": "source amount",
+      "amount2": "final amount",
+      "token": "token generated",
+    }).then((_) {
       print("success!");
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>ExchangeSucess(token: token)));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ExchangeSucess(token: token)));
     });
   }
 
@@ -431,6 +599,7 @@ class _AirportDetailsState extends State<OptionTaxi> {
 
 class ExchangeSucess extends StatelessWidget {
   final String token;
+
   ExchangeSucess({Key key, @required this.token}) : super(key: key);
 
   @override
@@ -446,7 +615,7 @@ class ExchangeSucess extends StatelessWidget {
               Navigator.pop(context);
             }),
         title: Text(
-          "Request Successful",
+          "Booking Request Successful",
           style: TextStyle(
             color: Theme.of(context).brightness == Brightness.dark
                 ? Colors.white

@@ -27,6 +27,7 @@ import 'package:sih/navigation/hotel.dart';
 import 'package:sih/navigation/indoor_navigation.dart';
 import 'package:sih/navigation/parking.dart';
 import 'package:sih/navigation/wifi_nearby.dart';
+import 'package:sih/parking_location_check.dart';
 import 'package:sih/permission.dart';
 import 'package:sih/taxi/screens/home_screen.dart';
 import 'package:sih/utils/airport_details.dart';
@@ -692,7 +693,7 @@ class _ExploreState extends State<Explore> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => Parking()));
+                                              builder: (context) => CheckPark()));
                                     },
                                     shape: CircleBorder(),
                                     child: Image.asset("assets/parkings.png")),

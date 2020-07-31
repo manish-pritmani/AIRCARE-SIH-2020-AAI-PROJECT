@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:rate_app_dialog/rate_app_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sih/profile/manage_sub.dart';
 import 'package:sih/profile/language.dart';
@@ -39,7 +40,24 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     getSwitchValues();
+    var langs = {
+      "en" : {
+        "title" : "Rate us",
+        "description": "Share your experienceAre you enjoying the app? \n Can you rate our app now?",
+      }
+    };
+
+    rateAppDialog = RateAppDialog(
+        context: context,
+        langTexts: langs,
+        afterStarRedirect: true,
+        emailAdmin: "kellvem222@gmail.com",
+        customDialogIOS: true,
+        minimeRequestToShow: 4,
+        minimeRateIsGood: 4);
   }
+
+  RateAppDialog rateAppDialog;
 
   getSwitchValues() async {
     isSwitchedFT = await getSwitchState() ?? false;
@@ -252,6 +270,17 @@ class _ProfileState extends State<Profile> {
                       color: Colors.grey.shade600,
                     ),
                   ),
+                  _buildDivider(),
+                  ListTile(
+                    title: Text("Backup my data"),
+                    onTap: () {
+                      showBackup(context);
+                    },
+                    trailing: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -454,7 +483,7 @@ class _ProfileState extends State<Profile> {
                 children: <Widget>[
                   SwitchListTile(
                     activeColor: Color(0xff0437D6),
-                    title: Text("Dark Mode"),
+                    title: Text("Dark Mode (Beta)"),
                     value: isSwitchedFT,
                     onChanged: (bool value) {
                       setState(() {
@@ -541,7 +570,7 @@ class _ProfileState extends State<Profile> {
                     title: Text("Rate Us"),
                     trailing: Icon(Icons.star, color: Colors.amberAccent),
                     onTap: () {
-                      
+                      rateAppDialog?.requestRate();
                     },
                   ),
                 ],
@@ -569,6 +598,94 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
+  String _email;
+
+
+  Widget takeUp({label, obscureText = false, message, onSave}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          label,
+          style: TextStyle(
+              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        TextFormField(
+          obscureText: obscureText,
+          validator: (input) {
+            if (input.isEmpty) {
+              return message;
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey[400])),
+            border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey[400])),
+          ),
+          onSaved: (val) => onSave = val,
+        ),
+        SizedBox(
+          height: 20,
+        ),
+      ],
+    );
+  }
+
+  final _backUpKey = new GlobalKey<FormState>();
+
+  void _submit() {
+    final form = _backUpKey.currentState;
+    if (form.validate()) {
+      form.save();
+
+    }
+  }
+
+
+  showBackup(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      title: Text("Backup this account"),
+      content: StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Changing mobile number or lost sim-card ? Don\'t worry your entire data will be back-up on Google drive securely.'),
+                SizedBox(height: 15,),
+                Form(
+                  key: _backUpKey,
+                  child: takeUp(
+                    label: "Enter email to backup.",
+                    message: "Provide your email id.",
+                    onSave: _email,
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('Start Backup'),
+          onPressed: _submit,
+        ),
+      ],
+    );
+    showDialog(barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   showAlertDialog(BuildContext context){
     AlertDialog alert=AlertDialog(
       content: new Row(

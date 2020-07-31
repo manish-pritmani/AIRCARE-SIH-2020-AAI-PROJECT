@@ -197,7 +197,8 @@ class _TravelState extends State<Travel> {
                           ),
                         ),
                       ],
-                    )),
+                    ),
+                ),
                 Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -241,8 +242,48 @@ class _TravelState extends State<Travel> {
                         ),
                       ],
                     )),
-
               ],),
+            ),
+            Padding(
+                padding: EdgeInsets.only(left: 15.0, right: 25.0, top: 10.0),
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    new Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        new Text(
+                          'Aarogya Setu',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )),
+            ListTile(
+              title: Text(
+              "As per recent government guidelines and rules published for flight-travellers,it is recommended to download Aarogya-Setu.",
+              style: TextStyle(
+              ),
+            ),
+              subtitle:RaisedButton(
+                color: Color(0xff376AFF),
+                child:
+                Text('DOWNLOAD NOW', style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13.0),),
+                onPressed: () {
+                  StoreRedirect.redirect(
+                      androidAppId: "nic.goi.aarogyasetu");
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(6.0)),
+              ),
             ),
             Padding(
                 padding: EdgeInsets.only(left: 15.0, right: 25.0, top: 10.0),
@@ -273,6 +314,7 @@ class _TravelState extends State<Travel> {
 //                  ),
 //                ),
 //            ),
+
             Padding(
               padding: EdgeInsets.fromLTRB(10.0,0,10.0,0),
               child: Container(
