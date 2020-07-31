@@ -99,6 +99,7 @@ class _HomePageDialogflow extends State<HomePageDialogflow> {
             ),
           )),
       backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: false,
       body: Column(children: <Widget>[
         _messages.length == 0 ? Flexible(
           child: Container(

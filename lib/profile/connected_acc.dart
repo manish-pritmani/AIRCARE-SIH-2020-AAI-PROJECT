@@ -6,6 +6,11 @@ class ConAcc extends StatefulWidget {
 }
 
 class _ConAccState extends State<ConAcc> {
+  var _wAccess = "Yes";
+  var _tAccess = "Yes";
+  var _pAccess = "Yes";
+  var _aAccess = "Yes";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +36,9 @@ class _ConAccState extends State<ConAcc> {
         child: Column(
           children: <Widget>[
             Card(
-              color: Theme.of(context).brightness == Brightness.dark
+              color: Theme
+                  .of(context)
+                  .brightness == Brightness.dark
                   ? Color(0xff121212)
                   : Colors.white,
               shape: RoundedRectangleBorder(
@@ -41,7 +48,6 @@ class _ConAccState extends State<ConAcc> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-
                   ListTile(
                     title: Text(
                       'Piyush Jain',
@@ -112,7 +118,9 @@ class _ConAccState extends State<ConAcc> {
                                   fontFamily: "Circular",
                                 ),
                               ),
-                              onPressed: (){},
+                              onPressed: () {
+                                showAccessDialog(context);
+                              },
                             ),
                             FlatButton.icon(
                               icon: Icon(Icons.exit_to_app),
@@ -123,7 +131,9 @@ class _ConAccState extends State<ConAcc> {
                                   fontFamily: "Circular",
                                 ),
                               ),
-                              onPressed: (){},
+                              onPressed: () {
+                                showAlertDialog(context);
+                              },
                             ),
                           ],
                         )),
@@ -132,7 +142,9 @@ class _ConAccState extends State<ConAcc> {
               ),
             ),
             Card(
-              color: Theme.of(context).brightness == Brightness.dark
+              color: Theme
+                  .of(context)
+                  .brightness == Brightness.dark
                   ? Color(0xff121212)
                   : Colors.white,
               shape: RoundedRectangleBorder(
@@ -212,7 +224,9 @@ class _ConAccState extends State<ConAcc> {
                                   fontFamily: "Circular",
                                 ),
                               ),
-                              onPressed: (){},
+                              onPressed: () {
+                                showAccessDialog(context);
+                              },
                             ),
                             FlatButton.icon(
                               icon: Icon(Icons.exit_to_app),
@@ -223,7 +237,9 @@ class _ConAccState extends State<ConAcc> {
                                   fontFamily: "Circular",
                                 ),
                               ),
-                              onPressed: (){},
+                              onPressed: () {
+                                showAlertDialog(context);
+                              },
                             ),
                           ],
                         )),
@@ -234,6 +250,243 @@ class _ConAccState extends State<ConAcc> {
           ],
         ),
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      title: Text("Logout this Account"),
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: <Widget>[
+            Text(
+                'This account will no longer have access to your services and benefits and will be removed from the connected accounts.'),
+          ],
+        ),
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('Logout'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        FlatButton(
+          child: Text('Cancel'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+    showDialog(barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAccessDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      title: Text("Change user access."),
+      content: StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Changing access will limit the services for this user account.'),
+                SizedBox(height: 15,),
+                Text('Wallet access'),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 0),
+                  padding: EdgeInsets.symmetric(
+                      vertical: 10, horizontal: 20),
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                      color: Color(0xFFE5E5E5),
+                    ),
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: DropdownButton(
+                          isExpanded: true,
+                          underline: SizedBox(),
+                          icon: Icon(Icons.keyboard_arrow_down,
+                              color: Colors.grey), //
+                          value: _wAccess,
+                          items: [
+                            "Yes",
+                            "No",
+                          ].map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _wAccess = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 15,),
+                Text('Travel access'),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 0),
+                  padding: EdgeInsets.symmetric(
+                      vertical: 10, horizontal: 20),
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                      color: Color(0xFFE5E5E5),
+                    ),
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: DropdownButton(
+                          isExpanded: true,
+                          underline: SizedBox(),
+                          icon: Icon(Icons.keyboard_arrow_down,
+                              color: Colors.grey), //
+                          value: _tAccess,
+                          items: [
+                            "Yes",
+                            "No",
+                          ].map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _tAccess = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 15,),
+                Text('Payment access'),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 0),
+                  padding: EdgeInsets.symmetric(
+                      vertical: 10, horizontal: 20),
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                      color: Color(0xFFE5E5E5),
+                    ),
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: DropdownButton(
+                          isExpanded: true,
+                          underline: SizedBox(),
+                          icon: Icon(Icons.keyboard_arrow_down,
+                              color: Colors.grey), //
+                          value: _pAccess,
+                          items: [
+                            "Yes",
+                            "No",
+                          ].map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _pAccess = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 15,),
+                Text('Account Details access'),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 0),
+                  padding: EdgeInsets.symmetric(
+                      vertical: 10, horizontal: 20),
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                      color: Color(0xFFE5E5E5),
+                    ),
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: DropdownButton(
+                          isExpanded: true,
+                          underline: SizedBox(),
+                          icon: Icon(Icons.keyboard_arrow_down,
+                              color: Colors.grey), //
+                          value: _aAccess,
+                          items: [
+                            "Yes",
+                            "No",
+                          ].map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _aAccess = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('Save Changes'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+    showDialog(barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

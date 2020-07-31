@@ -18,13 +18,13 @@ class CustomButton extends StatelessWidget {
         height: 45,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 253, 188, 51),
-          borderRadius: BorderRadius.circular(36),
+          color: Color(0xff376AFF),
+          borderRadius: BorderRadius.circular(6),
         ),
         alignment: Alignment.center,
         child: const Text(
           'Send OTP',
-          style: TextStyle(color: Colors.black, fontSize: 16.0),
+          style: TextStyle(color: Colors.white, fontSize: 16.0),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toast/toast.dart';
 
 class AppLanguage extends StatefulWidget {
   @override
@@ -27,6 +28,42 @@ class _LanguageState extends State<AppLanguage> {
               fontFamily: "Circular",
             ),
           )),
+      body: ListView(
+          children: <Widget>[
+            ListTile(
+                title: Text("English"),
+                trailing: Icon(Icons.check_circle,color: Color(0xff376AFF),),
+                onTap: (){
+                    Toast.show("Language Already Selected.", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+                },
+            ),
+            ListTile(
+                title: Text("हिन्दी"),
+                onTap: (){
+                    Toast.show("We're working on this.", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+                },
+            ),
+            ListTile(
+              title: Text("한국어"),
+              onTap: (){
+                Toast.show("We're working on this.", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+              },
+            ),
+            ListTile(
+              title: Text("Française"),
+              onTap: (){
+                Toast.show("We're working on this.", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+              },
+            ),
+            ListTile(
+              title: Text("svenska"),
+              onTap: (){
+                Toast.show("We're working on this.", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+              },
+            ),
+
+          ],
+        )
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sih/features/testing.dart';
 import 'package:sih/web_view.dart';
+import 'package:toast/toast.dart';
 
 class CovidResp extends StatefulWidget {
   @override
@@ -82,11 +83,9 @@ class _CovidRespState extends State<CovidResp> {
                   imageUrl: "assets/0.jpg",
                 ),
                 BikeListItem(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => null,
-                      )),
+                  onTap: (){
+                    Toast.show("Disabled by System administrator.", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+                  },
                   title: "Travelling at other Place",
                   textButton: "READ NOW",
                   thirdTitle:  "Check your destination travel advisories and requirements before you departure. ",

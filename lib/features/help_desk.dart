@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sih/Help/chatbot.dart';
 import 'package:sih/Help/faq.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HelpDesk extends StatefulWidget {
   @override
@@ -12,6 +13,25 @@ class _HelpDeskState extends State<HelpDesk> {
   double customFontSize = 13;
   double width,
       height = 50.0;
+
+  _sendMail() async {
+    const uri =
+        'mailto:support@aircare.com?subject=Support%20a%20Query';
+    if (await canLaunch(uri)) {
+      await launch(uri);
+    } else {
+      throw 'Could not initiate $uri';
+    }
+  }
+
+  _telPhone() async {
+    const uri = 'tel: 1800-11-0402';
+    if (await canLaunch(uri)) {
+      await launch(uri);
+    } else {
+      throw 'Could not initiate $uri';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +145,7 @@ class _HelpDeskState extends State<HelpDesk> {
                           height: height,
                           margin: EdgeInsets.only(bottom: 10),
                           child: RawMaterialButton(
-                              onPressed: () {},
+                              onPressed: _telPhone,
                               shape: CircleBorder(),
                               child: Image.asset("assets/icons8-call-64.png")),
                         ),
@@ -149,7 +169,8 @@ class _HelpDeskState extends State<HelpDesk> {
                         ),
                       ],
                     ),
-                  )),
+                  ),
+              ),
             ],
           ),
           SizedBox(
@@ -168,7 +189,7 @@ class _HelpDeskState extends State<HelpDesk> {
                           height: height,
                           margin: EdgeInsets.only(bottom: 10),
                           child: RawMaterialButton(
-                              onPressed: () {},
+                              onPressed: _sendMail,
                               shape: CircleBorder(),
                               child: Image.asset("assets/icons8-email-64.png")),
                         ),

@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sih/profile/manage_sub.dart';
 import 'package:sih/profile/language.dart';
 import 'package:sih/profile/dev_contact.dart';
 import 'package:sih/profile/connected_acc.dart';
 import 'package:sih/profile/my_profile.dart';
+import 'package:toast/toast.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -24,6 +26,110 @@ class _ProfileState extends State<Profile> {
   final TextStyle whiteBoldText = TextStyle(
     color: Colors.black,
   );
+
+
+  bool isSwitchedFT = true;
+  bool privateAcc = true;
+  bool receiveTravel = true;
+  bool flightUpdate = true;
+  bool deal=true;
+  bool baggageStatus=true;
+
+  @override
+  void initState() {
+    super.initState();
+    getSwitchValues();
+  }
+
+  getSwitchValues() async {
+    isSwitchedFT = await getSwitchState() ?? false;
+    privateAcc = await getPrivateAcc() ?? false;
+    receiveTravel = await getReceiveTravel() ?? false;
+    flightUpdate = await getFlightUpdate()?? false;
+    deal = await getDeal()?? false;
+    baggageStatus = await getBaggageStatus()?? false;
+    setState(() {});
+  }
+
+  Future<bool> getDeal() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool deal = prefs.getBool("deal");
+    return deal;
+  }
+
+  Future<bool> saveDeal(bool value) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("deal", value);
+    print("Deal Value Saved $value");
+    return prefs.setBool("deal", value);
+  }
+
+  Future<bool> getFlightUpdate() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool flightUpdate = prefs.getBool("flightUpdate");
+    return flightUpdate;
+  }
+
+  Future<bool> saveFlightUpdate(bool value) async{
+    SharedPreferences prefs =await SharedPreferences.getInstance();
+    prefs.setBool("flightUpdate", value);
+    print("Flight Value Saved $value");
+    return prefs.setBool("flightUpdate", value);
+  }
+
+
+  Future<bool> saveSwitchState(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("switchState", value);
+    print('Switch Value saved $value');
+    return prefs.setBool("switchState", value);
+  }
+
+  Future<bool> getSwitchState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isSwitchedFT = prefs.getBool("switchState");
+    return isSwitchedFT;
+  }
+
+  Future<bool> getBaggageStatus() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool baggageStatus = prefs.getBool("baggageStatus");
+    return baggageStatus;
+  }
+
+  Future<bool> saveBaggageStatus(bool value) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("baggageStatus",value);
+    print('Switch Value saved $value');
+    return prefs.setBool("baggageStatus", value);
+
+  }
+
+  Future<bool> getPrivateAcc() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool privateAcc = prefs.getBool("privateAcc");
+    return privateAcc;
+  }
+
+  Future<bool> savePrivate(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("privateAcc", value);
+    print('Switch Value saved $value');
+    return prefs.setBool("privateAcc", value);
+  }
+
+  Future<bool> getReceiveTravel() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool receiveTravel = prefs.getBool("receiveTravel");
+    return receiveTravel;
+  }
+
+  Future<bool> saveReceiveTravel(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("receiveTravel", value);
+    print('Switch Value saved $value');
+    return prefs.setBool("receiveTravel", value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,9 +214,31 @@ class _ProfileState extends State<Profile> {
                   _buildDivider(),
                   SwitchListTile(
                     activeColor: Color(0xff0437D6),
-                    value: true,
                     title: Text("Private Account"),
-                    onChanged: (val) {},
+                    value: privateAcc,
+                    onChanged: (bool value) {
+                      setState(() {
+                        privateAcc = value;
+                        savePrivate(value);
+                        print('Saved state is $privateAcc');
+                        if(privateAcc==true)
+                        {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text('Private Account Enabled Successfully'),
+                            duration: Duration(seconds: 2),
+                          ));
+                        }else
+                        {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text('Private Account Disabled by You'),
+                            duration: Duration(seconds: 2),
+                          ));
+                        }
+                        //switch works
+                      });
+                      print(isSwitchedFT);
+                    },
+
                   ),
                   _buildDivider(),
                   ListTile(
@@ -142,30 +270,117 @@ class _ProfileState extends State<Profile> {
                 children: <Widget>[
                   SwitchListTile(
                     activeColor: Color(0xff0437D6),
-                    value: true,
                     title: Text("Receive Travel Notifications"),
-                    onChanged: (val) {},
+                    value: receiveTravel,
+                    onChanged: (bool value) {
+                      setState(() {
+                        receiveTravel = value;
+                        saveSwitchState(value);
+                        print('Saved state is $receiveTravel');
+                        if(receiveTravel==true)
+                        {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text("You will receive travel status update notification."),
+                            duration: Duration(seconds: 2),
+                          ));
+                        }else
+                        {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text('You have disabled travel update notifications'),
+                            duration: Duration(seconds: 2),
+                          ));
+                        }
+                        //switch works
+                      });
+                      print(isSwitchedFT);
+                    },
                   ),
                   _buildDivider(),
                   SwitchListTile(
                     activeColor: Color(0xff0437D6),
-                    value: true,
                     title: Text("Flight Update Notifications"),
-                    onChanged: (val) {},
+                    value: flightUpdate,
+                    onChanged: (bool value) {
+                      setState(() {
+                        flightUpdate = value;
+                        var note = saveFlightUpdate(value);
+                        print("this is note $note");
+                        print('Saved state is $flightUpdate');
+                        if(flightUpdate==true)
+                        {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text('You will receive flight status update notification.'),
+                            duration: Duration(seconds: 2),
+                          ));
+                        }else
+                        {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text('You have disabled flight update notifications.'),
+                            duration: Duration(seconds: 2),
+                          ));
+                        }
+                        //switch works
+                      });
+                      print(isSwitchedFT);
+                    },
                   ),
                   _buildDivider(),
                   SwitchListTile(
                     activeColor: Color(0xff0437D6),
-                    value: true,
+                    value: deal,
                     title: Text("Deals and Offers"),
-                    onChanged: (val) {},
+                    onChanged: (bool value) {
+                      setState(() {
+                        deal = value;
+                        var note = saveDeal(value);
+                        print("this is note $note");
+                        print('Saved state is $deal');
+                        if(deal==true)
+                        {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text('You will receive deals and offers notifications.'),
+                            duration: Duration(seconds: 2),
+                          ));
+                        }else
+                        {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text('You have unsubscribed from deal and offers notifications.'),
+                            duration: Duration(seconds: 2),
+                          ));
+                        }
+                        //switch works
+                      });
+                      print(deal);
+                    },
                   ),
                   _buildDivider(),
                   SwitchListTile(
                     activeColor: Color(0xff0437D6),
-                    value: true,
+                    value: baggageStatus,
                     title: Text("Baggage Status"),
-                    onChanged: (val) {},
+                    onChanged: (bool value) {
+                      setState(() {
+                        baggageStatus = value;
+                        var note = saveBaggageStatus(value);
+                        print("this is note $note");
+                        print('Saved state is $baggageStatus');
+                        if(baggageStatus==true)
+                        {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text('You will receive updated information for your Baggage.'),
+                            duration: Duration(seconds: 2),
+                          ));
+                        }else
+                        {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text('You have unsubscribed from Baggage Updates notifications.'),
+                            duration: Duration(seconds: 2),
+                          ));
+                        }
+                        //switch works
+                      });
+                      print(baggageStatus);
+                    },
                   ),
                 ],
               ),
@@ -239,9 +454,30 @@ class _ProfileState extends State<Profile> {
                 children: <Widget>[
                   SwitchListTile(
                     activeColor: Color(0xff0437D6),
-                    value: true,
                     title: Text("Dark Mode"),
-                    onChanged: (val) {},
+                    value: isSwitchedFT,
+                    onChanged: (bool value) {
+                      setState(() {
+                        isSwitchedFT = value;
+                        saveSwitchState(value);
+                        print('Saved state is $isSwitchedFT');
+                        if(isSwitchedFT==true)
+                        {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text('Dark Mode Enabled Successfully.'),
+                            duration: Duration(seconds: 2),
+                          ));
+                        }else
+                        {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text('Dark Mode has been disabled by You.'),
+                            duration: Duration(seconds: 2),
+                          ));
+                        }
+                        //switch works
+                      });
+                      print(isSwitchedFT);
+                    },
                   ),
                   _buildDivider(),
                   ListTile(
@@ -274,7 +510,13 @@ class _ProfileState extends State<Profile> {
                 children: <Widget>[
                   ListTile(
                       title: Text("App Version"),
-                      onTap: () {},
+                      onTap: (){
+                        showAlertDialog(context);
+                        Future.delayed(const Duration(milliseconds: 1500), () {
+                          Navigator.pop(context);
+                          Toast.show("No update available.", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+                        });
+                      },
                       trailing: Text(
                         "2.3.84",
                         style: TextStyle(
@@ -325,6 +567,22 @@ class _ProfileState extends State<Profile> {
           ],
         ),
       ),
+    );
+  }
+  showAlertDialog(BuildContext context){
+    AlertDialog alert=AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(),
+          SizedBox(width: 10,),
+          Container(margin: EdgeInsets.only(left: 5),child:Text("Checking for updates" )),
+        ],),
+    );
+    showDialog(barrierDismissible: false,
+      context:context,
+      builder:(BuildContext context){
+        return alert;
+      },
     );
   }
 }

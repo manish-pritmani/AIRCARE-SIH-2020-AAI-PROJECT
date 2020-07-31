@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hotel/src/models/box_model.dart';
-import 'package:hotel/src/utils/icon_string_util.dart';
+import 'package:sih/models/box_model.dart';
+import 'package:sih/utils/icon_string_util.dart';
 
 class OptionsBox extends StatelessWidget {
   final List<BoxModel> boxes;

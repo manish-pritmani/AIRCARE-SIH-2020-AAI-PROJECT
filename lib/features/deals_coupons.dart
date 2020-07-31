@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 import 'package:sih/features/wifi.dart';
-
+import 'package:toast/toast.dart';
+import 'package:clipboard/clipboard.dart';
+import 'package:sih/features/tnc.dart';
 
 class Coupon extends StatefulWidget {
   @override
@@ -24,6 +26,7 @@ class _WalletState extends State<Coupon> with SingleTickerProviderStateMixin {
       _tabController.dispose();
       super.dispose();
     }
+
     return Scaffold(
       appBar: AppBar(
           elevation: 1,
@@ -35,19 +38,18 @@ class _WalletState extends State<Coupon> with SingleTickerProviderStateMixin {
           title: Text(
             "Deals and Discounts",
             style: TextStyle(
-              color: Theme.of(context).brightness == Brightness.dark ? Colors.white :Colors.black,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : Colors.black,
               fontFamily: "Circular",
             ),
-          )
-      ),
+          )),
       body: Container(
 //        color: Color(0xFFbdc3c7),
 //        width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
           child: Column(
-            children: <Widget>[
-              _tabSection(context)
-            ],
+            children: <Widget>[_tabSection(context)],
           ),
         ),
       ),
@@ -84,171 +86,428 @@ Widget _tabSection(BuildContext context) {
           //Add this to give height
           height: MediaQuery.of(context).size.height,
           child: TabBarView(children: [
-           SingleChildScrollView(
-             child:  Container(
-                 child: Column(
-                     children: <Widget> [
-                       Card(
-                         elevation: 1.0,
-                         shape: RoundedRectangleBorder(
-                           borderRadius: BorderRadius.circular(6.0),
-                         ),
-                         child: Stack(
-                           children: <Widget>[
-                             Column(
-                               children: <Widget>[
-                                 Container(
-                                   height: 150.0,
-                                   decoration: BoxDecoration(
-                                       borderRadius: BorderRadius.only(
-                                         topLeft: Radius.circular(6.0),
-                                         topRight: Radius.circular(6.0),
-                                       ),
-                                       image: DecorationImage(
-                                         image: AssetImage("assets/8.jfif"),
-                                         fit: BoxFit.cover,
-                                       )),
-                                 ),
-                                 Padding(
-                                   padding: const EdgeInsets.all(16.0),
-                                   child: Text(
-                                     "Get upto 25% off on your FIRST cab ride. USE CODE : FIRST25",
-                                     style: titleTextStyle,
-                                   ),
-                                 ),
-                                 Padding(
-                                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                                   child: Row(
-                                     children: <Widget>[
-                                       Text(
-                                         "T&C Apply (For VIP User only)",
-                                         style: TextStyle(
-                                           color: Colors.grey,
-                                           fontSize: 14.0,
-                                         ),
-                                       ),
-                                       Spacer(),
-                                       Text(
-                                         "Valid till : 29 Aug",
-                                         style: TextStyle(
-                                           color: Colors.grey,
-                                           fontSize: 14.0,
-                                         ),
-                                       ),
-                                     ],
-                                   ),
-                                 ),
-                                 const SizedBox(height: 20.0),
-                               ],
-                             ),
-                             Positioned(
-                               top: 140,
-                               left: 10.0,
-                               child:Container(
-                                 decoration: BoxDecoration(
-                                   color: Color(0xFF2ecc71),
-                                   borderRadius: BorderRadius.circular(16),
-                                 ),
-                                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                 child: Text(
-                                   "VIP USER",
-                                   style: TextStyle(
-                                       color: Colors.white,
-                                       fontSize: 16,
-                                       fontWeight: FontWeight.bold
-                                   ),
-                                 ),
-                               ),
-                             )
-                           ],
-                         ),
-                       ),
-                       Card(
-                         elevation: 1.0,
-                         shape: RoundedRectangleBorder(
-                           borderRadius: BorderRadius.circular(6.0),
-                         ),
-                         child: Stack(
-                           children: <Widget>[
-                             Column(
-                               children: <Widget>[
-                                 Container(
-                                   height: 150.0,
-                                   decoration: BoxDecoration(
-                                       borderRadius: BorderRadius.only(
-                                         topLeft: Radius.circular(6.0),
-                                         topRight: Radius.circular(6.0),
-                                       ),
-                                       image: DecorationImage(
-                                         image: AssetImage("assets/5.jpg"),
-                                         fit: BoxFit.cover,
-                                       )),
-                                 ),
-                                 Padding(
-                                   padding: const EdgeInsets.all(16.0),
-                                   child: Text(
-                                     "Shop on any duty free shop and get additional discount on payment using ONE WALLET.",
-                                     style: titleTextStyle,
-                                   ),
-                                 ),
-                                 Padding(
-                                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                                   child: Row(
-                                     children: <Widget>[
-                                       Text(
-                                         "T&C Apply",
-                                         style: TextStyle(
-                                           color: Colors.grey,
-                                           fontSize: 14.0,
-                                         ),
-                                       ),
-                                       Spacer(),
-                                       Text(
-                                         "Valid till : 31st Dec",
-                                         style: TextStyle(
-                                           color: Colors.grey,
-                                           fontSize: 14.0,
-                                         ),
-                                       ),
-                                     ],
-                                   ),
-                                 ),
-                                 const SizedBox(height: 20.0),
-                               ],
-                             ),
-                             Positioned(
-                               top: 140,
-                               left: 10.0,
-                               child:Container(
-                                 decoration: BoxDecoration(
-                                   color: Colors.redAccent,
-                                   borderRadius: BorderRadius.circular(16),
-                                 ),
-                                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                 child: Text(
-                                   "FREE USER",
-                                   style: TextStyle(
-                                       color: Colors.white,
-                                       fontSize: 16,
-                                       fontWeight: FontWeight.bold
-                                   ),
-                                 ),
-                               ),
-                             )
-                           ],
-                         ),
-                       ),
-                     ]
-                 )
-             ),
-           ),
-            Container(
-                child: Column(
-                  children: <Widget>[
+            SingleChildScrollView(
+              child: Container(
+                  child: Column(children: <Widget>[
+                Card(
+                  elevation: 1.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                  child: Stack(
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            height: 150.0,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(6.0),
+                                  topRight: Radius.circular(6.0),
+                                ),
+                                image: DecorationImage(
+                                  image: AssetImage("assets/8.jfif"),
+                                  fit: BoxFit.cover,
+                                )),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(16,16,16,0),
+                            child: Text(
+                              "Get upto 25% off on your FIRST cab ride. USE CODE : FIRST25",
+                              style: titleTextStyle,
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Row(
+                              children: <Widget>[
+                                FlatButton(
+                                  textColor: Colors.black,
+                                  child: Text(
+                                    'T&C Apply (Read)',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Tnc()));
+                                  },
+                                ),
+                                Spacer(),
+                                Text(
+                                  "Valid till : 29 Aug",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 14.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
 
-                  ],
-                )
+                        ],
+                      ),
+                      Positioned(
+                        top: 140,
+                        left: 10.0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xFF2ecc71),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          child: Text(
+                            "VIP USER",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Card(
+                  elevation: 1.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                  child: Stack(
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            height: 150.0,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(6.0),
+                                  topRight: Radius.circular(6.0),
+                                ),
+                                image: DecorationImage(
+                                  image: AssetImage("assets/5.jpg"),
+                                  fit: BoxFit.cover,
+                                )),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(16,16,16,0),
+                            child: Text(
+                              "Shop on any duty free shop and get additional discount on payment using ONE WALLET.",
+                              style: titleTextStyle,
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Row(
+                              children: <Widget>[
+                                FlatButton(
+                                  textColor: Colors.black,
+                                  child: Text(
+                                    'T&C Apply (Read)',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Tnc()));
+                                  },
+                                ),
+                                Spacer(),
+                                Text(
+                                  "Valid till : 31st Dec",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 14.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                        ],
+                      ),
+                      Positioned(
+                        top: 140,
+                        left: 10.0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.redAccent,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          child: Text(
+                            "FREE USER",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ])),
             ),
+            SingleChildScrollView(
+                child: Column(
+              children: <Widget>[
+                Card(
+                  elevation: 1.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12.0, vertical: 10),
+                        child: Text(
+                          "Get 10% off on your FIRST dining.",
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          "USE CODE : MYFIRST",
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      Divider(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Color(0xFF2ecc71),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 2),
+                              child: Text(
+                                "VIP USER",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              "Valid till : 29 Aug",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      FlatButton.icon(
+                        icon: Icon(Icons.content_paste),
+                        textColor: Colors.black,
+                        label: Text(
+                          'Copy this Coupon',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        onPressed: () {
+                          FlutterClipboard.copy('MYFIRST').then(( value ) {
+                            Toast.show("Coupon Code Copied.", context,
+                                duration: Toast.LENGTH_SHORT,
+                                gravity: Toast.BOTTOM);
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 10.0),
+                    ],
+                  ),
+                ),
+                Card(
+                  elevation: 1.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12.0, vertical: 10),
+                        child: Text(
+                          "Get 30% off on your BOOKING Flight.",
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          "USE CODE : FIRSTBOOK",
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      Divider(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 16),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 2),
+                              child: Text(
+                                "ELITE VIP USER",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              "Valid till : 31 July",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      FlatButton.icon(
+                        icon: Icon(Icons.content_paste),
+                        textColor: Colors.black,
+                        label: Text(
+                          'Copy this Coupon',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        onPressed: () {
+                          FlutterClipboard.copy('FIRSTBOOK').then(( value ) {
+                            Toast.show("Coupon Code Copied.", context,
+                                duration: Toast.LENGTH_SHORT,
+                                gravity: Toast.BOTTOM);
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 10.0),
+                    ],
+                  ),
+                ),
+                Card(
+                  elevation: 1.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12.0, vertical: 10),
+                        child: Text(
+                          "Get 10% extra cashback on add money in one wallet.",
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          "USE CODE : AIRCARE",
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      Divider(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 16),
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.redAccent,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 2),
+                              child: Text(
+                                "FREE USER",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              "Valid till : 29 Aug",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      FlatButton.icon(
+                        icon: Icon(Icons.content_paste),
+                        textColor: Colors.black,
+                        label: Text(
+                          'Copy this Coupon',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        onPressed: () {
+                          FlutterClipboard.copy('AIRCARE').then(( value ) {
+                            Toast.show("Coupon Code Copied.", context,
+                                duration: Toast.LENGTH_SHORT,
+                                gravity: Toast.BOTTOM);
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 10.0),
+                    ],
+                  ),
+                ),
+              ],
+            )),
           ]),
         ),
       ],
@@ -302,11 +561,13 @@ class _PaymentCardWidgetState extends State<PaymentCardWidget> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Expanded(child:  Text(
-              widget.payment.name,
-              style: TextStyle(
-                  inherit: true, fontWeight: FontWeight.w700, fontSize: 16.0),
-            ),)
+            Expanded(
+              child: Text(
+                widget.payment.name,
+                style: TextStyle(
+                    inherit: true, fontWeight: FontWeight.w700, fontSize: 16.0),
+              ),
+            )
           ],
         ),
         subtitle: Padding(
@@ -359,14 +620,14 @@ class PaymentModel {
 
 List<PaymentModel> getPaymentsCard() {
   List<PaymentModel> paymentCards = [
-    PaymentModel(Icons.add_circle_outline, Colors.green, "Added Money in Wallet",
-        "23 June 2020", "20.04 AM", 251.40, 1),
+    PaymentModel(Icons.add_circle_outline, Colors.green,
+        "Added Money in Wallet", "23 June 2020", "20.04 AM", 251.40, 1),
     PaymentModel(Icons.receipt, Color(0xFFff415f), "Transfer To Mihir Bhasin",
         "19 June 2020", "14.30 PM", 64.80, -1),
     PaymentModel(Icons.hotel, Colors.deepOrange, "Restroom Charges",
         "15 June 2020", "10.04 PM", 115.00, -1),
-    PaymentModel(Icons.train, Color(0xFF50f3e2), "Train ticket to Turkey", "07-23",
-        "13 June 2020", 37.00, -1),
+    PaymentModel(Icons.train, Color(0xFF50f3e2), "Train ticket to Turkey",
+        "07-23", "13 June 2020", 37.00, -1),
   ];
 
   return paymentCards;

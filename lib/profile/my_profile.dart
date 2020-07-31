@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,13 @@ class _ProfileInfo extends State<ProfileInfo>
   @override
   void initState() {
     super.initState();
+   getCurrent();
+  }
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future getCurrent() async{
+    FirebaseUser user = await _auth.currentUser();
+    print(user);
   }
 
   @override

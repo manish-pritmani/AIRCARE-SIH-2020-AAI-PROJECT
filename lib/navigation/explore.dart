@@ -1,23 +1,48 @@
+import 'package:android_intent/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:majascan/majascan.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sih/Help/chatbot.dart';
 import 'package:sih/Help/my_favourites.dart';
 import 'package:sih/Help/qna.dart';
+import 'package:sih/explore/shops.dart';
 import 'package:sih/features/book_flight.dart';
 import 'package:sih/features/deals_coupons.dart';
+import 'package:sih/features/drink_water.dart';
 import 'package:sih/features/help_desk.dart';
+import 'package:sih/hotel/hotelBooking/hotelHomeScreen.dart';
+import 'package:sih/features/my_coupons.dart';
+import 'package:sih/features/tokens.dart';
+import 'package:sih/features/tour_guide.dart';
 import 'package:sih/features/wheel_chair_request.dart';
 import 'package:sih/features/wifi_hunt.dart';
 import 'package:sih/main.dart';
+import 'package:sih/navigation/dining.dart';
+import 'package:sih/navigation/exchange.dart';
+import 'package:sih/navigation/hotel.dart';
 import 'package:sih/navigation/indoor_navigation.dart';
+import 'package:sih/navigation/parking.dart';
+import 'package:sih/navigation/wifi_nearby.dart';
+import 'package:sih/permission.dart';
+import 'package:sih/taxi/screens/home_screen.dart';
+import 'package:sih/utils/airport_details.dart';
+import 'package:sih/utils/buy_sub.dart';
 import 'package:sih/utils/offers.dart';
 import 'package:sih/utils/slider.dart';
 import 'package:sih/vip_zone.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:sih/features/covid_response.dart';
+import 'package:toast/toast.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sih/flight_book/home_page.dart';
+import 'package:sih/widgets/search_bar_widget.dart';
+import 'package:sih/navigation/option_taxi.dart';
+
+
 class Explore extends StatefulWidget {
   @override
   _ExploreState createState() => _ExploreState();
@@ -33,16 +58,79 @@ class _ExploreState extends State<Explore> {
 
   ScrollController scrollController;
   bool dialVisible = true;
+  final PermissionHandler permissionHandler = PermissionHandler();
+  Map<PermissionGroup, PermissionStatus> permissions;
+
+  Future<bool> _requestPermission(PermissionGroup permission) async {
+    final PermissionHandler _permissionHandler = PermissionHandler();
+    var result = await _permissionHandler.requestPermissions([permission]);
+    if (result[permission] == PermissionStatus.granted) {
+      return true;
+    }
+    return false;
+  }
+
+/*Checking if your App has been Given Permission*/
+  Future<bool> requestLocationPermission({Function onPermissionDenied}) async {
+    var granted = await _requestPermission(PermissionGroup.location);
+    if (granted != true) {
+      requestLocationPermission();
+    } else {
+      _getCurrentLocation();
+    }
+    debugPrint('requestContactsPermission $granted');
+    return granted;
+  }
+
+/*Show dialog if GPS not enabled and open settings location*/
+  Future _checkGps() async {
+    if (!(await Geolocator().isLocationServiceEnabled())) {
+      if (Theme.of(context).platform == TargetPlatform.android) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Can't get current location"),
+                content:
+                    const Text('Please make sure you enable GPS and try again'),
+                actions: <Widget>[
+                  FlatButton(
+                      child: Text('Ok'),
+                      onPressed: () {
+                        final AndroidIntent intent = AndroidIntent(
+                            action:
+                                'android.settings.LOCATION_SOURCE_SETTINGS');
+                        intent.launch();
+                        Navigator.of(context, rootNavigator: true).pop();
+                        _gpsService();
+                      })
+                ],
+              );
+            });
+      }
+    }
+  }
+
+/*Check if gps service is enabled or not*/
+  Future _gpsService() async {
+    if (!(await Geolocator().isLocationServiceEnabled())) {
+      _checkGps();
+      return null;
+    } else
+      return true;
+  }
 
   @override
   void initState() {
     super.initState();
-
+    requestLocationPermission();
+    _gpsService();
     scrollController = ScrollController()
       ..addListener(() {
         setDialVisible(scrollController.position.userScrollDirection ==
             ScrollDirection.forward);
       });
+
   }
 
   void setDialVisible(bool value) {
@@ -117,7 +205,7 @@ class _ExploreState extends State<Explore> {
         children: [
           SpeedDialChild(
               child: Icon(Icons.bubble_chart),
-              backgroundColor:  Color(0xff376AFF),
+              backgroundColor: Color(0xff376AFF),
               foregroundColor: Colors.white,
               label: 'HelpBot',
               labelStyle: TextStyle(fontSize: 18.0),
@@ -128,30 +216,41 @@ class _ExploreState extends State<Explore> {
                 );
               }),
           SpeedDialChild(
-            child: Icon(Icons.star),
-            backgroundColor: Colors.amberAccent,
-            foregroundColor: Colors.white,
-            label: 'Favourites',
-            labelStyle: TextStyle(fontSize: 18.0),
+              child: Icon(Icons.star),
+              backgroundColor: Colors.amberAccent,
+              foregroundColor: Colors.white,
+              label: 'Favourites',
+              labelStyle: TextStyle(fontSize: 18.0),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Favourites()),
+                  MaterialPageRoute(builder: (context) => SeachAppBarRecipe(title: "hello",)),
                 );
               }),
           SpeedDialChild(
-            child: Icon(Icons.local_offer),
-            backgroundColor: Colors.redAccent,
-            foregroundColor: Colors.white,
-            label: 'My Coupons',
-            labelStyle: TextStyle(fontSize: 18.0),
+              child: Icon(Icons.local_offer),
+              backgroundColor: Colors.redAccent,
+              foregroundColor: Colors.white,
+              label: 'My Coupons',
+              labelStyle: TextStyle(fontSize: 18.0),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Favourites()),
+                  MaterialPageRoute(builder: (context) => Coupons()),
                 );
-              }
-          ),
+              }),
+          SpeedDialChild(
+              child: Icon(Icons.library_books),
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
+              label: 'My Tokens',
+              labelStyle: TextStyle(fontSize: 18.0),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Tokens()),
+                );
+              }),
         ],
       ),
       body: SingleChildScrollView(
@@ -287,7 +386,12 @@ class _ExploreState extends State<Explore> {
                                 height: height,
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: RawMaterialButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Dining()));
+                                  },
                                   shape: CircleBorder(),
                                   child: Image.asset("assets/bell.png"),
                                 ),
@@ -309,10 +413,15 @@ class _ExploreState extends State<Explore> {
                                 height: height,
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: RawMaterialButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  OptionTaxi()));
+                                    },
                                     shape: CircleBorder(),
-                                    child: Image.asset(
-                                        "assets/taxier.png")),
+                                    child: Image.asset("assets/taxier.png")),
                               ),
                               Text(
                                 "Book Taxi",
@@ -330,7 +439,12 @@ class _ExploreState extends State<Explore> {
                                 width: width,
                                 height: height,
                                 child: RawMaterialButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Hotel()));
+                                  },
                                   shape: CircleBorder(),
                                   child: Image.asset("assets/bed-1.png"),
                                 ),
@@ -351,7 +465,12 @@ class _ExploreState extends State<Explore> {
                                 height: height,
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: RawMaterialButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Shops()));
+                                  },
                                   shape: CircleBorder(),
                                   child: Image.asset("assets/shops.png"),
                                 ),
@@ -403,7 +522,7 @@ class _ExploreState extends State<Explore> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  FlightSearchPage()));
+                                                  FlightBook()));
                                     },
                                     shape: CircleBorder(),
                                     child: Image.asset("assets/airport.png")),
@@ -424,7 +543,13 @@ class _ExploreState extends State<Explore> {
                                 width: width,
                                 height: height,
                                 child: RawMaterialButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  TourGuide()));
+                                    },
                                     shape: CircleBorder(),
                                     child: Image.asset("assets/pilot.png")),
                               ),
@@ -444,7 +569,13 @@ class _ExploreState extends State<Explore> {
                                 height: height,
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: RawMaterialButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CurrencyExchange()));
+                                    },
                                     shape: CircleBorder(),
                                     child: Image.asset("assets/money.png")),
                               ),
@@ -528,8 +659,7 @@ class _ExploreState extends State<Explore> {
                                 child: RawMaterialButton(
                                     onPressed: () {},
                                     shape: CircleBorder(),
-                                    child:
-                                        Image.asset("assets/time.png")),
+                                    child: Image.asset("assets/time.png")),
                               ),
                               Column(
                                 children: <Widget>[
@@ -558,7 +688,12 @@ class _ExploreState extends State<Explore> {
                                 height: height,
                                 margin: EdgeInsets.only(bottom: 10),
                                 child: RawMaterialButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Parking()));
+                                    },
                                     shape: CircleBorder(),
                                     child: Image.asset("assets/parkings.png")),
                               ),
@@ -579,7 +714,12 @@ class _ExploreState extends State<Explore> {
                                 width: width,
                                 height: height,
                                 child: RawMaterialButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => MyWifi()));
+                                    },
                                     shape: CircleBorder(),
                                     child: Image.asset("assets/router.png")),
                               ),
@@ -690,8 +830,7 @@ class _ExploreState extends State<Explore> {
                                       );
                                     },
                                     shape: CircleBorder(),
-                                    child:
-                                        Image.asset("assets/support.png")),
+                                    child: Image.asset("assets/support.png")),
                               ),
                               Text(
                                 "HelpDesk",
@@ -714,11 +853,10 @@ class _ExploreState extends State<Explore> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  WheelChairRequest()));
+                                                  DrinkWater()));
                                     },
                                     shape: CircleBorder(),
-                                    child:
-                                        Image.asset("assets/water.png")),
+                                    child: Image.asset("assets/water.png")),
                               ),
                               Column(
                                 children: <Widget>[
@@ -787,32 +925,32 @@ class _ExploreState extends State<Explore> {
 //              Navigator.push(
 //                  context, MaterialPageRoute(builder: (context) => ViewMore()));
             }),
-            Padding(
-              padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
-              child: Container(
-                height: MediaQuery.of(context).size.height / 2.4,
-                width: MediaQuery.of(context).size.width,
-                child: ListView.builder(
-                  primary: false,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: restaurants == null ? 0 : restaurants.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    Map restaurant = restaurants[index];
-
-                    return Padding(
-                      padding: EdgeInsets.only(right: 10.0),
-                      child: SlideItem(
-                        img: restaurant["img"],
-                        title: restaurant["title"],
-                        address: restaurant["address"],
-                        rating: restaurant["rating"],
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
+//            Padding(
+//              padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+//              child: Container(
+//                height: MediaQuery.of(context).size.height / 2.4,
+//                width: MediaQuery.of(context).size.width,
+//                child: ListView.builder(
+//                  primary: false,
+//                  shrinkWrap: true,
+//                  scrollDirection: Axis.horizontal,
+//                  itemCount: restaurants == null ? 0 : restaurants.length,
+//                  itemBuilder: (BuildContext context, int index) {
+//                    Map restaurant = restaurants[index];
+//
+//                    return Padding(
+//                      padding: EdgeInsets.only(right: 10.0),
+//                      child: SlideItem(
+//                        img: restaurant["img"],
+//                        title: restaurant["title"],
+//                        address: restaurant["address"],
+//                        rating: restaurant["rating"],
+//                      ),
+//                    );
+//                  },
+//                ),
+//              ),
+//            ),
             Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -960,7 +1098,7 @@ class _ExploreState extends State<Explore> {
                 title: Text("Buy VIP Subscription"),
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => VIPZone()));
+                      MaterialPageRoute(builder: (context) => Subscription()));
                 },
                 subtitle: Text("Get exciting offers and save more."),
                 trailing: Container(
@@ -970,7 +1108,7 @@ class _ExploreState extends State<Explore> {
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   child: Text(
-                    "BUY NOW",
+                    "Buy Now",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -985,8 +1123,10 @@ class _ExploreState extends State<Explore> {
                 contentPadding: EdgeInsets.symmetric(horizontal: 15),
                 title: Text("Airport Details"),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => VIPZone()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AirportDetails()));
                 },
                 subtitle: Text("Locate any airport and get details."),
                 trailing: Container(
@@ -996,7 +1136,7 @@ class _ExploreState extends State<Explore> {
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   child: Text(
-                    "LOCATE",
+                    "Locate",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -1011,8 +1151,10 @@ class _ExploreState extends State<Explore> {
                 contentPadding: EdgeInsets.symmetric(horizontal: 15),
                 title: Text("Safe Travel Guidelines"),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => VIPZone()));
+                  Toast.show("Disabled by System administrator.", context,
+                      duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+//                  Navigator.push(context,
+//                      MaterialPageRoute(builder: (context) => VIPZone()));
                 },
                 subtitle: Text("Coronavirus guidelines for airports."),
                 trailing: Container(
@@ -1022,7 +1164,36 @@ class _ExploreState extends State<Explore> {
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   child: Text(
-                    "SEE GUIDE",
+                    "See Guide",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              width: double.maxFinite,
+              child: ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                title: Text("Discover Subscription Benefits"),
+                onTap: () {
+                  Toast.show("Disabled by System administrator.", context,
+                      duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+//                  Navigator.push(context,
+//                      MaterialPageRoute(builder: (context) => VIPZone()));
+                },
+                subtitle:
+                    Text("Know various subscriptions and their benefits."),
+                trailing: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.purple,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  child: Text(
+                    "Explore",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -1107,14 +1278,109 @@ Widget createCard(BuildContext context, String imageAssetUrl) {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6.0),
           color: Colors.blueGrey[100],
-          image: DecorationImage(
-              //TODO add black vignette
-              image: NetworkImage(imageAssetUrl),
-              fit: BoxFit.cover,
-              alignment: Alignment.center),
+//          image: DecorationImage(
+//              //TODO add black vignette
+//              image: NetworkImage(imageAssetUrl),
+//              fit: BoxFit.cover,
+//              alignment: Alignment.center),
         ),
         child: Row(
           children: <Widget>[
+//            Stack(
+//              children: <Widget>[
+//                Container(
+//                  height: MediaQuery.of(context).size.height/3.7,
+//                  width: MediaQuery.of(context).size.width,
+//                  child: ClipRRect(
+//                    borderRadius: BorderRadius.only(
+//                      topLeft: Radius.circular(10),
+//                      topRight: Radius.circular(10),
+//                    ),
+//                    child: Image.asset(
+//                      "${widget.img}",
+//                      fit: BoxFit.cover,
+//                    ),
+//                  ),
+//                ),
+//
+//                Positioned(
+//                  top: 6.0,
+//                  right: 6.0,
+//                  child: Card(
+//                    shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(4.0)),
+//                    child: Padding(
+//                      padding: EdgeInsets.all(2.0),
+//                      child: Row(
+//                        children: <Widget>[
+//                          Icon(
+//                            Icons.star,
+//                            color: Constants.ratingBG,
+//                            size: 10,
+//                          ),
+//                          Text(
+//                            " ${widget.rating} ",
+//                            style: TextStyle(
+//                              fontSize: 10,
+//                            ),
+//                          ),
+//                        ],
+//                      ),
+//                    ),
+//                  ),
+//                ),
+//                Positioned(
+//                  top: 6.0,
+//                  left: 6.0,
+//                  child: Card(
+//                    shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(3.0)),
+//                    child: Padding(
+//                      padding: EdgeInsets.all(4.0),
+//                      child:Text(
+//                        " VIP DEAL ",
+//                        style: TextStyle(
+//                          fontSize: 10,
+//                          color: Colors.green,
+//                          fontWeight: FontWeight.bold,
+//                        ),
+//                      ),
+//                    ),
+//                  ),
+//                ),
+//              ],
+//            ),
+
+            SizedBox(height: 7.0),
+
+//            Padding(
+//              padding: EdgeInsets.only(left: 15.0),
+//              child: Container(
+//                width: MediaQuery.of(context).size.width,
+//                child: Text(
+//                  "${widget.title}",
+//                  style: TextStyle(
+//                    fontSize: 20,
+//                    fontWeight: FontWeight.w800,
+//                  ),
+//                  textAlign: TextAlign.left,
+//                ),
+//              ),
+//            ),
+
+            SizedBox(height: 7.0),
+
+//            Padding(
+//              padding: EdgeInsets.only(left: 15.0),
+//              child: Container(
+//                width: MediaQuery.of(context).size.width,
+//                child: Text(
+//                  "${widget.address}",
+//                  style: TextStyle(
+//                    fontSize: 12,
+//
+//                  ),
+//                ),
+//              ),
+//            ),
             Expanded(
               flex: 3,
               child: Column(
@@ -1126,7 +1392,7 @@ Widget createCard(BuildContext context, String imageAssetUrl) {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                            'Book Now the Hotels at best price in Jabalpur'
+                            'Book Now the Hotels at best price with One Wallet'
                                 .toUpperCase(),
                             overflow: TextOverflow.fade,
                             style: TextStyle(

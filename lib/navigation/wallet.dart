@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:lottie/lottie.dart';
 import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 import 'package:sih/features/wifi.dart';
-
+import 'package:sih/wallet/notifications.dart';
+import 'package:sih/wallet/recent_spend.dart';
+import 'package:sih/wallet/won_rewards.dart';
 
 class Wallet extends StatefulWidget {
   @override
@@ -11,6 +14,7 @@ class Wallet extends StatefulWidget {
 
 class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
   TabController _tabController;
+
   @override
   Widget build(BuildContext context) {
     @override
@@ -24,6 +28,7 @@ class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
       _tabController.dispose();
       super.dispose();
     }
+
     return Scaffold(
       appBar: AppBar(
           elevation: 1,
@@ -35,17 +40,52 @@ class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
           title: Text(
             "One Wallet",
             style: TextStyle(
-              color: Theme.of(context).brightness == Brightness.dark ? Colors.white :Colors.black,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : Colors.black,
               fontFamily: "Circular",
             ),
-          )
-      ),
+          )),
       body: Container(
 //        color: Color(0xFFbdc3c7),
 //        width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              SizedBox(
+                width: double.infinity,
+                child: Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: new BoxDecoration(
+                      color: Color(0xfff0f0f0),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 3,
+                        ),
+                        Icon(
+                          Icons.info_outline,
+                          color: Colors.black,
+                          size: 17,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        SizedBox(
+                          child: Text(
+                            "New user rewards added successfully.",
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: "Circular",
+                                color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    )),
+              ),
               Container(
                 padding: EdgeInsets.only(
                   bottom: 5,
@@ -60,7 +100,8 @@ class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
@@ -82,45 +123,46 @@ class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
                           ],
                         ),
                       ),
-
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(
-                              "32,452",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 35,
-                                  fontWeight: FontWeight.w900
-                              ),
+                            Row(
+                              children: <Widget>[
+                                Lottie.asset("assets/24113-coin-sparkle.json",
+                                    height: 40),
+                                Text(
+                                  "100",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 35,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                              ],
                             ),
-
                             Container(
                               decoration: BoxDecoration(
                                 color: Color(0xFF2ecc71),
                                 borderRadius: BorderRadius.circular(16),
                               ),
-                              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 2),
                               child: Text(
                                 "VIP USER",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
-                                    fontWeight: FontWeight.bold
-                                ),
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
-
                           ],
                         ),
                       ),
-
                       SizedBox(height: 10),
-
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                         child: Row(
                           children: <Widget>[
                             Text(
@@ -139,8 +181,11 @@ class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
                           RaisedButton.icon(
                             elevation: 0,
                             color: Colors.white,
-                            onPressed: (){},
-                            icon: Icon(Icons.add, color: Color(0xFF2ecc71),),
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.add,
+                              color: Color(0xFF2ecc71),
+                            ),
                             label: Text("Add Money"),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(4),
@@ -149,14 +194,21 @@ class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
                           RaisedButton.icon(
                             elevation: 0,
                             color: Colors.white,
-                            onPressed: (){},
-                            icon: Icon(Icons.view_headline, color: Color(0xff3498db),),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RecentSpend()));
+                            },
+                            icon: Icon(
+                              Icons.view_headline,
+                              color: Color(0xff3498db),
+                            ),
                             label: Text("Recent Spends"),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(4),
                             ),
                           ),
-
                         ],
                       ),
                       SizedBox(height: 15),
@@ -186,32 +238,51 @@ class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
                   FlatButton(
                     onPressed: () => {},
                     padding: EdgeInsets.all(10.0),
-                    child: Column( // Replace with a Row for horizontal icon + text
+                    child: Column(
+                      // Replace with a Row for horizontal icon + text
                       children: <Widget>[
                         Icon(LineIcons.money),
-                        SizedBox(height: 5,),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Text("Send Money")
                       ],
                     ),
                   ),
                   FlatButton(
-                    onPressed: () => {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NotificationPage()));
+                    },
                     padding: EdgeInsets.all(10.0),
-                    child: Column( // Replace with a Row for horizontal icon + text
+                    child: Column(
+                      // Replace with a Row for horizontal icon + text
                       children: <Widget>[
                         Icon(LineIcons.bell),
-                        SizedBox(height: 5,),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Text("Notifications")
                       ],
                     ),
                   ),
                   FlatButton(
-                    onPressed: () => {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WonRewards()));
+                    },
                     padding: EdgeInsets.all(10.0),
-                    child: Column( // Replace with a Row for horizontal icon + text
+                    child: Column(
+                      // Replace with a Row for horizontal icon + text
                       children: <Widget>[
                         Icon(LineIcons.gift),
-                        SizedBox(height: 5,),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Text("Won Rewards")
                       ],
                     ),
@@ -241,7 +312,7 @@ class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
 //                  ),
                 ],
               ),
-             _tabSection(context)
+              _tabSection(context)
             ],
           ),
         ),
@@ -267,44 +338,42 @@ Widget _tabSection(BuildContext context) {
                 Tab(
                   text: "Promotion",
                 ),
-          ]),
+              ]),
         ),
         Container(
           //Add this to give height
           height: MediaQuery.of(context).size.height,
           child: TabBarView(children: [
             Container(
-              child: Column(
-                children: <Widget> [
-                  SizedBox(height: 5,),
-                  ListView.separated(
-                    physics: ClampingScrollPhysics(),
-                    shrinkWrap: true,
-                    separatorBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 85.0),
-                        child: Divider(),
-                      );
-                    },
-                    padding: EdgeInsets.zero,
-                    itemCount: getPaymentsCard().length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return PaymentCardWidget(
-                        payment: getPaymentsCard()[index],
-                      );
-                    },
-                  ),
-                ]
-              )
-            ),
+                child: Column(children: <Widget>[
+              SizedBox(
+                height: 5,
+              ),
+              ListView.separated(
+                physics: ClampingScrollPhysics(),
+                shrinkWrap: true,
+                separatorBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 85.0),
+                    child: Divider(),
+                  );
+                },
+                padding: EdgeInsets.zero,
+                itemCount: getPaymentsCard().length,
+                itemBuilder: (BuildContext context, int index) {
+                  return PaymentCardWidget(
+                    payment: getPaymentsCard()[index],
+                  );
+                },
+              ),
+            ])),
             Container(
                 child: Column(
-                  children: <Widget>[
-                    TabContentStructure.createContent(context, 'PROMOTION'),
-                    TabContentStructure.createContent(context, 'LUCKY DRAW'),
-                  ],
-                )
-            ),
+              children: <Widget>[
+                TabContentStructure.createContent(context, 'PROMOTION'),
+                TabContentStructure.createContent(context, 'LUCKY DRAW'),
+              ],
+            )),
           ]),
         ),
       ],
@@ -358,11 +427,13 @@ class _PaymentCardWidgetState extends State<PaymentCardWidget> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-           Expanded(child:  Text(
-             widget.payment.name,
-             style: TextStyle(
-                 inherit: true, fontWeight: FontWeight.w700, fontSize: 16.0),
-           ),)
+            Expanded(
+              child: Text(
+                widget.payment.name,
+                style: TextStyle(
+                    inherit: true, fontWeight: FontWeight.w700, fontSize: 16.0),
+              ),
+            )
           ],
         ),
         subtitle: Padding(
@@ -415,15 +486,14 @@ class PaymentModel {
 
 List<PaymentModel> getPaymentsCard() {
   List<PaymentModel> paymentCards = [
-    PaymentModel(Icons.add_circle_outline, Colors.green, "Added Money in Wallet",
-        "23 June 2020", "20.04 AM", 251.40, 1),
+    PaymentModel(Icons.add_circle_outline, Colors.green,
+        "Added Money in Wallet", "23 June 2020", "20.04 AM", 251.40, 1),
     PaymentModel(Icons.receipt, Color(0xFFff415f), "Transfer To Mihir Bhasin",
         "19 June 2020", "14.30 PM", 64.80, -1),
     PaymentModel(Icons.hotel, Colors.deepOrange, "Restroom Charges",
         "15 June 2020", "10.04 PM", 115.00, -1),
-    PaymentModel(Icons.train, Color(0xFF50f3e2), "Train ticket to Turkey", "07-23",
-        "13 June 2020", 37.00, -1),
+    PaymentModel(Icons.train, Color(0xFF50f3e2), "Train ticket to Turkey",
+        "07-23", "13 June 2020", 37.00, -1),
   ];
-
   return paymentCards;
 }

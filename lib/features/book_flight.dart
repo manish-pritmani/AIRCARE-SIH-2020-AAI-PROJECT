@@ -1,340 +1,311 @@
-import 'package:flutter/material.dart';
-import 'package:sih/features/airport_model.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'dart:async';
 
-class FlightSearchPage extends StatefulWidget {
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_verification_code/flutter_verification_code.dart';
+import 'package:lottie/lottie.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:random_string/random_string.dart';
+import 'package:toast/toast.dart';
+
+class FlightBooking extends StatefulWidget{
   @override
-  _FlightSearchPageState createState() => _FlightSearchPageState();
+  _AirportDetailsState createState() => _AirportDetailsState();
 }
 
-enum TripType { oneway, roundtrip, multicity }
-
-Map<TripType, String> _tripTypes = {
-  TripType.oneway: 'ONE WAY',
-  TripType.roundtrip: 'ROUNDTRIP',
-  TripType.multicity: 'MULTICITY'
-};
-
-class _FlightSearchPageState extends State<FlightSearchPage> {
-  TripType _selectedTrip = TripType.oneway;
-
+class _AirportDetailsState extends State<FlightBooking> with SingleTickerProviderStateMixin {
+  String _ticket;
+  bool checkboxValue=false;
+  TextEditingController textEditingController = TextEditingController();
+  // ..text = "123456";
+  bool _onEditing = true;
+  String _code;
+  bool hasError = false;
+  String currentText = "";
+  var _c1 = "Indian Ruppee";
+  var _c2 = "US Dollar";
+  double width, height = 55.0;
+  double customFontSize = 13;
+  final TextStyle whiteText = TextStyle(
+    color: Colors.white,
+  );
+  final TextStyle greyText = TextStyle(
+    color: Colors.grey.shade600,
+  );
+  final TextStyle whiteBoldText = TextStyle(
+    color: Colors.black,
+  );
+  final firestoreInstance = Firestore.instance;
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+    final _formKey2 = GlobalKey<FormState>();
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
+        appBar: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.white,
+            centerTitle: true,
+            leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                color: Colors.black,
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            title: Text(
+              "Book Flight",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w400,
+                fontFamily: "Circular",
+              ),
+            )),
         backgroundColor: Colors.white,
-          title: Text(
-            "Book Flight",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w400,
-              fontFamily: "Circular",
-            ),
-          ),
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            color: Colors.black,
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-//        title: RichText(
-//          text: TextSpan(
-//              style: TextStyle(color: Colors.black, fontSize: 32),
-//              children: [
-//                TextSpan(
-//                    text: 'Flight',
-//                    style: GoogleFonts.overpass(fontWeight: FontWeight.w200)),
-//                TextSpan(
-//                    text: 'Search',
-//                    style: GoogleFonts.overpass(fontWeight: FontWeight.bold)),
-//              ]),
-//        ),
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(48),
-          child: Column(
+        body: SafeArea(
+          child: ListView(
             children: <Widget>[
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(24),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black26,
-                          offset: Offset(0, 6),
-                          blurRadius: 6),
-                    ]),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(_tripTypes.length, (index) {
-                    return buildTripTypeSelector(
-                        _tripTypes.keys.elementAt(index));
-                  }),
+                height: 150,
+                child: Lottie.asset("assets/7595-long-term-saving.json"),
+              ),
+              Container(
+                child:  Column(
+                  children: <Widget>[_tabSection(context)],
                 ),
-              )
+              ),
             ],
           ),
-        ),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Container(
-              color: Colors.white,
-              height: 20,
-            ),
-            FlatButton(
-              color: Colors.white,
-              padding: EdgeInsets.all(24),
-              onPressed: () {},
-              child: buildAirportSelector(
-                  AirportInfo('BOM', 'Mumbai',
-                      'Chatrapati Shijavi Maharaj International Airport'),
-                  Icons.flight_takeoff),
-            ),
-            Container(height: 1, color: Colors.black26),
-            FlatButton(
-              color: Colors.white,
-              padding: EdgeInsets.all(24),
-              onPressed: () {},
-              child: buildAirportSelector(
-                  AirportInfo('DEL', 'New Delhi',
-                      'Indira Gandhi International Airport'),
-                  Icons.flight_land),
-            ),
-            Container(height: 1, color: Colors.black26),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: FlatButton(
-                    color: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                    onPressed: () {},
-                    child: buildDateSelector('DEPARTURE', DateTime.now()),
+        ));
+  }
+
+  void feedData() {
+    String token = randomAlphaNumeric(10);
+    firestoreInstance.collection("users").document(token).setData(
+        {
+          "name" : "name of traveller",
+          "id" : "id of traveller",
+          "amount1" : "source amount",
+          "amount2" : "final amount",
+          "token" : "token generated",
+        }).then((_){
+      print("success!");
+    });
+  }
+
+  Widget _tabSection(BuildContext context) {
+    return DefaultTabController(
+      length: 3,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Container(
+            child: TabBar(
+                labelColor: Colors.black,
+                indicatorColor: Color(0xff0437D6),
+                tabs: [
+                  Tab(
+                    text: "Availability",
                   ),
-                ),
-                Expanded(
-                  child: FlatButton(
-                    color: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                    onPressed: () {},
-                    child: buildDateSelector(
-                        'RETURN', DateTime.now().add(Duration(days: 10))),
+                  Tab(
+                    text: "Calculator",
                   ),
-                ),
-              ],
-            ),
-            Container(height: 1, color: Colors.black26),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: FlatButton(
-                    color: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                    onPressed: () {},
-                    child: buildTravellersView(),
+                  Tab(
+                    text: "Find My Car",
                   ),
-                ),
-                Expanded(
-                  child: FlatButton(
-                    color: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                    onPressed: () {},
-                    child: Row(
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'CABIN CLASS',
-                              style: GoogleFonts.overpass(
-                                  fontSize: 18, color: Colors.grey),
-                            ),
-                            Text(
-                              'ECONOMY\nCLASS',
-                              style: GoogleFonts.overpass(fontSize: 24),
-                            )
-                          ],
+                ]),
+          ),
+          Container(
+            //Add this to give height
+            height: MediaQuery.of(context).size.height,
+            child: TabBarView(children: [
+              SingleChildScrollView(
+                child: Container(
+                    child: Column(children: <Widget>[
+                      Padding(
+                          padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+                          child: new Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Expanded(
+                                child: new Text(
+                                  'Where are you going?',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )),
+                      Container(
+                          padding: EdgeInsets.fromLTRB(25, 15, 25, 5),
+                          child: Center(
+                              child: Text(
+                                  'Parking Space Availability.'))),
+                      Container(
+                          child: Center(
+                              child: Text(
+                                  'GREEN = Available | RED = Full'))),
+                      Divider()
+                    ])),
+              ),
+              SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+
+                    ],
+                  )),
+              SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                          padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+                          child: new Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              Expanded(
+                                child: new Text(
+                                  'Locate Your Vehicle',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                  ),
+                                ),
+                              )
+                            ],
+                          )),
+                      Container(
+                          padding: EdgeInsets.fromLTRB(25, 15, 25, 10),
+                          child: Center(
+                              child: Text(
+                                  'Enter the digits of your vehicle license plate.'))),
+                      Form(
+                        key: formKey,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 18.0, horizontal: 30),
+                          child: VerificationCode(
+                            textStyle: TextStyle(fontSize: 25.0, color: Color(0xff0437D6)),
+                            keyboardType: TextInputType.number,
+                            length: 4,
+                            onCompleted: (String value) {
+                              setState(() {
+                                _code = value;
+                              });
+                            },
+                            onEditing: (bool value) {
+                              setState(() {
+                                _onEditing = value;
+                              });
+                            },
+                          ),),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        child: FlatButton(
+                          color: Color(0xff376AFF),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6.0)),
+                          splashColor: Colors.white.withAlpha(40),
+                          child: Text(
+                            'Locate',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13.0),
+                          ),
+                          onPressed: () {
+                            if (formKey.currentState.validate()) {
+                              Toast.show("Le parking men : sab kuch automatic kr rha hai, mein kya kru job chhod du?.", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+                            }
+                          },
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Stack(
-              children: <Widget>[
-                Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black26,
-                        offset: Offset(0, 12),
-                        blurRadius: 12,
                       ),
                     ],
-                    borderRadius: BorderRadius.vertical(
-                        bottom: Radius.elliptical(
-                            MediaQuery.of(context).size.width * 2, 100)),
-                  ),
-                ),
-                Center(
-                  child: Material(
-                    color: Colors.blue,
-                    shape: CircleBorder(),
-                    clipBehavior: Clip.antiAlias,
-                    elevation: 6,
-                    child: InkWell(
-                      onTap: () {},
-                      splashColor: Colors.orange,
-                      child: Container(
-                        width: 100,
-                        height: 100,
-                        alignment: Alignment.center,
-                        child: Text(
-                          'SEARCH',
-                          style: GoogleFonts.overpass(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildTravellersView() {
-    return Row(
-      children: <Widget>[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'TRAVELLERS',
-              style: GoogleFonts.overpass(fontSize: 18, color: Colors.grey),
-            ),
-            Text(
-              '01',
-              style: GoogleFonts.overpass(fontSize: 48),
-            )
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget buildDateSelector(String title, DateTime dateTime) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          title,
-          style: GoogleFonts.overpass(fontSize: 18, color: Colors.grey),
-        ),
-        Row(
-          children: <Widget>[
-            Text(
-              dateTime.day.toString().padLeft(2, '0'),
-              style: GoogleFonts.overpass(fontSize: 48),
-            ),
-            SizedBox(width: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'Jan 2020',
-                  style: GoogleFonts.overpass(fontSize: 16),
-                ),
-                Text(
-                  'Friday',
-                  style: GoogleFonts.overpass(fontSize: 16, color: Colors.grey),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget buildAirportSelector(AirportInfo airportInfo, IconData icon) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            Container(
-              width: 60,
-              child: Text(
-                airportInfo.airportCode,
-                style: GoogleFonts.overpass(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 24,
-                    color: Colors.black54),
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  airportInfo.airportShortName,
-                  style:
-                  GoogleFonts.overpass(fontSize: 24, color: Colors.black87),
-                ),
-                Text(
-                  airportInfo.airportLongName,
-                  style:
-                  GoogleFonts.overpass(fontSize: 12, color: Colors.black87),
-                ),
-              ],
-            ),
-          ],
-        ),
-        Icon(icon),
-      ],
-    );
-  }
-
-  Widget buildTripTypeSelector(TripType tripType) {
-    var isSelected = _selectedTrip == tripType;
-    return FlatButton(
-      padding: EdgeInsets.only(left: 4, right: 16),
-      onPressed: () {
-        setState(() {
-          _selectedTrip = tripType;
-        });
-      },
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
-      ),
-      color: isSelected ? Colors.blue : Colors.transparent,
-      child: Row(
-        children: <Widget>[
-          if (isSelected)
-            Icon(
-              Icons.check_circle,
-              color: Colors.white,
-            ),
-          Text(
-            _tripTypes[tripType],
-            style: TextStyle(
-                color: isSelected ? Colors.white : Colors.black,
-                fontWeight: FontWeight.bold),
-          )
+                  )),
+            ]),
+          ),
         ],
       ),
+    );
+  }
+
+  var titleTextStyle = TextStyle(
+    color: Colors.black87,
+    fontSize: 20.0,
+    fontWeight: FontWeight.bold,
+  );
+
+  Widget makeInput({label, obscureText = false, message, onSave}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          label,
+          style: TextStyle(
+              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        TextFormField(
+          obscureText: obscureText,
+          validator: (input) {
+            if (input.isEmpty) {
+              return message;
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey[400])),
+            border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey[400])),
+          ),
+          onSaved: (val) => onSave = val,
+        ),
+        SizedBox(
+          height: 20,
+        ),
+      ],
+    );
+  }
+
+  Widget makeRup({label, obscureText = false, message, onSave}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          label,
+          style: TextStyle(
+              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        TextFormField(
+          obscureText: obscureText,
+          validator: (input) {
+            if (input.isEmpty) {
+              return message;
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey[400])),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey[400])),
+              prefixIcon: Icon(Icons.monetization_on)),
+          onSaved: (val) => onSave = val,
+        ),
+        SizedBox(
+          height: 20,
+        ),
+      ],
     );
   }
 }

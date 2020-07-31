@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sih/main.dart';
+import 'package:sih/services/login_screen.dart';
+import 'package:sih/utils/buy_sub.dart';
+import 'package:sih/web_view.dart';
+
+
 
 class OnBoardingPage extends StatefulWidget {
   @override
@@ -12,8 +18,16 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
   void _onIntroEnd(context) {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => HomePage()),
+      MaterialPageRoute(builder: (context) => LoginScreen()),
     );
+  }
+
+  void _endCall(context) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (BuildContext context) => WebViewWindow(
+          title: "Terms of Service",
+          selectedUrl: "https://raw.githubusercontent.com/manish-pritmani/tnc/master/tnc",
+        )));
   }
 
   Widget _buildImage(String assetName) {
@@ -38,13 +52,42 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       key: introKey,
       pages: [
         PageViewModel(
-          title: "Get Rewarded in VIP",
+          title: "Introducing AirCare",
           body:
-              "Everytime you pay at anything get ONE Pay Rewards, Join VIP Today.",
+          "Simple and easy travel management with much more travel facilities than before.",
+          image: _buildImage('airport'),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "Now Travel Smartly with Automation using AI",
+          body:
+          "Travelling was never as easy as automating it like this.Automated Bookings,Good Recommendations.",
+          image: _buildImage('airport'),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "Pay Quick and Easy",
+          body:
+          "Introducing ONE Wallet Paying at Airport Shopping Complex,Parking, Hotels,Cabs was never be as easy.",
+          image: _buildImage('card'),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "Simplified Experience",
+          body:
+          "From Check-in,Parking to Waiting Room,We'll help you manage travel easily.",
+          image: _buildImage('card'),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "Great Offers,Limitless Discounts with VIP",
+          body:
+              "Everytime you pay anywhere get exclusive ONE Pay Rewards, and additional discounts for VIP Members.",
           image: _buildImage('reward'),
           footer: RaisedButton(
             onPressed: () {
-              introKey.currentState?.animateScroll(0);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Subscription()));
+//              introKey.currentState?.animateScroll(0);
             },
             child: const Text(
               'Buy VIP Now',
@@ -58,41 +101,25 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           ),
           decoration: pageDecoration,
         ),
-        PageViewModel(
-          title: "No Worries",
-          body:
-              "Easily manage your travels and never geta chance to worry for anythin.",
-          image: _buildImage('airport'),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Title of last page",
-          bodyWidget: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text("Click on ", style: bodyStyle),
-              Icon(Icons.edit),
-              Text(" to edit a post", style: bodyStyle),
-            ],
-          ),
-          image: _buildImage('img1'),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Pay Quick and Easy",
-          body:
-              "Introducing ONE Wallet Paying at Aiport Shopping Complex,Parking, Hotel,Cabs was never be as easy ",
-          image: _buildImage('card'),
-          decoration: pageDecoration,
-        ),
+//        PageViewModel(
+//          title: "Title of last page",
+//          bodyWidget: Row(
+//            mainAxisAlignment: MainAxisAlignment.center,
+//            children: const [
+//              Text("Click on ", style: bodyStyle),
+//              Icon(Icons.edit),
+//              Text(" to edit a post", style: bodyStyle),
+//            ],
+//          ),
+//          image: _buildImage('img1'),
+//          decoration: pageDecoration,
+//        ),
         PageViewModel(
           title: "Let's Get in",
-          body: "Another beautiful body text for this example onboarding",
+          body: "Create account to Explore and Book services easily. Make your travel hassle-free.",
           image: _buildImage('card'),
           footer: RaisedButton(
-            onPressed: () {
-              introKey.currentState?.animateScroll(0);
-            },
+            onPressed: () => _onIntroEnd(context),
             child: const Text(
               'Get Started',
               style: TextStyle(color: Colors.white, fontSize: 16),
@@ -106,7 +133,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           decoration: pageDecoration,
         ),
       ],
-      onDone: () => _onIntroEnd(context),
+      onDone: () => _endCall(context),
       onSkip: () => _onIntroEnd(context),
       // You can override onSkip callback
       showSkipButton: true,
@@ -114,7 +141,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       nextFlex: 0,
       skip: const Text('SKIP'),
       next: const Icon(Icons.arrow_forward),
-      done: const Text('HELP', style: TextStyle(fontWeight: FontWeight.w600)),
+      done: const Text('T&C', style: TextStyle(fontWeight: FontWeight.w600)),
       dotsDecorator: const DotsDecorator(
         size: Size(10.0, 10.0),
         activeColor: Color(0xff0437D6),
