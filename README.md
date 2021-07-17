@@ -1,7 +1,7 @@
 # AirCare - Smart India Hackathon 2020
 Let's solve fundamental problems of travelling around the world.
 
-## Getting Started
+## Module of projects
 
 This project is a starting point for a Flutter application.
 
