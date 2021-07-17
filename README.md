@@ -1,4 +1,4 @@
-# sih
+# AIRCARE - Smart India Hackathon 2020
 
 Project for Six Muskeeters AirCare
 
