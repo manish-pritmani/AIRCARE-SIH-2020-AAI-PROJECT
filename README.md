@@ -1,6 +1,5 @@
-# AIRCARE - Smart India Hackathon 2020
-
-Project for Six Muskeeters AirCare
+# AirCare - Smart India Hackathon 2020
+Let's solve fundamental problems of travelling around the world.
 
 ## Getting Started
 
