@@ -8,6 +8,8 @@ Flutter Based Mobile Application for Seamless Travel.
 3. Indoor Navigation
 4. Flight and Dining
 5. Tour and Travel
+
+## Road Map of the Project
 ![untitled@2x](https://user-images.githubusercontent.com/57122515/130924589-19e64955-7d05-469a-b571-ba9912147f5a.png)
 
 
